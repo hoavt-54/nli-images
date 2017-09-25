@@ -41,7 +41,7 @@ class DataStream(object):
         infile = open(inpath, 'rt')
         for line in infile:
             #print (line)
-            if(count_ins > 10000): break
+            if(count_ins > 1000): break
             count_ins +=1
             line = line.decode('utf-8').strip()
             if line.startswith('-'): continue

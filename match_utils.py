@@ -265,14 +265,16 @@ def match_passage_with_question(image_features, passage_context_representation_f
                                 question_context_representation_fw, question_context_representation_bw,question_mask,
                                 MP_dim, context_lstm_dim, scope=None,
                                 with_full_match=True, with_maxpool_match=True, with_attentive_match=True, with_max_attentive_match=True,
-                                with_img_full_match=True, with_img_maxpool_match=True, img_dim=100):
+                                with_image=True, with_img_full_match=True, with_img_maxpool_match=True, img_dim=100):
 
     all_question_aware_representatins = []
     dim = 0
     with tf.variable_scope(scope or "match_passage_with_question"):
         fw_question_full_rep = question_context_representation_fw[:,-1,:]
         bw_question_full_rep = question_context_representation_bw[:,0,:]
-        full_img_rep = tf.reduce_mean(image_features, axis=1) # [batch_size, feat_dim]
+        full_img_rep = None
+        if with_image:  
+            full_img_rep = tf.reduce_mean(image_features, axis=1) # [batch_size, feat_dim]
 
         question_context_representation_fw = tf.multiply(question_context_representation_fw, tf.expand_dims(question_mask,-1))
         question_context_representation_bw = tf.multiply(question_context_representation_bw, tf.expand_dims(question_mask,-1))
@@ -301,37 +303,39 @@ def match_passage_with_question(image_features, passage_context_representation_f
 
 
 
-            if with_img_full_match:
-                #def cal_full_matching_img(passage_representation, full_img_representation, w_decompose_params, img_decompose_params):
-                # forward Full-Matching: passage_context_representation_fw vs question_context_representation_fw[-1]
-                fw_w_decomp_params = tf.get_variable("forward_word_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                fw_full_img_decomp_params = tf.get_variable("forward_full_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
-                fw_full_img_match_rep = cal_full_matching_img(passage_context_representation_fw, full_img_rep, fw_w_decomp_params, fw_full_img_decomp_params) #[batch_size, passage_len, decompse_dim]
-                all_question_aware_representatins.append(fw_full_img_match_rep)
-                dim += MP_dim
+            if with_image:
+                if with_img_full_match:
+                    #def cal_full_matching_img(passage_representation, full_img_representation, w_decompose_params, img_decompose_params):
+                    # forward Full-Matching: passage_context_representation_fw vs question_context_representation_fw[-1]
+                    fw_w_decomp_params = tf.get_variable("forward_word_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
+                    fw_full_img_decomp_params = tf.get_variable("forward_full_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
+                    fw_full_img_match_rep = cal_full_matching_img(passage_context_representation_fw, full_img_rep, fw_w_decomp_params, fw_full_img_decomp_params) #[batch_size, passage_len, decompse_dim]
+                    all_question_aware_representatins.append(fw_full_img_match_rep)
+                    dim += MP_dim
+                
+                    # backward Full-Matching: passage_context_representation_bw vs question_context_representation_bw[0]
+                    bw_w_decomp_params = tf.get_variable("backward_word_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
+                    bw_full_img_decomp_params = tf.get_variable("backward_full_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
+                    bw_full_img_match_rep = cal_full_matching_img(passage_context_representation_bw, full_img_rep, bw_w_decomp_params, bw_full_img_decomp_params) #[batch_size, passage_len, decompse_dim]
+                    all_question_aware_representatins.append(bw_full_img_match_rep)
+                    dim += MP_dim
 
-                # backward Full-Matching: passage_context_representation_bw vs question_context_representation_bw[0]
-                bw_w_decomp_params = tf.get_variable("backward_word_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                bw_full_img_decomp_params = tf.get_variable("backward_full_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
-                bw_full_img_match_rep = cal_full_matching_img(passage_context_representation_bw, full_img_rep, bw_w_decomp_params, bw_full_img_decomp_params) #[batch_size, passage_len, decompse_dim]
-                all_question_aware_representatins.append(bw_full_img_match_rep)
-                dim += MP_dim
+            if with_image:
+                if with_img_maxpool_match:
+                    #def cal_maxpooling_matching_img(passage_rep, img_features, w_decompose_params, img_decompose_params):
+                    # forward Maxpooling-Matching
+                    fw_w_decomp_params = tf.get_variable("forward_word_max_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
+                    fw_max_img_decomp_params = tf.get_variable("forward_max_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
+                    fw_maxpooling_rep = cal_maxpooling_matching_img(passage_context_representation_fw, image_features, fw_w_decomp_params, fw_max_img_decomp_params)
+                    all_question_aware_representatins.append(fw_maxpooling_rep)
+                    dim += 2*MP_dim
 
-            if with_img_maxpool_match:
-                #def cal_maxpooling_matching_img(passage_rep, img_features, w_decompose_params, img_decompose_params):
-                # forward Maxpooling-Matching
-                fw_w_decomp_params = tf.get_variable("forward_word_max_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                fw_max_img_decomp_params = tf.get_variable("forward_max_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
-                fw_maxpooling_rep = cal_maxpooling_matching_img(passage_context_representation_fw, image_features, fw_w_decomp_params, fw_max_img_decomp_params)
-                all_question_aware_representatins.append(fw_maxpooling_rep)
-                dim += 2*MP_dim
-
-                # backward Maxpooling-Matching
-                bw_w_decomp_params = tf.get_variable("backward_word_max_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                bw_max_img_decomp_params = tf.get_variable("backward_max_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
-                bw_maxpooling_rep = cal_maxpooling_matching_img(passage_context_representation_bw, image_features, bw_w_decomp_params, bw_max_img_decomp_params)
-                all_question_aware_representatins.append(bw_maxpooling_rep)
-                dim += 2*MP_dim
+                    # backward Maxpooling-Matching
+                    bw_w_decomp_params = tf.get_variable("backward_word_max_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
+                    bw_max_img_decomp_params = tf.get_variable("backward_max_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
+                    bw_maxpooling_rep = cal_maxpooling_matching_img(passage_context_representation_bw, image_features, bw_w_decomp_params, bw_max_img_decomp_params)
+                    all_question_aware_representatins.append(bw_maxpooling_rep)
+                    dim += 2*MP_dim
  
 
             if with_maxpool_match:
@@ -443,7 +447,7 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
                         with_aggregation_highway,with_lex_decomposition,lex_decompsition_dim,
                         with_full_match=True, with_maxpool_match=True, with_attentive_match=True, with_max_attentive_match=True,
                         with_left_match=True, with_right_match=True, with_mean_aggregation=True, with_dep=False, with_image=False, 
-                        with_img_full_match=False, with_img_maxpool_match=False, img_dim=100):
+                        image_with_hypothesis_only=False, with_img_full_match=False, with_img_maxpool_match=False, img_dim=100):
 
     cosine_matrix = cal_relevancy_matrix(in_question_repres, in_passage_repres) # [batch_size, passage_len, question_len]
     cosine_matrix = mask_relevancy_matrix(cosine_matrix, question_mask, mask)
@@ -524,6 +528,7 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
                 
                 
                 # Multi-perspective matching
+                print('image_with_hypothesis_only: ', image_with_hypothesis_only)
                 with tf.variable_scope('left_MP_matching'):
                     (matching_vectors, matching_dim) = match_passage_with_question(image_features, passage_context_representation_fw, 
                                 passage_context_representation_bw, mask,
@@ -531,7 +536,8 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
                                 MP_dim, context_lstm_dim, scope=None,
                                 with_full_match=with_full_match, with_maxpool_match=with_maxpool_match, 
                                 with_attentive_match=with_attentive_match, with_max_attentive_match=with_max_attentive_match,
-                                with_img_full_match=False, with_img_maxpool_match=False, img_dim=100)
+                                with_image=with_image, with_img_full_match=(not image_with_hypothesis_only), 
+                                with_img_maxpool_match=(not image_with_hypothesis_only), img_dim=100)
                     question_aware_representatins.extend(matching_vectors)
                     question_aware_dim += matching_dim
                 
@@ -542,7 +548,7 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
                                 MP_dim, context_lstm_dim, scope=None,
                                 with_full_match=with_full_match, with_maxpool_match=with_maxpool_match, 
                                 with_attentive_match=with_attentive_match, with_max_attentive_match=with_max_attentive_match,
-                                with_img_full_match=with_img_full_match, with_img_maxpool_match=with_img_maxpool_match, img_dim=100)
+                                with_image=with_image, with_img_full_match=with_img_full_match, with_img_maxpool_match=with_img_maxpool_match, img_dim=100)
 
 
                     passage_aware_representatins.extend(matching_vectors)

@@ -27,7 +27,7 @@ def collect_vocabs(train_path, with_POS=False, with_NER=False):
     count = 0
     for line in infile:
         count += 1
-        if (count > 100000): break
+        if (count > 10000): break
         line = line.decode('utf-8').strip()
         if line.startswith('-'): continue
         items = re.split("\t", line)
@@ -248,7 +248,7 @@ def main(_):
                  with_left_match=(not FLAGS.wo_left_match), with_right_match=(not FLAGS.wo_right_match),
                  with_full_match=(not FLAGS.wo_full_match), with_maxpool_match=(not FLAGS.wo_maxpool_match), 
                  with_attentive_match=(not FLAGS.wo_attentive_match), with_max_attentive_match=(not FLAGS.wo_max_attentive_match), 
-                 with_dep=FLAGS.with_dep, with_image=FLAGS.with_image,
+                 with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_with_hypothesis_only=FLAGS.image_with_hypothesis_only,
                  with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, img_dim=FLAGS.img_dim)
             tf.summary.scalar("Training Loss", train_graph.get_loss()) # Add a scalar summary for the snapshot loss.
         
@@ -267,7 +267,7 @@ def main(_):
                  with_left_match=(not FLAGS.wo_left_match), with_right_match=(not FLAGS.wo_right_match),
                  with_full_match=(not FLAGS.wo_full_match), with_maxpool_match=(not FLAGS.wo_maxpool_match), 
                  with_attentive_match=(not FLAGS.wo_attentive_match), with_max_attentive_match=(not FLAGS.wo_max_attentive_match), 
-                 with_dep=FLAGS.with_dep, with_image=FLAGS.with_image,
+                 with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_with_hypothesis_only=FLAGS.image_with_hypothesis_only,
                  with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, img_dim=FLAGS.img_dim)
 
                 
@@ -383,7 +383,7 @@ def main(_):
                  with_left_match=(not FLAGS.wo_left_match), with_right_match=(not FLAGS.wo_right_match),
                  with_full_match=(not FLAGS.wo_full_match), with_maxpool_match=(not FLAGS.wo_maxpool_match), 
                  with_attentive_match=(not FLAGS.wo_attentive_match), with_max_attentive_match=(not FLAGS.wo_max_attentive_match), 
-                 with_dep=FLAGS.with_dep, with_image=FLAGS.with_image,
+                 with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_with_hypothesis_only=FLAGS.image_with_hypothesis_only,
                  with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, img_dim=FLAGS.img_dim)
         vars_ = {}
         for var in tf.all_variables():

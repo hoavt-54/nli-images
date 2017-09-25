@@ -13,7 +13,7 @@ class ModelGraph(object):
                  with_aggregation_highway=False,highway_layer_num=1,with_lex_decomposition=False, lex_decompsition_dim=-1,
                  with_left_match=True, with_right_match=True,
                  with_full_match=True, with_maxpool_match=True, with_attentive_match=True, with_max_attentive_match=True, with_dep=True, with_image=False,
-                 with_img_full_match=False, with_img_maxpool_match=False, img_dim=100):
+                 image_with_hypothesis_only=False, with_img_full_match=False, with_img_maxpool_match=False, img_dim=100):
 
         # ======word representation layer======
         in_question_repres = [] # premise
@@ -223,6 +223,7 @@ class ModelGraph(object):
                         with_aggregation_highway,with_lex_decomposition,lex_decompsition_dim,
                         with_full_match, with_maxpool_match, with_attentive_match, with_max_attentive_match,
                         with_left_match, with_right_match, with_dep=False, with_image=with_image, with_mean_aggregation=True,
+                        image_with_hypothesis_only=image_with_hypothesis_only, 
                         with_img_full_match=with_img_full_match, with_img_maxpool_match=with_img_maxpool_match, img_dim=100)
 
         #========Prediction Layer=========
