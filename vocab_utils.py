@@ -4,7 +4,7 @@ import numpy as np
 import re
 
 # import math
-MAX_VOCAB = 3000
+MAX_VOCAB = 300000
 class Vocab(object):
     def __init__(self, vec_path=None, dim=100, fileformat='bin',voc=None, word2id=None, word_vecs=None, unk_mapping_path=None, parser=None, beginning=False): 
         self.parser = parser

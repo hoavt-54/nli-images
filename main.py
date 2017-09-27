@@ -27,7 +27,7 @@ def collect_vocabs(train_path, with_POS=False, with_NER=False):
     count = 0
     for line in infile:
         count += 1
-        if (count > 10000): break
+        #if (count > 10000): break
         line = line.decode('utf-8').strip()
         if line.startswith('-'): continue
         items = re.split("\t", line)
