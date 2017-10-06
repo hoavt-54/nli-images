@@ -231,75 +231,74 @@ def main(_):
 
     best_accuracy = 0.0
     init_scale = 0.01
-    with tf.Graph().as_default():
-        initializer = tf.random_uniform_initializer(-init_scale, init_scale)
-#         with tf.name_scope("Train"):
-        with tf.variable_scope("Model", reuse=None, initializer=initializer):
-            train_graph = ModelGraph(num_classes, word_vocab=word_vocab, char_vocab=char_vocab,POS_vocab=POS_vocab, NER_vocab=NER_vocab, 
-                 dropout_rate=FLAGS.dropout_rate, learning_rate=FLAGS.learning_rate, optimize_type=FLAGS.optimize_type,
-                 lambda_l2=FLAGS.lambda_l2, char_lstm_dim=FLAGS.char_lstm_dim, context_lstm_dim=FLAGS.context_lstm_dim, 
-                 aggregation_lstm_dim=FLAGS.aggregation_lstm_dim, is_training=True, MP_dim=FLAGS.MP_dim, 
-                 context_layer_num=FLAGS.context_layer_num, aggregation_layer_num=FLAGS.aggregation_layer_num, 
-                 fix_word_vec=FLAGS.fix_word_vec,with_filter_layer=FLAGS.with_filter_layer, with_highway=FLAGS.with_highway,
-                 word_level_MP_dim=FLAGS.word_level_MP_dim,
-                 with_match_highway=FLAGS.with_match_highway, with_aggregation_highway=FLAGS.with_aggregation_highway,
-                 highway_layer_num=FLAGS.highway_layer_num,with_lex_decomposition=FLAGS.with_lex_decomposition, 
-                 lex_decompsition_dim=FLAGS.lex_decompsition_dim,
-                 with_left_match=(not FLAGS.wo_left_match), with_right_match=(not FLAGS.wo_right_match),
-                 with_full_match=(not FLAGS.wo_full_match), with_maxpool_match=(not FLAGS.wo_maxpool_match), 
-                 with_attentive_match=(not FLAGS.wo_attentive_match), with_max_attentive_match=(not FLAGS.wo_max_attentive_match), 
-                 with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_with_hypothesis_only=FLAGS.image_with_hypothesis_only,
-                 with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, img_dim=FLAGS.img_dim)
-            tf.summary.scalar("Training Loss", train_graph.get_loss()) # Add a scalar summary for the snapshot loss.
+    
+    if not FLAGS.decoding_only:
+        with tf.Graph().as_default():
+            initializer = tf.random_uniform_initializer(-init_scale, init_scale)
+            with tf.variable_scope("Model", reuse=None, initializer=initializer):
+                train_graph = ModelGraph(num_classes, word_vocab=word_vocab, char_vocab=char_vocab,POS_vocab=POS_vocab, NER_vocab=NER_vocab, 
+                    dropout_rate=FLAGS.dropout_rate, learning_rate=FLAGS.learning_rate, optimize_type=FLAGS.optimize_type,
+                    lambda_l2=FLAGS.lambda_l2, char_lstm_dim=FLAGS.char_lstm_dim, context_lstm_dim=FLAGS.context_lstm_dim, 
+                    aggregation_lstm_dim=FLAGS.aggregation_lstm_dim, is_training=True, MP_dim=FLAGS.MP_dim, 
+                    context_layer_num=FLAGS.context_layer_num, aggregation_layer_num=FLAGS.aggregation_layer_num, 
+                    fix_word_vec=FLAGS.fix_word_vec,with_filter_layer=FLAGS.with_filter_layer, with_highway=FLAGS.with_highway,
+                    word_level_MP_dim=FLAGS.word_level_MP_dim,
+                    with_match_highway=FLAGS.with_match_highway, with_aggregation_highway=FLAGS.with_aggregation_highway,
+                    highway_layer_num=FLAGS.highway_layer_num,with_lex_decomposition=FLAGS.with_lex_decomposition, 
+                    lex_decompsition_dim=FLAGS.lex_decompsition_dim,
+                    with_left_match=(not FLAGS.wo_left_match), with_right_match=(not FLAGS.wo_right_match),
+                    with_full_match=(not FLAGS.wo_full_match), with_maxpool_match=(not FLAGS.wo_maxpool_match), 
+                    with_attentive_match=(not FLAGS.wo_attentive_match), with_max_attentive_match=(not FLAGS.wo_max_attentive_match), 
+                    with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_with_hypothesis_only=FLAGS.image_with_hypothesis_only,
+                    with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, img_dim=FLAGS.img_dim)
+                tf.summary.scalar("Training Loss", train_graph.get_loss()) # Add a scalar summary for the snapshot loss.
         
-#         with tf.name_scope("Valid"):
-        with tf.variable_scope("Model", reuse=True, initializer=initializer):
-            valid_graph = ModelGraph(num_classes, word_vocab=word_vocab, char_vocab=char_vocab, POS_vocab=POS_vocab, NER_vocab=NER_vocab, 
-                 dropout_rate=FLAGS.dropout_rate, learning_rate=FLAGS.learning_rate, optimize_type=FLAGS.optimize_type,
-                 lambda_l2=FLAGS.lambda_l2, char_lstm_dim=FLAGS.char_lstm_dim, context_lstm_dim=FLAGS.context_lstm_dim, 
-                 aggregation_lstm_dim=FLAGS.aggregation_lstm_dim, is_training=False, MP_dim=FLAGS.MP_dim, 
-                 context_layer_num=FLAGS.context_layer_num, aggregation_layer_num=FLAGS.aggregation_layer_num, 
-                 fix_word_vec=FLAGS.fix_word_vec,with_filter_layer=FLAGS.with_filter_layer, with_highway=FLAGS.with_highway,
-                 word_level_MP_dim=FLAGS.word_level_MP_dim,
-                 with_match_highway=FLAGS.with_match_highway, with_aggregation_highway=FLAGS.with_aggregation_highway,
-                 highway_layer_num=FLAGS.highway_layer_num, with_lex_decomposition=FLAGS.with_lex_decomposition, 
-                 lex_decompsition_dim=FLAGS.lex_decompsition_dim,
-                 with_left_match=(not FLAGS.wo_left_match), with_right_match=(not FLAGS.wo_right_match),
-                 with_full_match=(not FLAGS.wo_full_match), with_maxpool_match=(not FLAGS.wo_maxpool_match), 
-                 with_attentive_match=(not FLAGS.wo_attentive_match), with_max_attentive_match=(not FLAGS.wo_max_attentive_match), 
-                 with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_with_hypothesis_only=FLAGS.image_with_hypothesis_only,
-                 with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, img_dim=FLAGS.img_dim)
+            with tf.variable_scope("Model", reuse=True, initializer=initializer):
+                valid_graph = ModelGraph(num_classes, word_vocab=word_vocab, char_vocab=char_vocab, POS_vocab=POS_vocab, NER_vocab=NER_vocab, 
+                    dropout_rate=FLAGS.dropout_rate, learning_rate=FLAGS.learning_rate, optimize_type=FLAGS.optimize_type,
+                    lambda_l2=FLAGS.lambda_l2, char_lstm_dim=FLAGS.char_lstm_dim, context_lstm_dim=FLAGS.context_lstm_dim, 
+                    aggregation_lstm_dim=FLAGS.aggregation_lstm_dim, is_training=False, MP_dim=FLAGS.MP_dim, 
+                    context_layer_num=FLAGS.context_layer_num, aggregation_layer_num=FLAGS.aggregation_layer_num, 
+                    fix_word_vec=FLAGS.fix_word_vec,with_filter_layer=FLAGS.with_filter_layer, with_highway=FLAGS.with_highway,
+                    word_level_MP_dim=FLAGS.word_level_MP_dim,
+                    with_match_highway=FLAGS.with_match_highway, with_aggregation_highway=FLAGS.with_aggregation_highway,
+                    highway_layer_num=FLAGS.highway_layer_num, with_lex_decomposition=FLAGS.with_lex_decomposition, 
+                    lex_decompsition_dim=FLAGS.lex_decompsition_dim,
+                    with_left_match=(not FLAGS.wo_left_match), with_right_match=(not FLAGS.wo_right_match),
+                    with_full_match=(not FLAGS.wo_full_match), with_maxpool_match=(not FLAGS.wo_maxpool_match), 
+                    with_attentive_match=(not FLAGS.wo_attentive_match), with_max_attentive_match=(not FLAGS.wo_max_attentive_match), 
+                    with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_with_hypothesis_only=FLAGS.image_with_hypothesis_only,
+                    with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, img_dim=FLAGS.img_dim)
 
                 
-        initializer = tf.global_variables_initializer()
-        vars_ = {}
-        for var in tf.all_variables():
-            if "word_embedding" in var.name: continue
-#             if not var.name.startswith("Model"): continue
-            vars_[var.name.split(":")[0]] = var
-        saver = tf.train.Saver(vars_)
+            initializer = tf.global_variables_initializer()
+            vars_ = {}
+            for var in tf.all_variables():
+                if "word_embedding" in var.name: continue
+                vars_[var.name.split(":")[0]] = var
+            saver = tf.train.Saver(vars_)
          
-        sess = tf.Session()
-        sess.run(initializer)
-        if has_pre_trained_model:
-            print("Restoring model from " + best_path)
-            saver.restore(sess, best_path)
-            print("DONE!")
+            sess = tf.Session()
+            sess.run(initializer)
+            if has_pre_trained_model:
+                print("Restoring model from " + best_path)
+                saver.restore(sess, best_path)
+                print("DONE!")
 
-        print('Start the training loop.')
-        train_size = trainDataStream.get_num_batch()
-        max_steps = train_size * FLAGS.max_epochs
-        total_loss = 0.0
-        start_time = time.time()
-        for step in xrange(max_steps):
-            # read data
-            cur_batch = trainDataStream.nextBatch()
-            (label_batch, sent1_batch, sent2_batch, label_id_batch, word_idx_1_batch, word_idx_2_batch, 
+            print('Start the training loop.')
+            train_size = trainDataStream.get_num_batch()
+            max_steps = train_size * FLAGS.max_epochs
+            total_loss = 0.0
+            start_time = time.time()
+            for step in xrange(max_steps):
+                # read data
+                cur_batch = trainDataStream.nextBatch()
+                (label_batch, sent1_batch, sent2_batch, label_id_batch, word_idx_1_batch, word_idx_2_batch, 
                                  char_matrix_idx_1_batch, char_matrix_idx_2_batch, sent1_length_batch, sent2_length_batch, 
                                  sent1_char_length_batch, sent2_char_length_batch,
                                  POS_idx_1_batch, POS_idx_2_batch, NER_idx_1_batch, NER_idx_2_batch, 
                                  dependency1_batch, dependency2_batch, dep_con1_batch, dep_con2_batch, img_feats_batch, img_id_batch) = cur_batch
-            feed_dict = {
+                feed_dict = {
                          train_graph.get_truth(): label_id_batch, 
                          train_graph.get_question_lengths(): sent1_length_batch, 
                          train_graph.get_passage_lengths(): sent2_length_batch, 
@@ -313,57 +312,57 @@ def main(_):
 #                          train_graph.get_in_question_chars(): char_matrix_idx_1_batch, 
 #                          train_graph.get_in_passage_chars(): char_matrix_idx_2_batch, 
                          }
-            if FLAGS.with_dep:
-                feed_dict[train_graph.get_in_question_dependency()] = dependency1_batch
-                feed_dict[train_graph.get_in_passage_dependency()] = dependency2_batch
-                feed_dict[train_graph.get_in_question_dep_con()] = dep_con1_batch
-                feed_dict[train_graph.get_in_passage_dep_con()] = dep_con2_batch
+                if FLAGS.with_dep:
+                    feed_dict[train_graph.get_in_question_dependency()] = dependency1_batch
+                    feed_dict[train_graph.get_in_passage_dependency()] = dependency2_batch
+                    feed_dict[train_graph.get_in_question_dep_con()] = dep_con1_batch
+                    feed_dict[train_graph.get_in_passage_dep_con()] = dep_con2_batch
 
-            if FLAGS.with_image:
-                feed_dict[train_graph.get_image_feats()] = img_feats_batch
+                if FLAGS.with_image:
+                    feed_dict[train_graph.get_image_feats()] = img_feats_batch
 
-            if char_vocab is not None:
-                feed_dict[train_graph.get_question_char_lengths()] = sent1_char_length_batch
-                feed_dict[train_graph.get_passage_char_lengths()] = sent2_char_length_batch
-                feed_dict[train_graph.get_in_question_chars()] = char_matrix_idx_1_batch
-                feed_dict[train_graph.get_in_passage_chars()] = char_matrix_idx_2_batch
+                if char_vocab is not None:
+                    feed_dict[train_graph.get_question_char_lengths()] = sent1_char_length_batch
+                    feed_dict[train_graph.get_passage_char_lengths()] = sent2_char_length_batch
+                    feed_dict[train_graph.get_in_question_chars()] = char_matrix_idx_1_batch
+                    feed_dict[train_graph.get_in_passage_chars()] = char_matrix_idx_2_batch
 
-            if POS_vocab is not None:
-                feed_dict[train_graph.get_in_question_poss()] = POS_idx_1_batch
-                feed_dict[train_graph.get_in_passage_poss()] = POS_idx_2_batch
+                if POS_vocab is not None:
+                    feed_dict[train_graph.get_in_question_poss()] = POS_idx_1_batch
+                    feed_dict[train_graph.get_in_passage_poss()] = POS_idx_2_batch
 
-            if NER_vocab is not None:
-                feed_dict[train_graph.get_in_question_ners()] = NER_idx_1_batch
-                feed_dict[train_graph.get_in_passage_ners()] = NER_idx_2_batch
+                if NER_vocab is not None:
+                    feed_dict[train_graph.get_in_question_ners()] = NER_idx_1_batch
+                    feed_dict[train_graph.get_in_passage_ners()] = NER_idx_2_batch
 
-            _, loss_value = sess.run([train_graph.get_train_op(), train_graph.get_loss()], feed_dict=feed_dict)
-            total_loss += loss_value
+                _, loss_value = sess.run([train_graph.get_train_op(), train_graph.get_loss()], feed_dict=feed_dict)
+                total_loss += loss_value
             
-            if step % 100==0: 
-                print('{} '.format(step), end="")
-                sys.stdout.flush()
+                if step % 100==0: 
+                    print('{} '.format(step), end="")
+                    sys.stdout.flush()
 
-            # Save a checkpoint and evaluate the model periodically.
-            if (step + 1) % trainDataStream.get_num_batch() == 0 or (step + 1) == max_steps:
-                print()
-                # Print status to stdout.
-                duration = time.time() - start_time
-                start_time = time.time()
-                print('Step %d: loss = %.2f (%.3f sec)' % (step, total_loss, duration))
-                total_loss = 0.0
+                # Save a checkpoint and evaluate the model periodically.
+                if (step + 1) % trainDataStream.get_num_batch() == 0 or (step + 1) == max_steps:
+                    print()
+                    # Print status to stdout.
+                    duration = time.time() - start_time
+                    start_time = time.time()
+                    print('Step %d: loss = %.2f (%.3f sec)' % (step, total_loss, duration))
+                    total_loss = 0.0
 
-                # Evaluate against the validation set.
-                print('Validation Data Eval:')
-                accuracy = evaluate(devDataStream, valid_graph, sess,char_vocab=char_vocab, POS_vocab=POS_vocab, NER_vocab=NER_vocab)
-                print("Current accuracy on dev is %.2f" % accuracy)
+                    # Evaluate against the validation set.
+                    print('Validation Data Eval:')
+                    accuracy = evaluate(devDataStream, valid_graph, sess,char_vocab=char_vocab, POS_vocab=POS_vocab, NER_vocab=NER_vocab)
+                    print("Current accuracy on dev is %.2f" % accuracy)
                 
-                #accuracy_train = evaluate(trainDataStream, valid_graph, sess,char_vocab=char_vocab, POS_vocab=POS_vocab, NER_vocab=NER_vocab)
-                #print("Current accuracy on train is %.2f" % accuracy_train)
-                if accuracy>best_accuracy:
-                    best_accuracy = accuracy
-                    saver.save(sess, best_path)
-
-    print("Best accuracy on dev set is %.2f" % best_accuracy)
+                    #accuracy_train = evaluate(trainDataStream, valid_graph, sess,char_vocab=char_vocab, POS_vocab=POS_vocab, NER_vocab=NER_vocab)
+                    #print("Current accuracy on train is %.2f" % accuracy_train)
+                    if accuracy>best_accuracy:
+                        best_accuracy = accuracy
+                        saver.save(sess, best_path)
+        print("Best accuracy on dev set is %.2f" % best_accuracy)
+    
     # decoding
     print('Decoding on the test set:')
     init_scale = 0.01
@@ -397,7 +396,7 @@ def main(_):
         step = 0
         saver.restore(sess, best_path)
 
-        accuracy = evaluate(testDataStream, valid_graph, sess, outpath=FLAGS.suffix+".result",char_vocab=char_vocab,POS_vocab=POS_vocab, NER_vocab=NER_vocab,label_vocab = label_vocab)
+        accuracy = evaluate(testDataStream, valid_graph, sess, outpath=FLAGS.suffix+".result_test",char_vocab=char_vocab,POS_vocab=POS_vocab, NER_vocab=NER_vocab,label_vocab = label_vocab)
         print("Accuracy for test set is %.2f" % accuracy)
         accuracy_train = evaluate(trainDataStream, valid_graph, sess,char_vocab=char_vocab,POS_vocab=POS_vocab, NER_vocab=NER_vocab)
         print("Accuracy for train set is %.2f" % accuracy_train)
