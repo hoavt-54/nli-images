@@ -396,7 +396,7 @@ def main(_):
         step = 0
         saver.restore(sess, best_path)
 
-        accuracy = evaluate(testDataStream, valid_graph, sess, outpath=FLAGS.suffix+".result_test",char_vocab=char_vocab,POS_vocab=POS_vocab, NER_vocab=NER_vocab,label_vocab = label_vocab)
+        accuracy = evaluate(testDataStream, valid_graph, sess, outpath=FLAGS.suffix+".result",char_vocab=char_vocab,POS_vocab=POS_vocab, NER_vocab=NER_vocab,label_vocab = label_vocab)
         print("Accuracy for test set is %.2f" % accuracy)
         accuracy_train = evaluate(trainDataStream, valid_graph, sess,char_vocab=char_vocab,POS_vocab=POS_vocab, NER_vocab=NER_vocab)
         print("Accuracy for train set is %.2f" % accuracy_train)
