@@ -4,13 +4,13 @@ import pandas as pd
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--full_sick_filename", type=str, required=True)
+    parser.add_argument("--sick_filename", type=str, required=True)
     parser.add_argument("--difficult_sick_filename", type=str, required=True)
     parser.add_argument("--filtered_sick_filename", type=str, required=True)
     parser.add_argument("--difficult_filtered_sick_filename", type=str, required=True)
     args = args = parser.parse_args()
 
-    full_sick = pd.read_csv(args.full_sick_filename, sep="\t")
+    full_sick = pd.read_csv(args.sick_filename, sep="\t")
     difficult_sick = pd.read_csv(args.difficult_sick_filename, sep="\t")
 
     filtered_sick = full_sick.query("sentence_A_expRule == 'S1_null' and sentence_A_dataset == 'FLICKR'")

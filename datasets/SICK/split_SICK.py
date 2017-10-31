@@ -4,13 +4,13 @@ import pandas as pd
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--full_sick_filename", type=str, required=True)
+    parser.add_argument("--sick_filename", type=str, required=True)
     parser.add_argument("--train_sick_filename", type=str, required=True)
     parser.add_argument("--dev_sick_filename", type=str, required=True)
     parser.add_argument("--test_sick_filename", type=str, required=True)
     args = args = parser.parse_args()
 
-    full_sick = pd.read_csv(args.full_sick_filename, sep="\t")
+    full_sick = pd.read_csv(args.sick_filename, sep="\t")
 
     full_sick_train = full_sick.query("SemEval_set == 'TRAIN'")
     full_sick_train.to_csv(args.train_sick_filename, sep="\t", index=False)
