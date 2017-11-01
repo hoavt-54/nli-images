@@ -12,6 +12,11 @@ import numpy as np
 def_fnames='/users/ud2017/hoavt/data/flickr30k-cnn/flickr30k/filenames_77512.json'
 def_feats='/users/ud2017/hoavt/data/flickr30k-cnn/flickr30k/vgg_feats_77512.npy'
 images_path= '/users/ud2017/hoavt/data/flickr30k-images/'
+
+#def_fnames='/users/ud2017/hoavt/data/flickr8k/filenames_77512.json'
+#def_feats='/users/ud2017/hoavt/data/flickr8k/vgg_feats_77512.npy'
+#images_path= '/users/ud2017/hoavt/data/flickr8k/Flicker8k_Dataset/'
+
 class ImageFeatures(object):
     def __init__(self, names_files=def_fnames, feats_files=def_feats):
         self.cache = {}
@@ -61,6 +66,6 @@ class ImageFeatures(object):
 
 if __name__ == '__main__':
     images_feats = ImageFeatures()
-    feats = images_feats.get_feat('1000092795.jpg')
+    feats = images_feats.get_feat('152881593.jpg')
     print len(feats)
     print feats
