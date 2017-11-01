@@ -8,73 +8,10 @@ import dill as pickle
 import torch
 import torch.nn as nn
 import torch.optim as O
-from torch.autograd import Variable
 from torchtext import data
 
-from models.utils import Linear, makedirs
-
-
-class Encoder(nn.Module):
-    def __init__(self, embedding_size, rnn_hidden_size, rnn_dropout_ratio):
-        super(Encoder, self).__init__()
-        self._embedding_size = embedding_size
-        self._rnn_hidden_size = rnn_hidden_size
-        self._rnn_dropout_ratio = rnn_dropout_ratio
-        self._rnn = nn.LSTM(embedding_size, rnn_hidden_size, dropout=rnn_dropout_ratio)
-
-    def forward(self, inputs):
-        batch_size = inputs.size()[1]
-        state_shape = 1, batch_size, self._rnn_hidden_size
-        h0 = c0 = Variable(inputs.data.new(*state_shape).zero_())
-        outputs, (ht, ct) = self._rnn(inputs, (h0, c0))
-        return ht[-1]
-
-
-class SNLIClassifier(nn.Module):
-    def __init__(self,
-                 num_tokens,
-                 num_labels,
-                 embedding_size,
-                 fix_embeddings,
-                 rnn_hidden_size,
-                 rnn_dropout_ratio):
-        super(SNLIClassifier, self).__init__()
-        self._num_tokens = num_tokens
-        self._num_labels = num_labels
-        self._embedding_size = embedding_size
-        self._fix_embeddings = fix_embeddings
-        self._rnn_hidden_size = rnn_hidden_size
-        self._rnn_dropout_ratio = rnn_dropout_ratio
-        self._embedding = nn.Embedding(num_tokens, embedding_size)
-        self._encoder = Encoder(embedding_size, rnn_hidden_size, rnn_dropout_ratio)
-        self._dropout = nn.Dropout(rnn_dropout_ratio)
-        self._tanh = nn.Tanh()
-        seq_in_size = 2 * rnn_hidden_size
-        lin_config = [seq_in_size] * 2
-        self.out = nn.Sequential(
-            Linear(*lin_config),
-            self._tanh,
-            self._dropout,
-            Linear(*lin_config),
-            self._tanh,
-            self._dropout,
-            Linear(*lin_config),
-            self._tanh,
-            self._dropout,
-            Linear(seq_in_size, num_labels)
-        )
-
-    def forward(self, batch):
-        premise_embedding = self._embedding(batch.premise)
-        hypothesis_embedding = self._embedding(batch.hypothesis)
-        if self._fix_embeddings:
-            premise_embedding = Variable(premise_embedding.data)
-            hypothesis_embedding = Variable(hypothesis_embedding.data)
-        premise = self._encoder(premise_embedding)
-        hypothesis = self._encoder(hypothesis_embedding)
-        scores = self.out(torch.cat([premise, hypothesis], 1))
-        return scores
-
+from models.models import SNLIClassifier
+from models.utils import makedirs
 
 if __name__ == "__main__":
     random.seed(1235)
