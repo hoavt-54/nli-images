@@ -17,13 +17,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     torch.cuda.set_device(args.gpu)
 
-    images = data.Field(sequential=False, unk_token=None, preprocessing=lambda x: x.strip())
-
     with open(args.index_filename, mode="rb") as in_file:
         index = pickle.load(in_file)
         inputs = index["inputs"]
         answers = index["answers"]
-        images = index["images"]
 
     test = data.TabularDataset(
         path=args.test_filename,
@@ -32,7 +29,7 @@ if __name__ == "__main__":
             ("label", answers),
             ("premise", inputs),
             ("hypothesis", inputs),
-            ("images", images)
+            ("images", None)
         ]
     )
 
