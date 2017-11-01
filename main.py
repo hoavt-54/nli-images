@@ -163,7 +163,9 @@ def main(_):
     POS_vocab = None
     NER_vocab = None
     DEP_vocab = None
-    if os.path.exists(best_path):
+    print('has pretrained model: ', os.path.exists(best_path))
+    print('best_path: ' + best_path)
+    if os.path.exists(best_path + '.meta'):
         has_pre_trained_model = True
         label_vocab = Vocab(label_path, fileformat='txt2')
         char_vocab = Vocab(char_path, fileformat='txt2')
@@ -250,7 +252,9 @@ def main(_):
                     with_full_match=(not FLAGS.wo_full_match), with_maxpool_match=(not FLAGS.wo_maxpool_match), 
                     with_attentive_match=(not FLAGS.wo_attentive_match), with_max_attentive_match=(not FLAGS.wo_max_attentive_match), 
                     with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_with_hypothesis_only=FLAGS.image_with_hypothesis_only,
-                    with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, img_dim=FLAGS.img_dim)
+                    with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, 
+                    with_img_attentive_match=FLAGS.with_img_attentive_match, image_context_layer=FLAGS.image_context_layer, 
+                    with_img_max_attentive_match=FLAGS.with_img_max_attentive_match, img_dim=FLAGS.img_dim)
                 tf.summary.scalar("Training Loss", train_graph.get_loss()) # Add a scalar summary for the snapshot loss.
         
             with tf.variable_scope("Model", reuse=True, initializer=initializer):
@@ -268,7 +272,9 @@ def main(_):
                     with_full_match=(not FLAGS.wo_full_match), with_maxpool_match=(not FLAGS.wo_maxpool_match), 
                     with_attentive_match=(not FLAGS.wo_attentive_match), with_max_attentive_match=(not FLAGS.wo_max_attentive_match), 
                     with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_with_hypothesis_only=FLAGS.image_with_hypothesis_only,
-                    with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, img_dim=FLAGS.img_dim)
+                    with_img_attentive_match=FLAGS.with_img_attentive_match, with_img_full_match=FLAGS.with_img_full_match, 
+                    with_img_maxpool_match=FLAGS.with_img_full_match, image_context_layer=FLAGS.image_context_layer, 
+                    with_img_max_attentive_match=FLAGS.with_img_max_attentive_match, img_dim=FLAGS.img_dim)
 
                 
             initializer = tf.global_variables_initializer()
@@ -383,7 +389,9 @@ def main(_):
                  with_full_match=(not FLAGS.wo_full_match), with_maxpool_match=(not FLAGS.wo_maxpool_match), 
                  with_attentive_match=(not FLAGS.wo_attentive_match), with_max_attentive_match=(not FLAGS.wo_max_attentive_match), 
                  with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_with_hypothesis_only=FLAGS.image_with_hypothesis_only,
-                 with_img_full_match=FLAGS.with_img_full_match, with_img_maxpool_match=FLAGS.with_img_full_match, img_dim=FLAGS.img_dim)
+                 with_img_attentive_match=FLAGS.with_img_attentive_match, with_img_full_match=FLAGS.with_img_full_match, 
+                 with_img_maxpool_match=FLAGS.with_img_full_match, image_context_layer=FLAGS.image_context_layer, 
+                 with_img_max_attentive_match=FLAGS.with_img_max_attentive_match, img_dim=FLAGS.img_dim)
         vars_ = {}
         for var in tf.all_variables():
             if "word_embedding" in var.name: continue

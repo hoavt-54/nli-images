@@ -9,9 +9,15 @@ import numpy as np
 from keras.models import Model
 
 
-def_fnames='/users/ud2017/hoavt/data/flickr30k-cnn/flickr30k/filenames_77512.json'
-def_feats='/users/ud2017/hoavt/data/flickr30k-cnn/flickr30k/vgg_feats_77512.npy'
-images_path= '/users/ud2017/hoavt/data/flickr30k-images/'
+#def_fnames='/users/ud2017/hoavt/data/flickr30k-cnn/flickr30k/filenames_77512.json'
+#def_feats='/users/ud2017/hoavt/data/flickr30k-cnn/flickr30k/vgg_feats_77512.npy'
+#images_path= '/users/ud2017/hoavt/data/flickr30k-images/'
+
+def_fnames='/users/ud2017/hoavt/data/flickr8k/filenames_77512.json'
+def_feats='/users/ud2017/hoavt/data/flickr8k/vgg_feats_77512.npy'
+images_path= '/users/ud2017/hoavt/data/flickr8k/Flicker8k_Dataset/'
+
+
 class ImageFeatures(object):
     def __init__(self, names_files=def_fnames, feats_files=def_feats):
         self.cache = {}
@@ -39,7 +45,7 @@ class ImageFeatures(object):
     
     def save_feat(self):
         self.feats = np.stack(self.feats)
-        np.save('/users/ud2017/hoavt/data/flickr30k-cnn/flickr30k/vgg_feats_77512', self.feats)
+        np.save(def_feats, self.feats)
         with open(self.names_files,'wb') as fn:
             json.dump(self.names, fn)
     def get_feat_model(self, img_file):
@@ -62,15 +68,10 @@ class ImageFeatures(object):
 
 if __name__ == '__main__':
     images_feats = ImageFeatures()
-    feats = images_feats.get_feat('1000092795.jpg')
-    print feats.shape
-    #feats = images_feats.get_feat('3043904009.jpg')
-    #feats = images_feats.get_feat('2560278143.jpg')
-    #images_feats.save_feat()
-    #print images_feats.feats.shape
-    exit()
-    with open('/users/ud2017/hoavt/data/flickr30k-cnn/flickr30k/filenames.json','rb') as fn:
-        names = json.load(fn)
-        for img_name in names:
-            images_feats.get_feat(img_name)
-    #images_feats.save_feat()
+    #feats = images_feats.get_feat('2504277798_936a09c74d.jpg')
+    #print feats.shape
+    #feats = images_feats.get_feat('2531942624_c3c072064e.jpg')
+    #print feats
+    for img_name in os.listdir(images_path):
+        images_feats.get_feat(img_name)
+    images_feats.save_feat()

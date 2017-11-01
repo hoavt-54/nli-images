@@ -41,7 +41,7 @@ class DataStream(object):
         infile = open(inpath, 'rt')
         for line in infile:
             #print (line)
-            #if(count_ins > 1000): break
+            #if(count_ins > 300): break
             count_ins +=1
             line = line.decode('utf-8').strip()
             if line.startswith('-'): continue
@@ -58,14 +58,16 @@ class DataStream(object):
             if with_image:
                 #print(items[3])
                 if len(items) < 4 or len(items[3]) < 3: 
-                    #print('skip', line)
+                    print('skip', line)
                     continue
-                img_id = img_id.strip()
-                img_feats=image_feats.get_feat(img_id)
-                img_feats = np.reshape(img_feats, (-1, 512))
-                if img_feats is None: raise Exception('feature not found for ' + items[3])
-
-
+                try:
+                    img_id = img_id.strip()
+                    img_feats=image_feats.get_feat(img_id)
+                    img_feats = np.reshape(img_feats, (-1, 512))
+                    if img_feats is None: raise Exception('feature not found for ' + items[3])
+                except:
+                    continue
+            
             if label_vocab is not None: 
                 label_id = label_vocab.getIndex(label)
                 if label_id >= label_vocab.vocab_size: label_id = 0
