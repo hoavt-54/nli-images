@@ -1,0 +1,280 @@
+neutral	A person in a black jacket is doing tricks on a motorbike	A person on a black motorbike is doing tricks with a jacket	3373243733_9aba7740ed.jpg#0
+entailment	Two people are kickboxing and spectators are watching	Two people are fighting and spectators are watching	3679341667_936769fd0c.jpg#1
+neutral	Two women are sparring in a kickboxing match	Two people are fighting and spectators are watching	3679341667_936769fd0c.jpg#2
+neutral	A little girl is looking at a woman in costume	A little girl in costume looks like a woman	3718007650_e5930b4509.jpg#4
+neutral	A man is jumping into an empty pool	There is no biker jumping in the air	2905948395_ca3e6b3c9a.jpg#1
+neutral	Four girls are doing backbends and playing outdoors	Four girls are doing backbends and playing indoors	3067885047_f69d90c35b.jpg#3
+entailment	Two teams are competing in a football match	Football is being played by two competing teams	2939371251_f923569a72.jpg#4
+entailment	A deer is jumping over a fence	A deer is jumping over the enclosure	3274879561_74997bbfff.jpg#1
+contradiction	A child is hitting a baseball	A child is missing a baseball	535249787_0fcaa613a0.jpg#1
+entailment	A motorcycle rider is standing up on the seat of a white motorcycle	A motorcycle is riding standing up on the seat of the vehicle	2719102611_fef453bf30.jpg#2
+entailment	Someone is on a black and white motorcycle and is standing on the seat	A rider is on a black and white bike and is standing on the seat	2719102611_fef453bf30.jpg#3
+contradiction	Someone is on a black and white motorcycle and is standing on the seat	No motorcycle rider is standing up on the seat of a motorcycle	2719102611_fef453bf30.jpg#3
+entailment	A motorcyclist with a red helmet is riding a blue motorcycle down the road	A motorcyclist is riding a motorbike along a roadway	166433861_70b66cd381.jpg#2
+entailment	The blond girl is dancing in front of the sound equipment	The equipment in front of the blond dancing girl is sound	3667908724_65c7d112f2.jpg#4
+neutral	A boy is standing in the water	The boy is wading through the blue ocean	2701603045_6cbdc4ce7c.jpg#4
+neutral	A man is pointing at a silver sedan	A man is in a parking lot and is playing tennis against a large wall	1432179046_8e3d75cf81.jpg#1
+entailment	A man, a woman and two girls are walking on the beach	A group of people is near the sea	3088322308_b0c940b3a3.jpg#1
+entailment	An Asian woman in a crowd is carrying a black bag	An Asian woman in in the midst of many people is carrying a black bag	498748832_941faaaf40.jpg#1
+neutral	A dog is chasing another and is holding a stick in its mouth	A dog is chasing a stick and holding another dog in its mouth	78984436_ad96eaa802.jpg#0
+entailment	A group of scouts are hiking through the grass	People are walking	244760301_5809214866.jpg#2
+neutral	Two men with bikes are on the side of a snowy road	Two men are breaking into a car during a trip on a snowy road	95734035_84732a92c1.jpg#1
+neutral	Two men are holding fishing poles	Two men are holding some water standing near fishing poles	488590040_35a3e96c89.jpg#2
+entailment	Two children and an adult are standing next to a tree limb	Three people are standing next to a tree limb	3220009216_10f088185e.jpg#2
+entailment	Two children are hanging on a large branch	Two children are climbing a tree	3220009216_10f088185e.jpg#4
+contradiction	A man is performing a trick on a green bicycle	There is no man performing a trick on a green bicycle	3122938209_2b2c6c1fab.jpg#2
+contradiction	A child is holding a squirt gun	There is no child holding a water gun or getting sprayed with water	2735792721_b8fe85e803.jpg#1
+entailment	A laughing child is holding a water gun and getting sprayed with water	A child is holding a squirt gun	2735792721_b8fe85e803.jpg#1
+neutral	Two brown dogs are fighting over a red ball and are playing in the grass	There is no dog playing with a red ball	584484388_0eeb36d03d.jpg#1
+neutral	A woman who is wearing a pink boa is riding a bicycle down a bridge built for pedestrians	A pedestrian woman is building pink bicycles for boa wearing riders	2269021076_cefc9af989.jpg#1
+neutral	A dog that has a brown and white coat is trotting through shallow water	A brown and white coat is floating across shallow water near a trotting dog	3682277595_55f8b16975.jpg#0
+contradiction	A white and brown dog is walking through the water with difficulty	There is no white and brown dog pacing with through the water difficulty	3682277595_55f8b16975.jpg#3
+entailment	A group of boys are playing with a ball in front of a large door made of wood	The children are playing in front of a door, which is very large	3426966595_c8c4e1e872.jpg#0
+entailment	A young lady with light brown hair is wearing a red necklace, a sweatshirt and earrings and is smiling	A teenage girl is wearing beads that are red	2200901777_f6c168bd32.jpg#0
+contradiction	A boy is climbing up a wall artificially built for climbing and is attached to a rope	A boy is coming down a wall artificially built for climbing and isn't attached to the rope	1357689954_72588dfdc4.jpg#1
+entailment	A fearful little boy is on a climbing wall	A little boy, who looks fearful, is on a climbing wall.	1357689954_72588dfdc4.jpg#2
+neutral	A young child is climbing a rock climbing wall which is indoors	A young child is under a rock climbing wall which is indoors	2565657591_6c1cdfc092.jpg#3
+entailment	One man is doing a bicycle trick in midair	The cyclist is performing a trick in the air	2524084967_a5e011b73d.jpg#3
+entailment	A man and a woman are sitting comfortably on the bench	Two people are sitting comfortably on the bench	3372167201_f7f909d480.jpg#1
+entailment	A man and a woman are sitting comfortably on the bench	Two people are sitting comfortably on the bench	561940436_64d6fc125d.jpg#0
+contradiction	A man and a woman are sitting comfortably on the bench	Nobody is sitting comfortably on the bench	3372167201_f7f909d480.jpg#1
+contradiction	A man and a woman are sitting comfortably on the bench	Nobody is sitting comfortably on the bench	561940436_64d6fc125d.jpg#0
+entailment	A married couple is walking down the aisle	A couple who have just got married are walking down the isle	3098824948_23c31df031.jpg#0
+neutral	A married couple is walking down the aisle	The priest is walking down the aisle to marry a couple	3098824948_23c31df031.jpg#0
+contradiction	A classroom is full of students	A classroom is empty	3044746136_8b89da5f40.jpg#0
+entailment	The presentation is being watched by a classroom of students	A classroom is full of students	3044746136_8b89da5f40.jpg#0
+neutral	A woman, who is old, is near a white dog	A woman, who is old, is far from a white dog	2448210587_9fe7ea5f42.jpg#1
+neutral	Two people are walking two dogs with golden coats in the snow	Two people are in the snow not wearing clothes, which provides camouflage. 	3120189281_1938460e85.jpg#3
+entailment	A girl is wearing a t-shirt and has her mouth open.	A girl has a t-shirt and is keeping her mouth open	3286543624_7a327f79ae.jpg#1
+neutral	A girl is wearing a t-shirt and has her mouth open.	A brown and white dog is holding a baseball in its mouth	3286543624_7a327f79ae.jpg#1
+neutral	A group of people is equipped with protective gear	A group of people is equipped with unprotective gear	207930963_af3a2f1784.jpg#0
+entailment	A black and a white dog are joyfully running on the grass	A dog, which has a black coat, and a white dog are running on the grass	1351315701_6580b51c41.jpg#0
+contradiction	People are on a beach full of sand by the ocean and are enjoying a sunny day	There is no one on the shore	442594271_2c3dd38483.jpg#1
+contradiction	The girl in the red shirt is blowing a bubble 	The girl in a dyed red shirt isn't blowing a bubble	798343627_7492fe0c12.jpg#2
+contradiction	Two young kids are eating corndogs	Two young kids are fasting	1977827746_4e13d7e19f.jpg#4
+entailment	A man in a shirt dyed purple is looking at a man in a black shirt who is doing a funny face	A man in a pose is being amusedly watched by another man	3444982197_0ff15cc50b.jpg#0
+entailment	A man in a shirt dyed purple is looking at a man in a black shirt who is doing a funny face	A man doing a pose is being watched by another man	3444982197_0ff15cc50b.jpg#0
+entailment	A man is falling off a horse on a track and is laid in the wild	A man is getting on a horse on a track laid in the wild	2578289278_01516d23a0.jpg#1
+contradiction	The man and the boy are standing at the bottom of the stairs, which are outdoors	The man and the boy are standing at the top of the stairs, which are outdoors	2061144717_5b3a1864f0.jpg#4
+neutral	A woman is wearing sunglasses of large size and is holding newspapers in both hands	A newspaper is featuring a woman with large sized hands holding sunglasses and wearing a coat	3386893620_5f0bb4e794.jpg#3
+neutral	An old woman is wearing a rose patterned shirt and is clumsily carrying two newspapers	A newspaper is featuring a woman with large sized hands holding sunglasses and wearing a coat	3386893620_5f0bb4e794.jpg#1
+entailment	The snowboarder is leaping over white snow	One person who is practicing snowboarding jumps into the air	2975118353_5af5a5df54.jpg#3
+neutral	A dog, which is small, is playing on the green grass	A woman wearing a blue shirt and high heels is standing on the sidewalk next to the man	662606040_8cc8cd9f1b.jpg#3
+neutral	A man in a hat is walking through a store	A man in a hat is walking past a store	2261550615_b6c25d987b.jpg#2
+contradiction	A dog with golden fur is in the water	A dog with golden fur is out of the water	343073813_df822aceac.jpg#3
+contradiction	The girl is carrying a sign and a group of people is following her	There is no young girl in a blue shirt walking on the sidewalk and holding up a pink sign	3474912569_7165dc1d06.jpg#0
+neutral	A dog is chasing the tail of an animal in the grass	The blonde girl with the pink top is not smiling and not wearing funny glasses with a large nose attached	2170222061_e8bce4a32d.jpg#1
+contradiction	The small child is wading through the water and is being guided by another person	There is no young child splashing in the water	1118557877_736f339752.jpg#1
+neutral	A person in a blue jacket is jumping off of a tall cement wall	A person in a blue jacket is jumping onto a tall cement wall	3244734844_c318c29c23.jpg#3
+neutral	A person in a blue jacket is jumping off of a tall cement wall	A large jump is being performed by a man	3244734844_c318c29c23.jpg#3
+contradiction	A woman in jeans is sitting on the saddle of a horse	There is no person wearing jeans sitting on top of a horse saddle	282960970_574aa1ba49.jpg#1
+entailment	A man is standing beside a large and colorful birdcage	The man is standing next to a bird cage	2572101672_4d699c8713.jpg#4
+entailment	A brown and white dog is holding a baseball in its mouth	A baseball is being held in its mouth by a black and white dog	390671130_09fdccd52f.jpg#4
+contradiction	A young boy wearing a red swimsuit is jumping into a blue kiddies pool	A young boy wearing a red swimsuit is jumping out of a blue kiddies pool	2501595799_6316001e89.jpg#4
+neutral	The boy and the girl are playing and wearing arm floats	A boy and a girl are naked	2951092164_4940b9a517.jpg#3
+neutral	A woman in a yellow shirt is surfing on a pink surfboard	A woman in a pink shirt is surfing through yellow surfboards	3707990914_843e8f15f1.jpg#2
+entailment	A man is sitting on a boat in font of the sunset, near a flag	A man is on a ship in front of the sunset	160805827_5e6646b753.jpg#2
+neutral	The brown dog is jumping in the air	A brown dog is jumping in the water	2303426046_09cfd7bc4e.jpg#0
+neutral	The brown dog is jumping in the air	A brown dog is jumping in the water	3439414478_8038ba9409.jpg#2
+contradiction	A policeman is sitting on a motorcycle	A policeman is getting off of a motorcycle	3240014971_ee2ea8406f.jpg#2
+contradiction	A policeman is sitting on a motorcycle	The cop is not sitting on a police bike	3240014971_ee2ea8406f.jpg#2
+entailment	Two women are wearing bikinis and are walking on the sand	Two women are wearing bikinis on the beach which is sandy	2883950737_3b67d24af4.jpg#3
+entailment	A black dog is running in the grass and its tongue is hanging out	A black dog is hanging out in the grass and running with its tongue out	3419634480_c390f62a6e.jpg#2
+contradiction	The little girl in a pink shirt is running under a tree in the desert	There is no girl wearing jeans and a pink shirt and running	2364774105_fbaf0c191f.jpg#2
+contradiction	A white dog is wearing a Christmas reindeer headband and is playing with a brown dog in the grass	The white dog is not wearing reindeer ears and isn't near a brown dog	2071309418_1d7580b0f0.jpg#1
+neutral	Two children are playing soccer in the park	There is no white dog wearing a Christmas reindeer headband and playing with a brown dog in the grass	2071309418_1d7580b0f0.jpg#0
+neutral	The woman in a red costume is leaning against a brick wall and playing an instrument	An instrument is being played by a woman in a red dress	2836325261_a3bf5c59be.jpg#4
+neutral	The child is playing with toys outdoors	The child is playing with toys indoors	3226796100_08c49cfa5c.jpg#4
+neutral	A dog is herding a pack of white sheep on a dusty farm	A sheepdog is dispersing a herd of sheep	843616798_5ab0ecb525.jpg#3
+neutral	A black man is break dancing on the pavement	The dark skinned male is standing on one hand in front of a yellow building	2529116152_4331dabf50.jpg#0
+neutral	The man is playing the guitar and has the guitar case open for donations	The man is opening the guitar for donations and plays with the case	3315353266_70f0bbb1c3.jpg#4
+entailment	A person is standing in a vast field of glacial ice	The person is standing on white ice	321229104_3cbaf0f51c.jpg#1
+neutral	A woman is snowboarding down an incline and another woman is standing behind her	A blond boy is sliding down a sand dune on a skateboard	3328646934_5cca4cebce.jpg#0
+entailment	The man is taking a picture of himself and another guy	A man is holding up an electronic device	3042484940_0975a5e486.jpg#2
+neutral	The sun is shining on the face of the girl who is in a yellow dress	Children are surrounding a girl in a brown dress who is closing her eyes	1211015912_9f3ee3a995.jpg#1
+neutral	The sun is shining on the face of the girl who is in a yellow dress	A girl is surrounding brown dressed children who are closing the eyes	1211015912_9f3ee3a995.jpg#1
+contradiction	Two people are looking at a gold statue	Two people are ignoring the nearby gold statue	201682811_105241dee3.jpg#2
+entailment	A woman is wearing a blue helmet and is riding a bicycle in a parking lot	The bicyclist is not riding on a city street	1142847777_2a0c1c2551.jpg#4
+contradiction	A young girl is standing on one leg	A young girl is standing on both legs	2477623312_58e8e8c8af.jpg#2
+entailment	A horse is leaping a hurdle and has a rider on its back	A horse and its rider are leaping over a barrier	3211581957_df2f7e2236.jpg#2
+contradiction	A football player in a red and white uniform is being lifted by two teammates	A football player in a red and white uniform is being pulled down by two teammates	241347214_5f19e7998c.jpg#0
+entailment	Four middle eastern children, three girls and one boy, are climbing on the grotto with a pink interior	A group of kids is playing on a structure which is colorful	509241560_00e5b20562.jpg#3
+neutral	A child is making a snow ball	There is no kid in orange playing outside with a snowball	2052702658_da1204f6d1.jpg#3
+entailment	Two people are sitting in lawn chairs and are reading books	Two people in two chairs are reading	2518853257_02f30e282e.jpg#2
+entailment	A man on a bicycle is riding on the beach	A person is riding a bicycle in the sand beside the ocean	2137789511_69a6c6afa8.jpg#0
+neutral	The kids are chasing each other in the sand	The little boy is running on the ground and playing with a little girl	2776029171_5abdd5a22f.jpg#3
+entailment	A dog is running up a grassy hill	A dog is running uphill	3361411074_83f27d2a1c.jpg#3
+entailment	Two white dogs are running and jumping along a beach	Two dogs are playing on the beach	2056042552_f59e338533.jpg#1
+entailment	Two white dogs are running and jumping along a beach	Two dogs are playing on the beach	3585487286_ef9a8d4c56.jpg#2
+neutral	A man is holding a sign and is seeking money	A man is seeking a sign and is holding some money	518251319_40e031e818.jpg#3
+entailment	A snowboarder is doing a flip over a mound of snow	Somebody is leaping in the air on a board	2971431335_e192613db4.jpg#0
+contradiction	A blonde boy in green is sitting on a swing	A blonde boy in green is standing on a swing	2362481035_a7600875d0.jpg#0
+entailment	A white dog is standing on fallen leaves	One white dog is standing on the leaves on the ground	3439243433_d5f3508612.jpg#1
+entailment	A white dog is standing on the leaves on the ground	A dog, which is white, is standing on fallen leaves	3439243433_d5f3508612.jpg#2
+entailment	A biker with a blue jacket, black pants and a white helmet is driving on dirt and people are watching	Blue and black pants are being worn by the motocross rider	3458559770_12cf9f134e.jpg#0
+neutral	A man on inline skates is skating at a skate park	A man on inline skates is resting at a skate park	3625049113_554d82c2a1.jpg#0
+neutral	A rollerblader is performing a trick on a ramp	A man on inline skates is skating at a park built for skating	3625049113_554d82c2a1.jpg#2
+neutral	A rollerblader is performing a trick on a ramp	A man on inline skates is skating at a skate park	3625049113_554d82c2a1.jpg#2
+neutral	A small girl is riding in a toy car	A small toy girl is in a riding car	2422302286_385725e3cf.jpg#2
+contradiction	A small girl is riding in a toy car	There is no child sitting in a red and yellow toy car	2422302286_385725e3cf.jpg#2
+entailment	A brown dog and a black dog are playing in the sand	The black dog is playing with the brown dog on the sand	260231029_966e2f1727.jpg#2
+contradiction	A woman and three men are posing for a photo	Three men and a woman are running away from a picture	3721812313_6000566803.jpg#1
+entailment	The black dog is walking through the tall grass	The black dog is not running through the grass	1361420539_e9599c60ae.jpg#4
+entailment	Two small boys dressed in tuxedos are sitting on a red carpeted floor	Two little kids are wearing tuxedos	2638981862_6b23833f37.jpg#0
+entailment	Two small boys dressed in tuxedos are sitting on a red carpeted floor	Two little boys are wearing tuxedos	2638981862_6b23833f37.jpg#0
+contradiction	Two small boys dressed in tuxedos are sitting on a red carpeted floor	Two little boys are not wearing tuxedos	2638981862_6b23833f37.jpg#1
+entailment	A dog with a muzzle and a blue jacket is running around the yard	A dog with a blue blanket is running through the grass	2393410666_b8c20fff61.jpg#2
+neutral	A dog with a muzzle and a blue jacket is running around the yard	A dog with a blue muzzle is running around the yard with a jacket	2393410666_b8c20fff61.jpg#3
+entailment	The man is doing a wheelie on a mountain bike	A person on a bike is riding on one wheel only	990890291_afc72be141.jpg#1
+contradiction	The man is doing a wheelie on a mountain bike	There is no man on a bicycle riding on one wheel only	990890291_afc72be141.jpg#1
+entailment	The man is doing a wheelie on a mountain bike	A man on a bicycle is riding on one wheel only	990890291_afc72be141.jpg#1
+neutral	The elderly lady is waiting on the sidewalk	The elderly person is waiting a lady on the sidewalk	2307807200_91fa29cba1.jpg#4
+entailment	A young child is running down a gravel road that is covered with dead leaves	A young child is running outside over the fallen leaves	2571096893_694ce79768.jpg#1
+neutral	The men are climbing a mountain	One climber is holding a rock and another man is roping a wall	405534893_2d0f3b0147.jpg#4
+entailment	Two children are playing on a statue	Small kids are climbing a statue in a park	1428681303_04213524e3.jpg#3
+entailment	Small children are climbing a statue in a park	Some children are playing on a statue	1428681303_04213524e3.jpg#1
+entailment	A smiling boy in winter clothes is waving his mittened hands outside a building in the snow	A young child dressed for cold weather is standing outside	2171576939_d1e72daab2.jpg#2
+neutral	A man and a child are kayaking through gentle waters	A man and a young boy are riding in a yellow kayak	1028205764_7e8df9a2ea.jpg#2
+neutral	A dog is chasing a ball in the grass	A dog with a ball is being chased in the grass	3561433412_3985208d53.jpg#0
+neutral	The bearded man is sitting on a train	The hairy man is sitting on a train	2985679744_75a7102aab.jpg#0
+neutral	A small child is showing excitement on a swing set at the park	A small child is showing boredom on a swing set at the park	2977246776_b14be8290d.jpg#2
+neutral	A small child is showing excitement on a swing set at the park	The little girl is not swinging and the woman is not standing behind her	2977246776_b14be8290d.jpg#2
+contradiction	The little girl is swinging and the woman is standing behind her	The girl is standing behind the little woman who is swinging	2977246776_b14be8290d.jpg#0
+neutral	A man is performing a trick on a surfboard in the water	The wave is being ridden by a surfer	3073535022_4af81f360c.jpg#0
+neutral	A surfer is riding the wave	A man is performing a trick on a surfboard in the water	3073535022_4af81f360c.jpg#0
+entailment	A man and two women in a darkened room are sitting at a table with candles	The group of people is sitting in a room which is dim	3266399073_40820596d5.jpg#1
+contradiction	A man in a white shirt and sunglasses and a man in a black shirt and sunglasses are sitting at a table with four beer bottles	There are no men sitting at the table with four beer bottles	3416339125_0860d3d1eb.jpg#0
+contradiction	Two guys are sitting around a table and holding beers in their hands	There are no men sitting at the table with four beer bottles	3416339125_0860d3d1eb.jpg#1
+entailment	A person on a bike is jumping through the air and the sun is flaring through the bike frame	The person is flying through the air on a bicycle	3522076584_7c603d2ac5.jpg#2
+neutral	A woman in a purple top is walking a bicycle between two stone columns	A stone woman and bicycle are on top of two purple columns, between which people are walking	3068994801_b2bc079e67.jpg#2
+neutral	A girl dressed in purple and blue is walking beside her bike at night	A stone woman and bicycle are on top of two purple columns, between which people are walking	3068994801_b2bc079e67.jpg#0
+entailment	A man is wearing a red jacket and standing beside a yellow canoe on some rocks with water in the background	The man in the red jacket is standing next to the yellow kayak on some rocks by the ocean	2641770481_c98465ff35.jpg#3
+entailment	The black dog is walking along a tree trunk bridge over water	A river is being crossed by a dog on a bridge made from a fallen tree	247704641_d883902277.jpg#3
+neutral	The black dog is walking along a tree trunk bridge over water	A dog is crossing a river on a bridge made from a fallen tree	247704641_d883902277.jpg#3
+entailment	The man is doing a handstand on the wet sand at the edge of the water at the beach	A man is performing a handstand on the beach	3398746625_5199beea71.jpg#4
+contradiction	A young boy is playing in the park with his mother	There is no young boy playing in the park with his mother	3263141261_db3a4798b5.jpg#4
+neutral	A boy in blue is running away from a woman in blue	A boy in blue is running towards a woman in blue	3263141261_db3a4798b5.jpg#0
+entailment	A little boy with brown hair is jumping off of a brown chair onto the floor	A young boy is quickly jumping off a chair	2823200990_7b02b7cc36.jpg#2
+entailment	A little boy with brown hair is jumping off of a brown chair onto the floor	A young boy is jumping off a chair	2823200990_7b02b7cc36.jpg#2
+neutral	A dog is playing alone on a beach covered by snow	A dog is sleeping on a beach covered by snow	426191845_1e979e9345.jpg#0
+contradiction	A great dog is climbing a steep hill	A great dog is getting down a steep hill	2738077433_10e6264b6f.jpg#2
+neutral	A surfer is riding a big wave across dark green water	The big surfer is riding and waving	3214151585_f2d0b00b41.jpg#3
+entailment	A man is squatting in brush and taking a photograph	A man is crouching and holding a camera	708945669_08e7ffb9a7.jpg#1
+contradiction	A man on a motorcycle is riding on a track and waving	The person on the motorcycle is not holding up an arm	2911928620_06c3fa293e.jpg#1
+entailment	Three people are driving ATVs	Three people are driving four wheel vehicles in a field	109823394_83fcb735e1.jpg#0
+contradiction	Three people are driving four wheel ATVs in a field	There are no people driving ATVs	109823394_83fcb735e1.jpg#3
+neutral	A dog is jumping at a shiny blue soccer ball in a field of dry leaves	A dog is jumping at dry leaves in a field of shiny blue soccer balls	312156254_ef31dca5ed.jpg#3
+entailment	A dog is running through a field and is chasing a ball	A dog is running towards a toy	895502702_5170ada2ee.jpg#4
+entailment	A basketball player is on the court floor and another one is grabbing the ball	Two basketball players are scrambling for the ball on the court	2529205842_bdcb49d65b.jpg#1
+contradiction	A black sheep is standing near three white dogs	A black sheep is standing far from three white dogs	3357937209_cf4a9512ac.jpg#0
+neutral	A grey dog is jumping toward a black and white dog in the snow	A grey dog is jumping toward a black and white dog in the water	2056042552_f59e338533.jpg#0
+contradiction	A man dressed in black and white is holding up the tennis racket and is waiting for the ball	A man dressed in black and white is dropping the tennis racket and is waiting for the ball	3420278866_1d17c12713.jpg#3
+neutral	The young boy in the blue shirt is jumping into the water	A young girl is jumping into a still lake	2138487671_5b89104043.jpg#4
+entailment	Two people are carrying colorful baskets and blankets and walking near a building	Two people are walking with laden baskets and blankets	86412576_c53392ef80.jpg#3
+neutral	A young girl is sitting in swimming gear	A young man is sitting in swimming gear	656260720_a7db4ce48b.jpg#4
+neutral	A black and white dog is playing with a tattered volleyball in a brown field	A black and white dog is playing with a frisbee in a brown field	2713897716_c8cd610360.jpg#3
+neutral	A black and white dog is playing with a tattered volleyball in a brown field	A black and white dog is playing with a new volleyball	2713897716_c8cd610360.jpg#3
+contradiction	A topless woman is being smeared with a brown substance and a blurry crowd is in the background	A topless woman is being smeared with brown substance and a nobody is in the background	2602085456_d1beebcb29.jpg#4
+neutral	A woman in blue has a yellow ball in the mitt	A man in blue has a yellow ball in the mitt	2944952557_8484f0da8f.jpg#2
+neutral	A woman in blue has a yellow ball in the mitt	The man in blue is chasing the base runner with a number on the jersey	2944952557_8484f0da8f.jpg#2
+neutral	The girl in blue is chasing the base runner with a number on the jersey	The man in blue is chasing the base runner with a number on the jersey	2944952557_8484f0da8f.jpg#3
+entailment	A man in a purple hat is climbing a rocky wall with bare hands	The man is rock climbing	3320209694_db579cb607.jpg#0
+neutral	Two people are driving a jeep and a lady is sitting on the top of it	Two people are driving a boat and a lady is sitting on the top of it	2737609659_efce872c24.jpg#4
+neutral	A blond woman is sitting on the roof of a yellow vehicle and two people are inside	A blond woman is sitting on the roof of a yellow vehicle and two people are outside	2737609659_efce872c24.jpg#3
+contradiction	The yellow dog is drinking water from a bottle	The yellow dog is drinking water from a pot	918886676_3323fb2a01.jpg#3
+neutral	A woman is looking down and is wearing a wedding veil	A boy is looking down and wearing a wedding veil	2286235203_af3cd8f243.jpg#0
+neutral	A girl is standing in a group and is wearing a black shirt and pink beads	A girl is standing alone and wears a black shirt and pink beads	3491013009_572cf2c18a.jpg#1
+neutral	Two large dogs are frolicking in a grassy field	Two animals are running through high grass	3110018626_307a123b59.jpg#4
+neutral	A young man is pushing a motocross bike up a dirt hill	A young man is pushing a motocross bike down a dirt hill	479807465_cf42f39d00.jpg#1
+neutral	An older man and a woman are riding bikes on the boardwalk near the ocean	A middle aged man and woman are riding horses down a road beside the water	2541701582_0a651c380f.jpg#3
+entailment	Pedestrians and cars are moving through a traffic jam in a big city	Some people and vehicles are on a crowded street	1643915227_9f48068772.jpg#2
+entailment	Pedestrians and cars are moving through a traffic jam in a big city	Some people and cars are on a crowded street	1643915227_9f48068772.jpg#1
+entailment	Two brown and white dogs are fighting on a grassy area in front of a tree	Two animals are playing outside	432490118_54a9c0e500.jpg#2
+entailment	A soccer player is sitting on the field and is drinking water	Water is being drunk by a soccer player sitting on the field	3028095878_07341efc9c.jpg#4
+contradiction	The dog is running through the wet sand	The dog is running through the dry sand	2491343114_a3e35a2a3a.jpg#4
+neutral	Dogs are racing on a track	A horse is racing	2191329761_3effd856c5.jpg#0
+entailment	A horse is racing	A horse is running	2191329761_3effd856c5.jpg#3
+neutral	A racer in full gear is wearing a helmet with sponsor logos and is riding a red sport motorcycle	A racer in full gear wears a helmet with sponsor logos and is riding a blue sport motorcycle	3493479159_609ebe1b35.jpg#3
+neutral	People are sitting at square tables in a red room	Several people are sitting at small tables in a light room	3663307538_468739e4c3.jpg#2
+neutral	A black man is walking next to a building in a big city	A woman is looking into the distance and people are walking between buildings behind	3296226598_1c892c4351.jpg#0
+entailment	A black dog is jumping off a dock into a pond	A black animal is jumping from a dock into the water	2595186208_9b16fa0ee3.jpg#3
+entailment	A black dog is jumping off a dock into a pond	A black dog is jumping from a dock into the water	2595186208_9b16fa0ee3.jpg#3
+contradiction	A little girl is smiling and running outside	A little girl is smiling and running inside	3569329986_1f468729b2.jpg#2
+neutral	A skier in black is catching a tiny bit of air	A man is skiing down a snowy hill	3139876823_859c7d7c23.jpg#0
+neutral	A young man in a white shirt and gold and black hat is sitting with crossed legs	A man with no hat is sitting on the ground	2268601066_b018b124fd.jpg#3
+neutral	A shirtless man is playing football on a lawn	A shirtless man is playing football on a field	2681215810_00b0642f7b.jpg#3
+contradiction	Five people are standing in the grass with three dogs	Five people are running with three dogs in the green field beside the road	3047144646_2252ff8e04.jpg#3
+neutral	A girl in gold and purple is holding a rainbow afghan	A man in gold and purple is holding a rainbow afghan	318070878_92ead85868.jpg#1
+neutral	A tan dog is splashing in the water on the bank of a pond	A tan dog is splashing in the water on the bank of a river	2270483627_16fe41b063.jpg#3
+contradiction	The child is splashing water in a small blue pool	The child is splashing water in a big red pool	539751252_2bd88c456b.jpg#4
+entailment	A toddler is making a splash inside a blue paddling pool	The child is splashing water in a small blue pool	539751252_2bd88c456b.jpg#4
+entailment	A toddler is making a splash inside a blue paddling pool	The child is splashing water in a pool	539751252_2bd88c456b.jpg#0
+entailment	A dirty tan dog is rolling in the dirt and looking right at the camera	A dog is playing on the ground	2696866120_254a0345bc.jpg#0
+entailment	A dirty tan dog is rolling in the dirt and looking right at the camera	A dog is rolling on the ground	2696866120_254a0345bc.jpg#0
+neutral	A person on a yellow dirt bike is taking a jump	A person on a yellow clean bike is taking a jump	640053014_549d2f23d2.jpg#4
+entailment	A person on a yellow dirt bike is taking a jump	A cyclist on a yellow bike is airborne	640053014_549d2f23d2.jpg#4
+neutral	A little girl is hitting a baseball off a tee	A little girl in a pink shirt is playing t-ball and taking a swing	3631671718_d712821757.jpg#2
+entailment	A group of people is gathering at a stand at the fair	The people are standing at a carnival	3409947123_a8d07edecf.jpg#1
+neutral	Rollerbladers are rolling in formation down a hill	Rollerbladers are running in formation down a hill	3500136982_bf7a85531e.jpg#4
+neutral	A man dressed in black is wearing inline skates and performing a trick on a rail	A woman dressed in black is wearing inline skates and performing a trick on a rail	3323988406_e3c8fce690.jpg#1
+contradiction	Three children are running down hill	Three children are running up hill	775664534_3f6de7d413.jpg#4
+entailment	Three children are running down a grassy hillside	Three kids are running down hill	775664534_3f6de7d413.jpg#3
+entailment	A group of people are looking at sound equipment	A group of people are standing around a sound mixing console	3042380610_c5ea61eef8.jpg#1
+entailment	A young couple is lying in bed	A couple is lying on a bed together	2922981282_203f04bf9b.jpg#0
+neutral	A young couple is lying on a bed together	A young couple is lying on a couch together	2922981282_203f04bf9b.jpg#1
+neutral	A child is wearing a yellow jacket and is jumping down from a rock	A child is wearing a yellow jacket and is jumping on a rock	2297744130_f571f3a239.jpg#0
+entailment	A toddler is riding a plastic scooter toy	A toddler is playing with a plastic scooter toy	2395967330_7e6ea404f6.jpg#2
+entailment	People are clustered around a bonfire at night	People are sitting around a bonfire at night	1807169176_7f5226bf5a.jpg#2
+entailment	Several people are sitting around a fire at night	People are clustered around a bonfire at night	1807169176_7f5226bf5a.jpg#2
+entailment	Several people are sitting around a fire at night	Several people are gathered around a fire at night	1807169176_7f5226bf5a.jpg#4
+entailment	People are clustered around a bonfire at night	Several people are gathered around a fire at night	1807169176_7f5226bf5a.jpg#4
+neutral	A boy is speeding down a steep slide	A girl is wearing all black and is sliding down a blow up yellow slide	2426781076_e3f4d2685c.jpg#0
+neutral	A boy is wearing all black and is sliding down a blow up yellow slide	A kid is speeding down a steep slide	2426781076_e3f4d2685c.jpg#1
+neutral	A boy is wearing all black and is sliding down a blow up yellow slide	A girl is speeding down a steep slide	2426781076_e3f4d2685c.jpg#1
+neutral	A small white dog is running across a lawn	A brown and white cat with a brown and black bandanna is running very fast	3556390715_65c6d1e88b.jpg#2
+neutral	A brown and white dog with a brown and black bandanna is running very fast	A brown and white cat with a brown and black bandanna is running very fast	3556390715_65c6d1e88b.jpg#0
+neutral	The dog is on a leash and is walking out of the water	The dog is on a leash and is walking near the water	527968666_1fcddf81ab.jpg#4
+neutral	Dirt bikers are riding on a trail	Motorbikes are being ridden by two people	3104400277_1524e4f758.jpg#0
+entailment	A middle eastern man is standing with the back against a lamp post near to other people	A man is leaning against a pole and is surrounded by people	2930622766_fa8f84deb1.jpg#1
+entailment	A middle eastern man is standing with the back against a lamp post near to other people	A man is leaning against a pole and is surrounded	2930622766_fa8f84deb1.jpg#3
+entailment	A man and a woman are standing in front of an art gallery and are looking at a map	A couple is looking at a map	3523471597_87e0bf3b21.jpg#0
+neutral	One boy in orange shorts is standing on a rock cliff over the water and the other boy in black shorts is jumping of it into the water	A baby is sneezing and frightening another baby	632251903_b36701a5e9.jpg#2
+neutral	A cyclist is biking in a snowy forest at night	The man is biking in the snow and wearing a red jacket	3242808166_8638150274.jpg#3
+neutral	Two dogs are playing on a beach	A brown dog is running after a white dog on a rocky shore	1056873310_49c665eb22.jpg#2
+entailment	A large white dog is jumping up in the snow	A large white dog is jumping in the air over a snowy area	2100909581_b7dde5b704.jpg#1
+neutral	A black and brown dog is eyeing a fly	A brown and black dog is pointing the nose upwards	3474330484_a01d8af624.jpg#0
+neutral	A brown and black dog is pointing the nose upwards	A brown and black dog is pointing the nose downwards	3474330484_a01d8af624.jpg#4
+neutral	A brown and black dog is pointing the nose upwards	A black and brown dog is eyeing an insect	3474330484_a01d8af624.jpg#4
+entailment	Two little boys are playing outside with a soccer ball on the green grass	Two children are playing with a ball in the park	197504190_fd1fc3d4b7.jpg#4
+neutral	A girl with Indian clothing and henna on her hand is going through paperwork	A man is wearing a colorful shirt and a lot of jewelry	2687672606_275169c35d.jpg#0
+entailment	The person is hiking	The person is walking	455611732_d65bf3e976.jpg#4
+contradiction	A girl in a uniform is playing the flute with a marching band	A girl in a uniform is not playing the flute with a marching band	2355763034_9fb61a8165.jpg#4
+neutral	A person is doing a trick on a snowboard	A snowboarder is grinding down a long concrete rail	3098336319_a7e5b061d0.jpg#1
+neutral	A person is doing a trick on a snowboard	A snowboarder is grinding down a long rail	3098336319_a7e5b061d0.jpg#0
+contradiction	Three friends are making faces for the camera	Three enemies are making faces for the camera	3662871327_b128d25f04.jpg#0
+entailment	Four people are walking along a city sidewalk and the one in the green hat is talking on a cell phone	A group of people is walking down the street and a person in a hat is on the phone	3666056567_661e25f54c.jpg#2
+neutral	The players is maneuvering for the soccer ball	The players is maneuvering for the basket ball	3221128704_d1205db79b.jpg#2
+neutral	Two children are playing in the surf	A kid is splashing in the water	827941668_2e4ac6cb39.jpg#4
+entailment	Two people dressed in green and red costumes are outside on the sidewalk	Two people dressed in green and red costumes are outside near the street	3342272425_804316cb3d.jpg#3
+neutral	A dog is in a sandy area with the sand that is being stirred up into the air and several plants are in the background	A cat is in a sandy area with the sand that is being stirred up into the air and several plants are in the background	1541272333_1624b22546.jpg#3
+entailment	A dog is in the sand that is blowing in the wind	A dog is in a sandy area with the sand that is being stirred up into the air and several plants are in the background	1541272333_1624b22546.jpg#2
+neutral	A woman wearing a blue shirt and high heels is standing on the sidewalk next to a man	A woman wearing a blue shirt and high heels is standing on the sidewalk next to a dog	1432342377_3e41603f26.jpg#1
+entailment	A woman wearing a blue shirt and high heels is standing on the sidewalk next to a man	A man and a woman are standing on the curb	1432342377_3e41603f26.jpg#0
+neutral	A man on a green bike is performing tricks on a dirt ramp	A man on a green car is performing tricks on a dirt ramp	3621329299_6fb3f2935c.jpg#2
+neutral	A kid is sitting wearing swim gear	A young swimmer is standing in a bathing suit and waiting for the next race	652542470_60e858da64.jpg#2
+entailment	A black dog and a tan dog are fighting	Two dogs are fighting	1897025969_0c41688fa6.jpg#0
+entailment	A black dog and a white dog are wrestling on the ground	Two dogs are fighting	1897025969_0c41688fa6.jpg#1
+neutral	A black dog and a white dog are wrestling on the ground	A black dog and a tan dog are sleeping	1897025969_0c41688fa6.jpg#1
+contradiction	A cluster of four brown dogs are playing in a field of brown grass	There is no dog playing in a field of brown grass	439492931_a96d590e40.jpg#0
+entailment	A brown puppy is gnawing a metallic post that is stuck in the ground	A brown puppy is biting a pole	3228069008_edb2961fc4.jpg#0
+neutral	A brown puppy is biting a pole	A brown puppy is biting a stick	3228069008_edb2961fc4.jpg#4
+contradiction	Two race cars are on a road in front of a grassy parking area	No race car is on a road in front of a grassy parking area	3578068665_87bdacef6a.jpg#4
+contradiction	A brown dog is running in the snow	No dog is running through the snow	2322327298_7948338390.jpg#4
+entailment	An elderly man is sitting on a bench	An old person is sitting on a bench	2938072630_d641b63e4d.jpg#0
+neutral	A barefoot man in pajamas is looking toward the sky and is walking on the tennis court	A barefoot man in pajamas is looking toward the sky and is standing on the tennis court	3157744152_31ace8c9ed.jpg#0
+neutral	The man is standing in a body of water near a waterfall	The body of a man is in the water near a waterfall	1357724865_4faf4e1418.jpg#4
+neutral	A brown and white dog is catching a dirty tennis ball in a dirt field	A brown and white dog is catching a dirty golf ball in a dirt field	2429978680_1e18a13835.jpg#0
+neutral	A dog is running on the sand and chasing a ball	A dog is running on the grass and chasing a ball	2429978680_1e18a13835.jpg#3
+neutral	A shirtless man is escorting a horse that is pulling a carriage along a paved road	A shirtless man is escorting a horse that is pulling a carriage along a dirty road	1149179852_acad4d7300.jpg#1
+contradiction	A young girl is playing on the edge of a fountain and an older woman is watching her	A young girl is playing on the edge of a fountain and an older woman is not watching her	3461049169_e068ae4f25.jpg#3
+entailment	A woman is wearing ear protection and is firing a gun at an indoor shooting range	A woman is shooting at target practice	2504277798_936a09c74d.jpg#1
