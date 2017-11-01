@@ -16,9 +16,9 @@ The results of the Recognizing Textual Inference task are reported in the follow
 ## Results of the Recognizing Visual Textual Inference task
 The results of the Recognizing Visual Textual Inference task are reported in the following table:
 
-| train dataset | test dataset | Bowman et al. + images | BiMPM + images |
-|---------------|--------------|------------------------|----------------|
-| VSNLI train   | VSNLI test   | 34.27                  | 86.7           |
-| VSNLI train   | VSICK        | 27.21                  |                |
+| train dataset | test dataset | Bowman et al. + images | V-BiMPM |
+|---------------|--------------|------------------------|---------|
+| VSNLI train   | VSNLI test   | 34.27                  | 86.7    |
+| VSNLI train   | VSICK        | 27.21                  |         |
 
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference.".
