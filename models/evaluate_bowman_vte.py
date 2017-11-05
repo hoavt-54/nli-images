@@ -22,6 +22,8 @@ if __name__ == "__main__":
         inputs = index["inputs"]
         answers = index["answers"]
 
+    images = data.Field(sequential=False, unk_token=None, preprocessing=lambda x: x.strip())
+
     test = data.TabularDataset(
         path=args.test_filename,
         format="tsv",
@@ -29,9 +31,10 @@ if __name__ == "__main__":
             ("label", answers),
             ("premise", inputs),
             ("hypothesis", inputs),
-            ("images", None)
+            ("image", images)
         ]
     )
+    images.build_vocab(test)
 
     test_iter = data.BucketIterator(
         test,
