@@ -122,6 +122,7 @@ def evaluate(dataStream, valid_graph, sess, outpath=None, label_vocab=None, mode
     if outpath is not None: outfile.close()
 
     accuracy = correct_tags / total_tags * 100
+    print ("correct_tags: %s\ttotal_tags: %s"%(correct_tags, total_tags))
     return accuracy
 
 def output_probs(probs, label_vocab):
@@ -290,6 +291,8 @@ def main(_):
                 print("Restoring model from " + best_path)
                 saver.restore(sess, best_path)
                 print("DONE!")
+                #if best_path.startswith('bimpm_baseline'):
+                best_path = best_path + '_sick' 
 
             print('Start the training loop.')
             train_size = trainDataStream.get_num_batch()

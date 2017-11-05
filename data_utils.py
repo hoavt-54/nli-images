@@ -52,11 +52,14 @@ class DataStream(object):
 
 
             img_feats = None
-            if len(items) < 4 or len(items[3]) < 3:
+            img_id = None
+            if (len(items) < 4 or len(items[3]) < 3) and with_image:
                 continue
-            img_id = items[3]
+            else:
+                img_id = str(count_ins)
             if with_image:
-                #print(items[3])
+                img_id = items[3]
+                #print(items[3]
                 if len(items) < 4 or len(items[3]) < 3: 
                     print('skip', line)
                     continue

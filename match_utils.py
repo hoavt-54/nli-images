@@ -717,7 +717,8 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
         
     question_aware_representatins = tf.concat(question_aware_representatins, 2) # [batch_size, passage_len, question_aware_dim]
     passage_aware_representatins = tf.concat(passage_aware_representatins, 2) # [batch_size, question_len, question_aware_dim]
-    image_aware_representatins = tf.concat(image_aware_representatins, 2)
+    #image_aware_representatins = None
+    if with_image: image_aware_representatins = tf.concat(image_aware_representatins, 2)
     if is_training:
         question_aware_representatins = tf.nn.dropout(question_aware_representatins, (1 - dropout_rate))
         passage_aware_representatins = tf.nn.dropout(passage_aware_representatins, (1 - dropout_rate))
