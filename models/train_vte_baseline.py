@@ -8,7 +8,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
-from dataset import load_te_dataset
+from dataset import load_vte_dataset
 from embedding import load_glove, glove_embeddings_initializer
 from logger import start_logger, stop_logger
 from progress import Progbar
@@ -103,6 +103,8 @@ if __name__ == "__main__":
     parser.add_argument("--train_filename", type=str, required=True)
     parser.add_argument("--dev_filename", type=str, required=True)
     parser.add_argument("--vectors_filename", type=str, required=True)
+    parser.add_argument("--img_names_filename", type=str, required=True)
+    parser.add_argument("--img_features_filename", type=str, required=True)
     parser.add_argument("--model_save_filename", type=str, required=True)
     parser.add_argument("--model_load_filename", type=str)
     parser.add_argument("--max_vocab", type=int, default=300000)
@@ -124,8 +126,6 @@ if __name__ == "__main__":
         with open(args.model_load_filename + ".params", mode="r") as in_file:
             params = json.load(in_file)
             params["l2_reg"] = args.l2_reg
-            params["train_filename"] = args.train_filename
-            params["dev_filename"] = args.dev_filename
             params["model_save_filename"] = args.model_save_filename
             params["model_load_filename"] = args.model_load_filename
             args = AttrDict(params)
@@ -168,10 +168,10 @@ if __name__ == "__main__":
             print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses = load_te_dataset(args.train_filename, token2id, label2id)
+    train_labels, train_premises, train_hypotheses = load_vte_dataset(args.train_filename, token2id, label2id)
 
     print("-- Loading development set")
-    dev_labels, dev_premises, dev_hypotheses = load_te_dataset(args.dev_filename, token2id, label2id)
+    dev_labels, dev_premises, dev_hypotheses = load_vte_dataset(args.dev_filename, token2id, label2id)
 
     if args.model_load_filename:
         print("-- Loading model")
