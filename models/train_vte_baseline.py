@@ -8,20 +8,22 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
-from dataset import load_vte_dataset
+from dataset import load_vte_dataset, ImageReader
 from embedding import load_glove, glove_embeddings_initializer
 from logger import start_logger, stop_logger
 from progress import Progbar
 from utils import AttrDict
 
 
-def build_te_baseline_model(premise_input,
+def build_vte_baseline_model(premise_input,
                             hypothesis_input,
+                            img_features_input,
                             dropout_input,
                             num_tokens,
                             num_labels,
                             embeddings,
                             embeddings_size,
+                            img_features_size,
                             train_embeddings,
                             rnn_hidden_size):
     premise_length = tf.cast(
@@ -74,19 +76,19 @@ def build_te_baseline_model(premise_input,
         dtype=tf.float32
     )
     # hypothesis_last = extract_axis_1(hypothesis_outputs, hypothesis_length - 1)
-    premise_hypothesis = tf.concat([premise_final_states.h, hypothesis_final_states.h], axis=1)
+    premise_hypothesis_img = tf.concat([premise_final_states.h, hypothesis_final_states.h, img_features_input], axis=1)
     return tf.contrib.layers.fully_connected(
         tf.contrib.layers.fully_connected(
             tf.contrib.layers.fully_connected(
                 tf.contrib.layers.fully_connected(
-                    premise_hypothesis,
-                    rnn_hidden_size * 2,
+                    premise_hypothesis_img,
+                    rnn_hidden_size * 2 + img_features_size,
                     activation_fn=tf.nn.tanh
                 ),
-                rnn_hidden_size * 2,
+                rnn_hidden_size * 2 + img_features_size,
                 activation_fn=tf.nn.tanh
             ),
-            rnn_hidden_size * 2,
+            rnn_hidden_size * 2 + img_features_size,
             activation_fn=tf.nn.tanh
         ),
         num_labels,
@@ -110,6 +112,7 @@ if __name__ == "__main__":
     parser.add_argument("--max_vocab", type=int, default=300000)
     parser.add_argument("--embeddings_size", type=int, default=300)
     parser.add_argument("--train_embeddings", type=bool, default=True)
+    parser.add_argument("--img_features_size", type=int, default=512)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
     parser.add_argument("--batch_size", type=int, default=128)
@@ -126,6 +129,8 @@ if __name__ == "__main__":
         with open(args.model_load_filename + ".params", mode="r") as in_file:
             params = json.load(in_file)
             params["l2_reg"] = args.l2_reg
+            params["train_filename"] = args.train_filename
+            params["dev_filename"] = args.dev_filename
             params["model_save_filename"] = args.model_save_filename
             params["model_load_filename"] = args.model_load_filename
             args = AttrDict(params)
@@ -168,25 +173,31 @@ if __name__ == "__main__":
             print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses = load_vte_dataset(args.train_filename, token2id, label2id)
+    train_labels, train_premises, train_hypotheses, train_img_names = load_vte_dataset(args.train_filename, token2id, label2id)
 
     print("-- Loading development set")
-    dev_labels, dev_premises, dev_hypotheses = load_vte_dataset(args.dev_filename, token2id, label2id)
+    dev_labels, dev_premises, dev_hypotheses, dev_img_names = load_vte_dataset(args.dev_filename, token2id, label2id)
+
+    print("-- Loading images")
+    image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
 
     if args.model_load_filename:
         print("-- Loading model")
         premise_input = tf.placeholder(tf.int32, (None, None))
         hypothesis_input = tf.placeholder(tf.int32, (None, None))
+        img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size))
         label_input = tf.placeholder(tf.int32, (None,))
         dropout_input = tf.placeholder(tf.float32)
-        logits = build_te_baseline_model(
+        logits = build_vte_baseline_model(
             premise_input,
             hypothesis_input,
+            img_features_input,
             dropout_input,
             num_tokens,
             num_labels,
             None,
             args.embeddings_size,
+            args.img_features_size,
             args.train_embeddings,
             args.rnn_hidden_size
         )
@@ -194,16 +205,19 @@ if __name__ == "__main__":
         print("-- Building model")
         premise_input = tf.placeholder(tf.int32, (None, None))
         hypothesis_input = tf.placeholder(tf.int32, (None, None))
+        img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size))
         label_input = tf.placeholder(tf.int32, (None,))
         dropout_input = tf.placeholder(tf.float32)
-        logits = build_te_baseline_model(
+        logits = build_vte_baseline_model(
             premise_input,
             hypothesis_input,
+            img_features_input,
             dropout_input,
             num_tokens,
             num_labels,
             embeddings,
             args.embeddings_size,
+            args.img_features_size,
             args.train_embeddings,
             args.rnn_hidden_size
         )
@@ -244,10 +258,13 @@ if __name__ == "__main__":
                 batch_premises = train_premises[batch_indexes]
                 batch_hypotheses = train_hypotheses[batch_indexes]
                 batch_labels = train_labels[batch_indexes]
+                batch_img_names = [train_img_names[i] for i in batch_indexes]
+                batch_img_features = image_reader.get_features(batch_img_names)
 
                 loss, _ = session.run([loss_function, train_step], feed_dict={
                     premise_input: batch_premises,
                     hypothesis_input: batch_hypotheses,
+                    img_features_input: batch_img_features,
                     label_input: batch_labels,
                     dropout_input: args.rnn_dropout_ratio
                 })
@@ -266,11 +283,14 @@ if __name__ == "__main__":
                 dev_batch_premises = dev_premises[dev_batch_indexes]
                 dev_batch_hypotheses = dev_hypotheses[dev_batch_indexes]
                 dev_batch_labels = dev_labels[dev_batch_indexes]
+                dev_batch_img_names = [dev_img_names[i] for i in dev_batch_indexes]
+                dev_batch_img_features = image_reader.get_features(dev_batch_img_names)
                 predictions = session.run(
                     tf.argmax(logits, axis=1),
                     feed_dict={
                         premise_input: dev_batch_premises,
                         hypothesis_input: dev_batch_hypotheses,
+                        img_features_input: dev_batch_img_features,
                         dropout_input: 1.0
                     }
                 )
