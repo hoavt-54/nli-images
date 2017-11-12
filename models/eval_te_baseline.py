@@ -43,10 +43,10 @@ if __name__ == "__main__":
     test_labels, test_premises, test_hypotheses = load_te_dataset(args.test_filename, token2id, label2id)
 
     print("-- Restoring model")
-    premise_input = tf.placeholder(tf.int32, (None, None))
-    hypothesis_input = tf.placeholder(tf.int32, (None, None))
-    label_input = tf.placeholder(tf.int32, (None,))
-    dropout_input = tf.placeholder(tf.float32)
+    premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
+    hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
+    label_input = tf.placeholder(tf.int32, (None,), name="label_input")
+    dropout_input = tf.placeholder(tf.float32, name="dropout_input")
     logits = build_te_baseline_model(
         premise_input,
         hypothesis_input,

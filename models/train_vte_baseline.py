@@ -183,11 +183,11 @@ if __name__ == "__main__":
 
     if args.model_load_filename:
         print("-- Loading model")
-        premise_input = tf.placeholder(tf.int32, (None, None))
-        hypothesis_input = tf.placeholder(tf.int32, (None, None))
-        img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size))
-        label_input = tf.placeholder(tf.int32, (None,))
-        dropout_input = tf.placeholder(tf.float32)
+        premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
+        hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
+        img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size), name="img_features_input")
+        label_input = tf.placeholder(tf.int32, (None,), name="label_input")
+        dropout_input = tf.placeholder(tf.float32, name="dropout_input")
         logits = build_vte_baseline_model(
             premise_input,
             hypothesis_input,
@@ -203,11 +203,11 @@ if __name__ == "__main__":
         )
     else:
         print("-- Building model")
-        premise_input = tf.placeholder(tf.int32, (None, None))
-        hypothesis_input = tf.placeholder(tf.int32, (None, None))
-        img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size))
-        label_input = tf.placeholder(tf.int32, (None,))
-        dropout_input = tf.placeholder(tf.float32)
+        premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
+        hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
+        img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size), name="img_features_input")
+        label_input = tf.placeholder(tf.int32, (None,), name="label_input")
+        dropout_input = tf.placeholder(tf.float32, name="dropout_input")
         logits = build_vte_baseline_model(
             premise_input,
             hypothesis_input,
