@@ -40,7 +40,7 @@ def load_vte_dataset(nli_dataset_filename, token2id, label2id):
 
         for row in reader:
             label = row[0].strip()
-            img = row[3].strip()
+            img = row[3].strip().split("#")[0]
             labels.append(label2id[label])
             premise_tokens = row[1].strip().lower().split()
             hypothesis_tokens = row[2].strip().lower().split()
