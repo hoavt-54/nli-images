@@ -20,6 +20,9 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--test_filename", type=str, required=True)
     parser.add_argument("--model_filename", type=str, required=True)
+    parser.add_argument("--img_names_filename", type=str, required=True)
+    parser.add_argument("--img_features_filename", type=str, required=True)
+    parser.add_argument("--img_features_size", type=int, default=512)
     args = parser.parse_args()
     start_logger(args.model_filename + ".test_log")
     atexit.register(stop_logger)
@@ -47,7 +50,7 @@ if __name__ == "__main__":
     print("-- Restoring model")
     premise_input = tf.placeholder(tf.int32, (None, None))
     hypothesis_input = tf.placeholder(tf.int32, (None, None))
-    img_features_input = tf.placeholder(tf.float32, (None, params["img_features_size"]))
+    img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size))
     label_input = tf.placeholder(tf.int32, (None,))
     dropout_input = tf.placeholder(tf.float32)
     logits = build_vte_baseline_model(
