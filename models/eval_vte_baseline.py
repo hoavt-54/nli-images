@@ -49,11 +49,11 @@ if __name__ == "__main__":
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
 
     print("-- Restoring model")
-    premise_input = tf.placeholder(tf.int32, (None, None))
-    hypothesis_input = tf.placeholder(tf.int32, (None, None))
-    img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size))
-    label_input = tf.placeholder(tf.int32, (None,))
-    dropout_input = tf.placeholder(tf.float32)
+    premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
+    hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
+    img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size), name="img_features_input")
+    label_input = tf.placeholder(tf.int32, (None,), name="label_input")
+    dropout_input = tf.placeholder(tf.float32, name="dropout_input")
     logits = build_vte_baseline_model(
         premise_input,
         hypothesis_input,
@@ -88,6 +88,7 @@ if __name__ == "__main__":
                 feed_dict={
                     premise_input: test_batch_premises,
                     hypothesis_input: test_batch_hypotheses,
+                    img_features_input: batch_img_features,
                     dropout_input: 1.0
                 }
             )
