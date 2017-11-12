@@ -22,9 +22,10 @@ if __name__ == "__main__":
     parser.add_argument("--model_filename", type=str, required=True)
     parser.add_argument("--img_names_filename", type=str, required=True)
     parser.add_argument("--img_features_filename", type=str, required=True)
+    parser.add_argument("--result_filename", type=str, required=True)
     parser.add_argument("--img_features_size", type=int, default=512)
     args = parser.parse_args()
-    start_logger(args.model_filename + ".test_log")
+    start_logger(args.result_filename)
     atexit.register(stop_logger)
 
     print("-- Loading params")
