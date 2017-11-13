@@ -235,6 +235,8 @@ if __name__ == "__main__":
     with tf.Session() as session:
         if args.model_load_filename:
             saver.restore(session, args.model_load_filename + ".ckpt")
+            softmax_layer_weights = [v for v in tf.global_variables() if v.name == "fully_connected_3/weights:0"][0]
+            session.run(softmax_layer_weights.initializer)
             train_step = tf.get_collection("train_step")
         else:
             optimizer = tf.train.AdadeltaOptimizer(learning_rate=args.learning_rate)
