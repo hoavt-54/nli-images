@@ -198,9 +198,9 @@ if __name__ == "__main__":
         tf.add_to_collection("hypothesis_input", hypothesis_input)
         tf.add_to_collection("label_input", label_input)
         tf.add_to_collection("dropout_input", dropout_input)
+        tf.add_to_collection("logits", logits)
         tf.add_to_collection("loss_function", loss_function)
         tf.add_to_collection("train_step", train_step)
-        tf.add_to_collection("logits", logits)
     else:
         print("-- Loading model")
         saver = tf.train.import_meta_graph(args.model_load_filename + ".ckpt.meta")
@@ -217,13 +217,13 @@ if __name__ == "__main__":
             session.run(tf.global_variables_initializer())
         else:
             saver.restore(session, args.model_load_filename + ".ckpt")
-            train_step = tf.get_collection("train_step")[0]
-            loss_function = tf.get_collection("loss_function")[0]
-            dropout_input = tf.get_collection("dropout_input")[0]
-            label_input = tf.get_collection("label_input")[0]
-            hypothesis_input = tf.get_collection("hypothesis_input")[0]
             premise_input = tf.get_collection("premise_input")[0]
+            hypothesis_input = tf.get_collection("hypothesis_input")[0]
+            label_input = tf.get_collection("label_input")[0]
+            dropout_input = tf.get_collection("dropout_input")[0]
             logits = tf.get_collection("logits")[0]
+            loss_function = tf.get_collection("loss_function")[0]
+            train_step = tf.get_collection("train_step")[0]
             softmax_layer_weights = [v for v in tf.global_variables() if v.name == "fully_connected_3/weights:0"][0]
             session.run(softmax_layer_weights.initializer)
 
