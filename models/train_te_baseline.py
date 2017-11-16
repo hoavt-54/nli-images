@@ -214,7 +214,7 @@ if __name__ == "__main__":
 
     with tf.Session() as session:
         if not args.model_load_filename:
-            session.run(tf.initialize_all_variables())
+            session.run(tf.global_variables_initializer())
         else:
             saver.restore(session, args.model_load_filename + ".ckpt")
             train_step = tf.get_collection("train_step")[0]
