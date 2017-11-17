@@ -10,4 +10,4 @@
 
 # Bowman et al. VSNLI train -> VSICK
 
-~/python3 eval_vte_baseline.py --model_filename=checkpoints/vte/vsnli_train --test_filename=../datasets/SICK/VSICK/VSICK.tsv --img_names_filename=../../flickr8k-cnn/flickr8k/filenames_77512.json --img_features_filename=../../flickr8k-cnn/flickr8k/vgg_feats_77512.npy --result_filename=results/vte/vsnli_train_to_VSICK.txt
+~/python3 eval_vte_baseline.py --model_filename=checkpoints/vte/vsnli_train --test_filename=../datasets/SICK/VSICK2/VSICK2.tsv --img_names_filename=../../flickr8k-cnn/flickr8k/filenames_77512.json --img_features_filename=../../flickr8k-cnn/flickr8k/vgg_feats_77512.npy --result_filename=results/vte/vsnli_train_to_VSICK.txt
