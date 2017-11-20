@@ -143,10 +143,6 @@ if __name__ == "__main__":
             num_tokens = len(token2id)
             num_labels = len(label2id)
     else:
-        with open(args.model_save_filename + ".params", mode="w") as out_file:
-            json.dump(vars(args), out_file)
-            print("Params saved to: {}".format(args.model_save_filename + ".params"))
-
         print("-- Building vocabulary")
         embeddings, token2id, id2token = load_glove(args.vectors_filename, args.max_vocab, args.embeddings_size)
         label2id = {"neutral": 0, "entailment": 1, "contradiction": 2}
@@ -155,17 +151,22 @@ if __name__ == "__main__":
         num_labels = len(label2id)
         print("Number of tokens: {}".format(num_tokens))
         print("Number of labels: {}".format(num_labels))
-        with open(args.model_save_filename + ".index", mode="wb") as out_file:
-            pickle.dump(
-                {
-                    "token2id": token2id,
-                    "id2token": id2token,
-                    "label2id": label2id,
-                    "id2label": id2label
-                },
-                out_file
-            )
-            print("Index saved to: {}".format(args.model_save_filename + ".index"))
+
+    with open(args.model_save_filename + ".params", mode="w") as out_file:
+        json.dump(vars(args), out_file)
+        print("Params saved to: {}".format(args.model_save_filename + ".params"))
+
+    with open(args.model_save_filename + ".index", mode="wb") as out_file:
+        pickle.dump(
+            {
+                "token2id": token2id,
+                "id2token": id2token,
+                "label2id": label2id,
+                "id2label": id2label
+            },
+            out_file
+        )
+        print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
     train_labels, train_premises, train_hypotheses = load_te_dataset(args.train_filename, token2id, label2id)
