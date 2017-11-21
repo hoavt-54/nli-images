@@ -1,5 +1,6 @@
 import atexit
 import json
+import os
 import pickle
 import random
 from argparse import ArgumentParser
@@ -14,6 +15,7 @@ from train_te_baseline import build_te_baseline_model
 from utils import batch
 
 if __name__ == "__main__":
+    os.environ["PYTHONHASHSEED"] = "0"
     random_seed = 12345
     random.seed(random_seed)
     np.random.seed(random_seed)
