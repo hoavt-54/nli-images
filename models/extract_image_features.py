@@ -30,6 +30,7 @@ def extract_image_features(images_path):
 
     return img_names, img_features
 
+
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--images_path", type=str, required=True)
