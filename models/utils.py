@@ -16,6 +16,12 @@ def extract_axis_1(data, ind):
     return res
 
 
+def batch(iterable, n=1):
+    length = len(iterable)
+    for ndx in range(0, length, n):
+        yield iterable[ndx:min(ndx + n, length)]
+
+
 class AttrDict(dict):
     def __init__(self, *args, **kwargs):
         super(AttrDict, self).__init__(*args, **kwargs)

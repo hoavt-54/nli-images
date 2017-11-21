@@ -12,20 +12,20 @@ from dataset import load_vte_dataset, ImageReader
 from embedding import load_glove, glove_embeddings_initializer
 from logger import start_logger, stop_logger
 from progress import Progbar
-from utils import AttrDict
+from utils import AttrDict, batch
 
 
 def build_vte_baseline_model(premise_input,
-                            hypothesis_input,
-                            img_features_input,
-                            dropout_input,
-                            num_tokens,
-                            num_labels,
-                            embeddings,
-                            embeddings_size,
-                            img_features_size,
-                            train_embeddings,
-                            rnn_hidden_size):
+                             hypothesis_input,
+                             img_features_input,
+                             dropout_input,
+                             num_tokens,
+                             num_labels,
+                             embeddings,
+                             embeddings_size,
+                             img_features_size,
+                             train_embeddings,
+                             rnn_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -133,6 +133,9 @@ if __name__ == "__main__":
             params["dev_filename"] = args.dev_filename
             params["model_save_filename"] = args.model_save_filename
             params["model_load_filename"] = args.model_load_filename
+            params["img_names_filename"] = args.img_names_filename
+            params["img_features_filename"] = args.img_features_filename
+            params["model_load_filename"] = args.model_load_filename
             args = AttrDict(params)
             with open(args.model_save_filename + ".params", mode="w") as out_file:
                 json.dump(vars(args), out_file)
@@ -148,10 +151,6 @@ if __name__ == "__main__":
             num_tokens = len(token2id)
             num_labels = len(label2id)
     else:
-        with open(args.model_save_filename + ".params", mode="w") as out_file:
-            json.dump(vars(args), out_file)
-            print("Params saved to: {}".format(args.model_save_filename + ".params"))
-
         print("-- Building vocabulary")
         embeddings, token2id, id2token = load_glove(args.vectors_filename, args.max_vocab, args.embeddings_size)
         label2id = {"neutral": 0, "entailment": 1, "contradiction": 2}
@@ -160,6 +159,11 @@ if __name__ == "__main__":
         num_labels = len(label2id)
         print("Number of tokens: {}".format(num_tokens))
         print("Number of labels: {}".format(num_labels))
+
+    with open(args.model_save_filename + ".params", mode="w") as out_file:
+        json.dump(vars(args), out_file)
+        print("Params saved to: {}".format(args.model_save_filename + ".params"))
+
         with open(args.model_save_filename + ".index", mode="wb") as out_file:
             pickle.dump(
                 {
@@ -173,7 +177,8 @@ if __name__ == "__main__":
             print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses, train_img_names = load_vte_dataset(args.train_filename, token2id, label2id)
+    train_labels, train_premises, train_hypotheses, train_img_names = load_vte_dataset(args.train_filename, token2id,
+                                                                                       label2id)
 
     print("-- Loading development set")
     dev_labels, dev_premises, dev_hypotheses, dev_img_names = load_vte_dataset(args.dev_filename, token2id, label2id)
@@ -251,12 +256,11 @@ if __name__ == "__main__":
             batch_index = 1
             epoch_loss = 0
 
-            for start_idx in range(0, num_examples - args.batch_size + 1, args.batch_size):
-                batch_indexes = batches_indexes[start_idx:start_idx + args.batch_size]
-                batch_premises = train_premises[batch_indexes]
-                batch_hypotheses = train_hypotheses[batch_indexes]
-                batch_labels = train_labels[batch_indexes]
-                batch_img_names = [train_img_names[i] for i in batch_indexes]
+            for indexes in batch(batches_indexes, args.batch_size):
+                batch_premises = train_premises[indexes]
+                batch_hypotheses = train_hypotheses[indexes]
+                batch_labels = train_labels[indexes]
+                batch_img_names = [train_img_names[i] for i in indexes]
                 batch_img_features = image_reader.get_features(batch_img_names)
 
                 loss, _ = session.run([loss_function, train_step], feed_dict={
@@ -276,12 +280,11 @@ if __name__ == "__main__":
             dev_batches_indexes = np.arange(dev_num_examples)
             dev_num_correct = 0
 
-            for start_idx in range(0, dev_num_examples - args.batch_size + 1, args.batch_size):
-                dev_batch_indexes = dev_batches_indexes[start_idx:start_idx + args.batch_size]
-                dev_batch_premises = dev_premises[dev_batch_indexes]
-                dev_batch_hypotheses = dev_hypotheses[dev_batch_indexes]
-                dev_batch_labels = dev_labels[dev_batch_indexes]
-                dev_batch_img_names = [dev_img_names[i] for i in dev_batch_indexes]
+            for indexes in batch(dev_batches_indexes, args.batch_size):
+                dev_batch_premises = dev_premises[indexes]
+                dev_batch_hypotheses = dev_hypotheses[indexes]
+                dev_batch_labels = dev_labels[indexes]
+                dev_batch_img_names = [dev_img_names[i] for i in indexes]
                 dev_batch_img_features = image_reader.get_features(dev_batch_img_names)
                 predictions = session.run(
                     tf.argmax(logits, axis=1),

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Recognizing Visual Textual Entailment
+# Recognizing Visual Textual Entailment without Transfer Learning
 
 # Bowman et al. VSNLI train -> VSNLI test
 
@@ -8,6 +8,6 @@
 
 ~/python3 eval_vte_baseline.py --model_filename=checkpoints/vte/vsnli_train --test_filename=../datasets/snli_1.0/snli_1.0_test_filtered.tsv --img_names_filename=../../flickr30k-cnn/flickr30k/filenames_77512.json --img_features_filename=../../flickr30k-cnn/flickr30k/vgg_feats_77512.npy --result_filename=results/vte/vsnli_train_to_vsnli_test.txt
 
-# Bowman et al. VSNLI train -> VSICK
+# Bowman et al. VSNLI train -> VSICK2
 
-~/python3 eval_vte_baseline.py --model_filename=checkpoints/vte/vsnli_train --test_filename=../datasets/SICK/VSICK2/VSICK2.tsv --img_names_filename=../../flickr8k-cnn/flickr8k/filenames_77512.json --img_features_filename=../../flickr8k-cnn/flickr8k/vgg_feats_77512.npy --result_filename=results/vte/vsnli_train_to_VSICK.txt
+~/python3 eval_vte_baseline.py --model_filename=checkpoints/vte/vsnli_train --test_filename=../datasets/SICK/VSICK2/VSICK2.tsv --img_names_filename=../../flickr8k-cnn/flickr8k/filenames_77512.json --img_features_filename=../../flickr8k-cnn/flickr8k/vgg_feats_77512.npy --result_filename=results/vte/vsnli_train_to_VSICK2.txt

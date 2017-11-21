@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Recognizing Textual Entailment
+# Recognizing Textual Entailment  without Transfer Learning
 
 # Bowman et al. SNLI train -> SNLI test
 

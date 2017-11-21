@@ -1,9 +1,9 @@
+import atexit
 import json
 import pickle
 import random
 from argparse import ArgumentParser
 
-import atexit
 import numpy as np
 import tensorflow as tf
 from tensorflow.core.protobuf import saver_pb2
@@ -11,6 +11,7 @@ from tensorflow.core.protobuf import saver_pb2
 from dataset import load_te_dataset
 from logger import start_logger, stop_logger
 from train_te_baseline import build_te_baseline_model
+from utils import batch
 
 if __name__ == "__main__":
     random_seed = 12345
@@ -67,11 +68,10 @@ if __name__ == "__main__":
         test_batches_indexes = np.arange(test_num_examples)
         test_num_correct = 0
 
-        for start_idx in range(0, test_num_examples - params["batch_size"] + 1, params["batch_size"]):
-            test_batch_indexes = test_batches_indexes[start_idx:start_idx + params["batch_size"]]
-            test_batch_premises = test_premises[test_batch_indexes]
-            test_batch_hypotheses = test_hypotheses[test_batch_indexes]
-            test_batch_labels = test_labels[test_batch_indexes]
+        for indexes in batch(test_batches_indexes, params["batch_size"]):
+            test_batch_premises = test_premises[indexes]
+            test_batch_hypotheses = test_hypotheses[indexes]
+            test_batch_labels = test_labels[indexes]
             predictions = session.run(
                 tf.argmax(logits, axis=1),
                 feed_dict={

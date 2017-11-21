@@ -12,7 +12,7 @@ from dataset import load_te_dataset
 from embedding import load_glove, glove_embeddings_initializer
 from logger import start_logger, stop_logger
 from progress import Progbar
-from utils import AttrDict
+from utils import AttrDict, batch
 
 
 def build_te_baseline_model(premise_input,
@@ -239,11 +239,10 @@ if __name__ == "__main__":
             batch_index = 1
             epoch_loss = 0
 
-            for start_idx in range(0, num_examples - args.batch_size + 1, args.batch_size):
-                batch_indexes = batches_indexes[start_idx:start_idx + args.batch_size]
-                batch_premises = train_premises[batch_indexes]
-                batch_hypotheses = train_hypotheses[batch_indexes]
-                batch_labels = train_labels[batch_indexes]
+            for indexes in batch(batches_indexes, args.batch_size):
+                batch_premises = train_premises[indexes]
+                batch_hypotheses = train_hypotheses[indexes]
+                batch_labels = train_labels[indexes]
 
                 loss, _ = session.run([loss_function, train_step], feed_dict={
                     premise_input: batch_premises,
@@ -261,11 +260,11 @@ if __name__ == "__main__":
             dev_batches_indexes = np.arange(dev_num_examples)
             dev_num_correct = 0
 
-            for start_idx in range(0, dev_num_examples - args.batch_size + 1, args.batch_size):
-                dev_batch_indexes = dev_batches_indexes[start_idx:start_idx + args.batch_size]
-                dev_batch_premises = dev_premises[dev_batch_indexes]
-                dev_batch_hypotheses = dev_hypotheses[dev_batch_indexes]
-                dev_batch_labels = dev_labels[dev_batch_indexes]
+            for indexes in batch(dev_batches_indexes, args.batch_size):
+                dev_batch_premises = dev_premises[indexes]
+                dev_batch_hypotheses = dev_hypotheses[indexes]
+                dev_batch_labels = dev_labels[indexes]
+                print("blah blah blah")
                 predictions = session.run(
                     tf.argmax(logits, axis=1),
                     feed_dict={
@@ -274,6 +273,8 @@ if __name__ == "__main__":
                         dropout_input: 1.0
                     }
                 )
+                print("bloh bloh bloh")
+                print(predictions)
                 dev_num_correct += (predictions == dev_batch_labels).sum()
             dev_accuracy = dev_num_correct / dev_num_examples
             print("Current mean validation accuracy: {}".format(dev_accuracy))

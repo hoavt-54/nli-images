@@ -11,6 +11,7 @@ from tensorflow.core.protobuf import saver_pb2
 from dataset import ImageReader, load_vte_dataset
 from logger import start_logger, stop_logger
 from train_vte_baseline import build_vte_baseline_model
+from utils import batch
 
 if __name__ == "__main__":
     random_seed = 12345
@@ -43,7 +44,8 @@ if __name__ == "__main__":
         num_labels = len(label2id)
 
     print("-- Loading test set")
-    test_labels, test_premises, test_hypotheses, test_img_names = load_vte_dataset(args.test_filename, token2id, label2id)
+    test_labels, test_premises, test_hypotheses, test_img_names = load_vte_dataset(args.test_filename, token2id,
+                                                                                   label2id)
 
     print("-- Loading images")
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
@@ -76,12 +78,11 @@ if __name__ == "__main__":
         test_batches_indexes = np.arange(test_num_examples)
         test_num_correct = 0
 
-        for start_idx in range(0, test_num_examples - params["batch_size"] + 1, params["batch_size"]):
-            test_batch_indexes = test_batches_indexes[start_idx:start_idx + params["batch_size"]]
-            test_batch_premises = test_premises[test_batch_indexes]
-            test_batch_hypotheses = test_hypotheses[test_batch_indexes]
-            test_batch_labels = test_labels[test_batch_indexes]
-            batch_img_names = [test_img_names[i] for i in test_batch_indexes]
+        for indexes in batch(test_batches_indexes, params["batch_size"]):
+            test_batch_premises = test_premises[indexes]
+            test_batch_hypotheses = test_hypotheses[indexes]
+            test_batch_labels = test_labels[indexes]
+            batch_img_names = [test_img_names[i] for i in indexes]
             batch_img_features = image_reader.get_features(batch_img_names)
             predictions = session.run(
                 tf.argmax(logits, axis=1),
