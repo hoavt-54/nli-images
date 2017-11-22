@@ -27,13 +27,13 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 
 | train dataset | test dataset | Bowman et al. + images | V-BiMPM |
 |---------------|--------------|------------------------|---------|
-| VSNLI train   | VSNLI test   | 34.28                  | 87.19   |
-| VSNLI train   | VSICK2       | 24.81                  |         |
+| VSNLI train   | VSNLI test   |                        | 87.19   |
+| VSNLI train   | VSICK2       |                        |         |
 
 ### With transfer learning:
 
 | pre-train dataset | train dataset | test dataset | Bowman et al. | V-BiMPM |
 |-------------------|---------------|--------------|---------------|---------|
-| VSNLI train       | VSICK2 train  | VSICK2 test  | 66.13         |         |
+| VSNLI train       | VSICK2 train  | VSICK2 test  |               |         |
 
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference.".
