@@ -231,7 +231,7 @@ if __name__ == "__main__":
     best_epoch = None
     should_stop = False
 
-    with tf.Session() as session:
+    with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
         if not args.model_load_filename:
             session.run(tf.global_variables_initializer())
         else:

@@ -62,7 +62,7 @@ if __name__ == "__main__":
         params["rnn_hidden_size"]
     )
     saver = tf.train.Saver(write_version=saver_pb2.SaverDef.V1)
-    with tf.Session() as session:
+    with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
         saver.restore(session, args.model_filename + ".ckpt")
 
         print("-- Evaluating model")
