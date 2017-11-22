@@ -33,11 +33,11 @@ def extract_image_features(images_path):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--images_path", type=str, required=True)
+    parser.add_argument("--img_path", type=str, required=True)
     parser.add_argument("--img_names_filename", type=str, required=True)
     parser.add_argument("--img_features_filename", type=str, required=True)
     args = parser.parse_args()
-    img_names, img_features = extract_image_features(args.images_path)
+    img_names, img_features = extract_image_features(args.img_path)
     with open(args.img_names_filename, "w") as in_file:
         json.dump(img_names, in_file)
     np.save(args.img_features_filename, img_features)
