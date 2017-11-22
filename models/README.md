@@ -11,7 +11,7 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 |---------------|--------------|---------------|-------|
 | SNLI train    | SNLI test    | 78.67         | 86.39 |
 | SNLI train    | SICK test    | 52.26         | 39.93 |
-| SNLI train    | SICK2        | 56.86         | 31.33 |
+| SNLI train    | SICK2        | 56.86         | 56.49 |
 | SICK train    | SICK test    | 56.87         | 83.33 |
 
 ### With transfer learning:
@@ -28,7 +28,7 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 | train dataset | test dataset | Bowman et al. + images | V-BiMPM |
 |---------------|--------------|------------------------|---------|
 | VSNLI train   | VSNLI test   |                        | 87.19   |
-| VSNLI train   | VSICK2       |                        |         |
+| VSNLI train   | VSICK2       |                        | 60.57   |
 
 ### With transfer learning:
 
