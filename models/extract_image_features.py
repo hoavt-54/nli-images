@@ -3,7 +3,7 @@ import os
 from argparse import ArgumentParser
 
 import numpy as np
-from keras import Model
+from keras.models import Model
 from keras.applications import VGG16
 from keras.applications.imagenet_utils import preprocess_input
 from keras.preprocessing import image
@@ -15,14 +15,14 @@ def extract_image_features(images_path):
     img_names = []
     img_features = []
     files = os.listdir(images_path)
-    for file_index, file in enumerate(files):
+    for file_index, file in enumerate(files, 1):
         if os.path.splitext(file)[-1].lower() == ".jpg":
             img = image.load_img(os.path.join(images_path, file), target_size=(224, 224))
             x = image.img_to_array(img)
             x = np.expand_dims(x, axis=0)
             x = preprocess_input(x)
             fc7_features = model.predict(x).squeeze()
-            print("Reading file {} [{}/{}]".format(file, file_index, len(files)))
+            print("Processing file {} [{}/{}]".format(file, file_index, len(files)))
             img_names.append(file)
             img_features.append(fc7_features)
 
