@@ -114,7 +114,7 @@ if __name__ == "__main__":
     parser.add_argument("--max_vocab", type=int, default=300000)
     parser.add_argument("--embeddings_size", type=int, default=300)
     parser.add_argument("--train_embeddings", type=bool, default=True)
-    parser.add_argument("--img_features_size", type=int, default=512)
+    parser.add_argument("--img_features_size", type=int, default=4096)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
     parser.add_argument("--batch_size", type=int, default=128)
