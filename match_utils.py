@@ -693,6 +693,7 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
 
             if not image_with_hypothesis_only:
                 with tf.variable_scope('premise_image_matching'):
+                #with tf.variable_scope('hypothesis_image_matching', reuse=True):
                     (matching_vectors, matching_dim) = match_passage_with_image(image_features,image_features, full_img_rep, full_img_rep, image_mask,
                                 question_context_representation_fw, question_context_representation_bw, question_mask,
                                 MP_dim, context_lstm_dim, scope=None,img_dim=100,
@@ -703,6 +704,7 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
                     passage_aware_dim += matching_dim
 
                 with tf.variable_scope('image_premise_matching'):
+                #with tf.variable_scope('image_hypo_matching', reuse=True):
                     (matching_vectors, matching_dim) = match_passage_with_image( question_context_representation_fw, question_context_representation_bw,
                                 question_context_representation_fw[:,-1,:], question_context_representation_bw[:,0,:], question_mask,
                                 image_features, image_features, image_mask,
