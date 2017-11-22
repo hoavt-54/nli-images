@@ -15,8 +15,8 @@ from train_te_baseline import build_te_baseline_model
 from utils import batch
 
 if __name__ == "__main__":
-    os.environ["PYTHONHASHSEED"] = "0"
     random_seed = 12345
+    os.environ["PYTHONHASHSEED"] = str(random_seed)
     random.seed(random_seed)
     np.random.seed(random_seed)
     tf.set_random_seed(random_seed)
