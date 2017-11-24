@@ -104,5 +104,5 @@ if __name__ == "__main__":
         print("Mean test accuracy: {}".format(test_accuracy))
         cm = confusion_matrix(y_true, y_pred)
         classes = set(label2id.keys())
-        draw_confusion_matrix(cm, classes, args.result_filename + ".cm_unnormalized")
-        draw_confusion_matrix(cm, classes, args.result_filename + ".cm_normalized", normalized=True)
+        draw_confusion_matrix(cm, classes, args.result_filename + ".cm_unnormalized.png")
+        draw_confusion_matrix(cm, classes, args.result_filename + ".cm_normalized.png", normalized=True)
