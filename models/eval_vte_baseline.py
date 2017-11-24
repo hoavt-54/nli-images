@@ -15,8 +15,8 @@ from train_vte_baseline import build_vte_baseline_model
 from utils import batch
 
 if __name__ == "__main__":
-    os.environ["PYTHONHASHSEED"] = "0"
     random_seed = 12345
+    os.environ["PYTHONHASHSEED"] = str(random_seed)
     random.seed(random_seed)
     np.random.seed(random_seed)
     tf.set_random_seed(random_seed)
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     parser.add_argument("--img_names_filename", type=str, required=True)
     parser.add_argument("--img_features_filename", type=str, required=True)
     parser.add_argument("--result_filename", type=str, required=True)
-    parser.add_argument("--img_features_size", type=int, default=512)
+    parser.add_argument("--img_features_size", type=int, default=4096)
     args = parser.parse_args()
     start_logger(args.result_filename)
     atexit.register(stop_logger)
@@ -72,7 +72,7 @@ if __name__ == "__main__":
         params["rnn_hidden_size"]
     )
     saver = tf.train.Saver(write_version=saver_pb2.SaverDef.V1)
-    with tf.Session() as session:
+    with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
         saver.restore(session, args.model_filename + ".ckpt")
 
         print("-- Evaluating model")

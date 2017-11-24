@@ -98,8 +98,8 @@ def build_vte_baseline_model(premise_input,
 
 
 if __name__ == "__main__":
-    os.environ["PYTHONHASHSEED"] = "0"
     random_seed = 12345
+    os.environ["PYTHONHASHSEED"] = str(random_seed)
     random.seed(random_seed)
     np.random.seed(random_seed)
     tf.set_random_seed(random_seed)
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     parser.add_argument("--max_vocab", type=int, default=300000)
     parser.add_argument("--embeddings_size", type=int, default=300)
     parser.add_argument("--train_embeddings", type=bool, default=True)
-    parser.add_argument("--img_features_size", type=int, default=512)
+    parser.add_argument("--img_features_size", type=int, default=4096)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
     parser.add_argument("--batch_size", type=int, default=128)
@@ -231,7 +231,7 @@ if __name__ == "__main__":
     best_epoch = None
     should_stop = False
 
-    with tf.Session() as session:
+    with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
         if not args.model_load_filename:
             session.run(tf.global_variables_initializer())
         else:

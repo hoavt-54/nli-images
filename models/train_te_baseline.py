@@ -96,8 +96,8 @@ def build_te_baseline_model(premise_input,
 
 
 if __name__ == "__main__":
-    os.environ["PYTHONHASHSEED"] = "0"
     random_seed = 12345
+    os.environ["PYTHONHASHSEED"] = str(random_seed)
     random.seed(random_seed)
     np.random.seed(random_seed)
     tf.set_random_seed(random_seed)
@@ -215,7 +215,7 @@ if __name__ == "__main__":
     best_epoch = None
     should_stop = False
 
-    with tf.Session() as session:
+    with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
         if not args.model_load_filename:
             session.run(tf.global_variables_initializer())
         else:
@@ -266,7 +266,6 @@ if __name__ == "__main__":
                 dev_batch_premises = dev_premises[indexes]
                 dev_batch_hypotheses = dev_hypotheses[indexes]
                 dev_batch_labels = dev_labels[indexes]
-                print("blah blah blah")
                 predictions = session.run(
                     tf.argmax(logits, axis=1),
                     feed_dict={
@@ -275,8 +274,8 @@ if __name__ == "__main__":
                         dropout_input: 1.0
                     }
                 )
-                print("bloh bloh bloh")
                 print(predictions)
+                print(dev_batch_labels)
                 dev_num_correct += (predictions == dev_batch_labels).sum()
             dev_accuracy = dev_num_correct / dev_num_examples
             print("Current mean validation accuracy: {}".format(dev_accuracy))

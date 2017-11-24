@@ -17,8 +17,8 @@ from train_te_baseline import build_te_baseline_model
 from utils import batch, draw_confusion_matrix
 
 if __name__ == "__main__":
-    os.environ["PYTHONHASHSEED"] = "0"
     random_seed = 12345
+    os.environ["PYTHONHASHSEED"] = str(random_seed)
     random.seed(random_seed)
     np.random.seed(random_seed)
     tf.set_random_seed(random_seed)
@@ -64,7 +64,7 @@ if __name__ == "__main__":
         params["rnn_hidden_size"]
     )
     saver = tf.train.Saver(write_version=saver_pb2.SaverDef.V1)
-    with tf.Session() as session:
+    with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
         saver.restore(session, args.model_filename + ".ckpt")
 
         print("-- Evaluating model")

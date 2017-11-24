@@ -64,9 +64,11 @@ class ImageReader:
             img_names = json.load(in_file)
 
         with open(img_features_filename, mode="rb") as in_file:
-            img_features = np.load(in_file).reshape(-1, 7 * 7, 512)
+            # img_features = np.load(in_file).reshape(-1, 7 * 7, 512)
+            img_features = np.load(in_file)
 
         self._img_names_features = {filename: features for filename, features in zip(img_names, img_features)}
 
     def get_features(self, images_names):
-        return np.array([np.mean(self._img_names_features[image_name], 0) for image_name in images_names])
+        # return np.array([np.mean(self._img_names_features[image_name], 0) for image_name in images_names])
+        return np.array([self._img_names_features[image_name] for image_name in images_names])
