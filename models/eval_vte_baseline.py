@@ -7,7 +7,6 @@ from argparse import ArgumentParser
 
 import numpy as np
 import tensorflow as tf
-from tensorflow.core.protobuf import saver_pb2
 
 from dataset import ImageReader, load_vte_dataset
 from logger import start_logger, stop_logger
@@ -71,7 +70,7 @@ if __name__ == "__main__":
         params["train_embeddings"],
         params["rnn_hidden_size"]
     )
-    saver = tf.train.Saver(write_version=saver_pb2.SaverDef.V1)
+    saver = tf.train.Saver()
     with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
         saver.restore(session, args.model_filename + ".ckpt")
 
