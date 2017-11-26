@@ -7,14 +7,14 @@ import random
 from argparse import ArgumentParser
 
 import numpy as np
+import pandas as pd
 import tensorflow as tf
-from sklearn.metrics import confusion_matrix
 from tensorflow.core.protobuf import saver_pb2
 
 from dataset import load_te_dataset
 from logger import start_logger, stop_logger
 from train_te_baseline import build_te_baseline_model
-from utils import batch, draw_confusion_matrix
+from utils import batch
 
 if __name__ == "__main__":
     random_seed = 12345
@@ -102,7 +102,7 @@ if __name__ == "__main__":
                     y_pred.append(id2label[predictions[i]])
         test_accuracy = test_num_correct / test_num_examples
         print("Mean test accuracy: {}".format(test_accuracy))
-        cm = confusion_matrix(y_true, y_pred)
-        classes = set(label2id.keys())
-        draw_confusion_matrix(cm, classes, args.result_filename + ".cm_unnormalized.png")
-        draw_confusion_matrix(cm, classes, args.result_filename + ".cm_normalized.png", normalized=True)
+        y_true = pd.Series(y_true, name="Actual")
+        y_pred = pd.Series(y_pred, name="Predicted")
+        confusion_matrix = pd.crosstab(y_true, y_pred, margins=True)
+        confusion_matrix.to_csv(args.result_filename + ".confusion_matrix")
