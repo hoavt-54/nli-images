@@ -274,8 +274,6 @@ if __name__ == "__main__":
                         dropout_input: 1.0
                     }
                 )
-                print(predictions)
-                print(dev_batch_labels)
                 dev_num_correct += (predictions == dev_batch_labels).sum()
             dev_accuracy = dev_num_correct / dev_num_examples
             print("Current mean validation accuracy: {}".format(dev_accuracy))
