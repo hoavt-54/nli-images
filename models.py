@@ -28,8 +28,9 @@ class ModelGraph(object):
         # word embedding
         if with_word and word_vocab is not None: 
             self.in_question_words = tf.placeholder(tf.int32, [None, None]) # [batch_size, question_len]
-            self.in_passage_words = tf.placeholder(tf.int32, [None, None]) # [batch_size, passage_len]
-#             self.word_embedding = tf.get_variable("word_embedding", shape=[word_vocab.size()+1, word_vocab.word_dim], initializer=tf.constant(word_vocab.word_vecs), dtype=tf.float32)
+            self.in_passage_words  = tf.placeholder(tf.int32, [None, None]) # [batch_size, passage_len]
+            #self.emb_init          = tf.placeholder(tf.float32, shape=word_vocab.word_vecs.shape)
+            #self.word_embedding = tf.get_variable("word_embedding", shape=[word_vocab.size()+1, word_vocab.word_dim], initializer=tf.constant(word_vocab.word_vecs), dtype=tf.float32)
             word_vec_trainable = True
             cur_device = '/gpu:0'
             if fix_word_vec: 
@@ -38,7 +39,7 @@ class ModelGraph(object):
             with tf.device(cur_device):
                 self.word_embedding = tf.get_variable("word_embedding", trainable=word_vec_trainable, 
                                                   initializer=tf.constant(word_vocab.word_vecs), dtype=tf.float32)
-            #
+                #self.word_embedding = tf.Variable(self.emb_init, name="word_embedding",trainable=word_vec_trainable, dtype=tf.float32)
             in_question_word_repres = tf.nn.embedding_lookup(self.word_embedding, self.in_question_words) # [batch_size, question_len, word_dim]
             in_passage_word_repres = tf.nn.embedding_lookup(self.word_embedding, self.in_passage_words) # [batch_size, passage_len, word_dim]
             #print (in_question_word_repres)
@@ -633,10 +634,20 @@ class ModelGraph(object):
     def del_image_feats(self):
         del self.__image_feats
 
+    def get_emb_init(self):
+        return self.__emb_init
+
+    def set_emb_init(self, value):
+        self.__emb_init=value
+
+    def del_emb_init(self):
+        del self.__emb_init
+
     image_feats = property(get_image_feats, set_image_feats, del_image_feats, "image_features's docstring")
     question_lengths = property(get_question_lengths, set_question_lengths, del_question_lengths, "question_lengths's docstring")
     passage_lengths = property(get_passage_lengths, set_passage_lengths, del_passage_lengths, "passage_lengths's docstring")
     truth = property(get_truth, set_truth, del_truth, "truth's docstring")
+    emb_init = property(get_emb_init, set_emb_init, del_emb_init, "pretrained word embedding")
     in_question_words = property(get_in_question_words, set_in_question_words, del_in_question_words, "in_question_words's docstring")
     in_passage_words = property(get_in_passage_words, set_in_passage_words, del_in_passage_words, "in_passage_words's docstring")
     in_question_dependency = property(get_in_question_dependency, set_in_question_dependency, del_in_question_dependency, "in_question_dependency's docstring")
