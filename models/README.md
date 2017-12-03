@@ -27,7 +27,7 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 
 | train dataset | test dataset | Bowman et al. + images | V-BiMPM |
 |---------------|--------------|------------------------|---------|
-| VSNLI train   | VSNLI test   |                        | 86.99   |
+| VSNLI train   | VSNLI test   | 33.82                  | 86.99   |
 | VSNLI train   | VSICK2       |                        | 60.57   |
 
 ### With transfer learning:

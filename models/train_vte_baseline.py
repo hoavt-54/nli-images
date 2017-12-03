@@ -26,7 +26,8 @@ def build_vte_baseline_model(premise_input,
                              embeddings_size,
                              img_features_size,
                              train_embeddings,
-                             rnn_hidden_size):
+                             rnn_hidden_size,
+                             img_features_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -77,7 +78,12 @@ def build_vte_baseline_model(premise_input,
         dtype=tf.float32
     )
     # hypothesis_last = extract_axis_1(hypothesis_outputs, hypothesis_length - 1)
-    premise_hypothesis_img = tf.concat([premise_final_states.h, hypothesis_final_states.h, img_features_input], axis=1)
+    img_features_hidden = tf.contrib.layers.fully_connected(
+        img_features_input,
+        img_features_hidden_size,
+        activation_fn=tf.nn.tanh
+    )
+    premise_hypothesis_img = tf.concat([premise_final_states.h, hypothesis_final_states.h, img_features_hidden], axis=1)
     return tf.contrib.layers.fully_connected(
         tf.contrib.layers.fully_connected(
             tf.contrib.layers.fully_connected(
@@ -98,8 +104,8 @@ def build_vte_baseline_model(premise_input,
 
 
 if __name__ == "__main__":
-    os.environ["PYTHONHASHSEED"] = "0"
     random_seed = 12345
+    os.environ["PYTHONHASHSEED"] = str(random_seed)
     random.seed(random_seed)
     np.random.seed(random_seed)
     tf.set_random_seed(random_seed)
@@ -116,6 +122,7 @@ if __name__ == "__main__":
     parser.add_argument("--train_embeddings", type=bool, default=True)
     parser.add_argument("--img_features_size", type=int, default=4096)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
+    parser.add_argument("--img_features_hidden_size", type=int, default=200)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
@@ -206,7 +213,8 @@ if __name__ == "__main__":
             args.embeddings_size,
             args.img_features_size,
             args.train_embeddings,
-            args.rnn_hidden_size
+            args.rnn_hidden_size,
+            args.img_features_hidden_size
         )
         L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
         loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
@@ -231,7 +239,7 @@ if __name__ == "__main__":
     best_epoch = None
     should_stop = False
 
-    with tf.Session() as session:
+    with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
         if not args.model_load_filename:
             session.run(tf.global_variables_initializer())
         else:

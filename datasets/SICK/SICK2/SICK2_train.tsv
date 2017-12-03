@@ -1,0 +1,1203 @@
+neutral	A group of kids is playing in a yard and an old man is standing in the background	A group of boys in a yard is playing and a man is standing in the background	#
+entailment	The young boys are playing outdoors and the man is smiling nearby	The kids are playing outdoors near a man with a smile	#
+neutral	The young boys are playing outdoors and the man is smiling nearby	A group of kids is playing in a yard and an old man is standing in the background	#
+neutral	A brown dog is attacking another animal in front of the man in pants	Two dogs are fighting	#
+neutral	A brown dog is attacking another animal in front of the man in pants	Two dogs are wrestling and hugging	#
+neutral	A person is riding the bicycle on one wheel	A man in a black jacket is doing tricks on a motorbike	#
+entailment	A man with a jersey is dunking the ball at a basketball game	The ball is being dunked by a man with a jersey at a basketball game	#
+neutral	A man with a jersey is dunking the ball at a basketball game	A man who is playing dunks the basketball into the net and a crowd is in background	#
+neutral	The player is dunking the basketball into the net and a crowd is in background	A man with a jersey is dunking the ball at a basketball game	#
+neutral	Two people are kickboxing and spectators are watching	Two young women are not sparring in a kickboxing fight	#
+neutral	Two women are sparring in a kickboxing match	Two people are kickboxing and spectators are not watching	#
+neutral	Children in red shirts are playing in the leaves	Three kids are sitting in the leaves	#
+neutral	Children in red shirts are playing in the leaves	Three kids are jumping in the leaves	#
+neutral	Two people in snowsuits are lying in the snow and making snow angels	Two angels are making snow on the lying children	#
+neutral	Two children are lying in the snow and are making snow angels	Two people in snowsuits are lying in the snow and making snow angels	#
+entailment	People wearing costumes are gathering in a forest and are looking in the same direction	Masked people are looking in the same direction in a forest	#
+neutral	People wearing costumes are gathering in a forest and are looking in the same direction	People wearing costumes are scattering in a forest and are looking in different directions	#
+neutral	A little girl is looking at a woman in costume	People wearing costumes are scattering in a forest and are looking in different directions	#
+neutral	A little girl is looking at a woman in costume	People are looking at some costumes gathered in the vicinity of the forest	#
+neutral	People wearing costumes are gathering in a forest and are looking in the same direction	The little girl is looking at a man in costume	#
+neutral	People wearing costumes are gathering in a forest and are looking in the same direction	A little girl in costume looks like a woman	#
+entailment	A lone biker is jumping in the air	A biker is jumping in the air, alone	#
+contradiction	A man is jumping into an empty pool	A man is jumping into a full pool	#
+neutral	A man is jumping into an empty pool	The man's jumper is in the empty pool	#
+neutral	A lone biker is jumping in the air	A man is jumping into a full pool	#
+neutral	A lone biker is jumping in the air	A man is jumping into an empty pool	#
+neutral	A player is running with the ball	Two teams are competing in a football match	#
+contradiction	Five kids are standing close together and one kid has a gun	Five kids are standing close together and none of the kids has a gun	#
+neutral	A man is sitting in a field	A man is running in a field	#
+neutral	A person is wearing a hat and is sitting on the grass	A person is sitting in a field and is wearing a hat	#
+neutral	A man is sitting in a field	A person is wearing a hat and is sitting on the grass	#
+contradiction	A group of friends are riding the current in a raft	A group is not riding the current in a raft	#
+neutral	A group of friends are riding the current in a raft	This group of people is practicing water safety and wearing preservers	#
+contradiction	A deer is jumping over a fence	A deer isn't jumping over the fence	#
+contradiction	Several people are in front of a colorful building	Nobody is in front of the colorful building	#
+neutral	People are walking outside a building that has many murals on it	Nobody is in front of the colorful building	#
+neutral	A family is watching a little boy who is hitting a baseball	A family is watching a little boy who is missing a baseball	#
+neutral	A child is hitting a baseball	A family is watching a little boy who is missing a baseball	#
+neutral	A large group of Asian people is eating at a restaurant	Various customers are eating in a crowded restaurant with purple lights	#
+neutral	Various people are eating at red tables in a crowded restaurant with purple lights	A small group of people is waiting to eat in a restaurant	#
+contradiction	A motorcycle rider is standing up on the seat of a white motorcycle	No motorcycle rider is standing up on the seat of a motorcycle	#
+neutral	Two dogs are playing by a tree	A dog is catching a stick in the air and another is watching	#
+neutral	Two dogs are playing by a tree	There is no dog leaping in the air	#
+neutral	Two dogs are playing by a tree	A dog is leaping high in the air and another is watching	#
+neutral	A girl in white is dancing	The dancer is dancing in front of the sound equipment	#
+neutral	A girl in white is dancing	The blond girl is dancing behind the sound equipment	#
+neutral	The blond girl is dancing in front of the sound equipment	There is no girl in white dancing	#
+contradiction	Three Asian kids are dancing and a man is looking	Three Asian kids are dancing and there is no man looking	#
+neutral	Three Asian kids are dancing and a man is looking	An Asian man is dancing and three kids are looking	#
+neutral	The children of a family are playing and waiting	Three Asian kids are dancing and a serious man is looking	#
+neutral	A woman is wearing an Egyptian headdress	A woman is wearing an Indian headdress	#
+contradiction	A hiker is on top of the mountain and is dancing	There is no hiker dancing on top of the mountain	#
+neutral	A hiker is on top of the mountain and is dancing	A man is on a rock high above some trees and is standing in an uncomfortable position	#
+neutral	A hiker is on top of the mountain and is dancing	There is no man on a rock high above some trees standing in a strange position	#
+neutral	A man is on a rock high above some trees and is standing in a strange position	A hiker is on top of the mountain and is doing a joyful dance	#
+contradiction	The brown horse is near a red barrel at the rodeo	The brown horse is far from a red barrel at the rodeo	#
+neutral	A cowgirl is riding a horse and corners a barrel	The brown horse is near a red barrel at the rodeo	#
+neutral	A boy is standing in the water	The kid is swimming through the blue ocean	#
+neutral	The boy is wading through the blue ocean	A boy is standing in the cold water	#
+contradiction	A man is playing a guitar on stage	There is no man playing a guitar on stage	#
+neutral	A man is playing a guitar on stage	A guitarist has blonde and flyaway hair	#
+neutral	A man is playing a guitar on stage	A bald person is playing a guitar	#
+neutral	Several children are sitting down and have their knees raised	Several children are lying down and are raising their knees	#
+contradiction	A nude lady is walking in front of a crowd in body paint	There is no lady walking in body paint in front of a crowd 	#
+neutral	A nude lady is walking in front of a crowd in body paint	A nude crowd in body paint is walking in front of a lady 	#
+entailment	A young, topless woman is covered in paint	A topless girl is covered in paint	#
+entailment	A nude lady is walking in front of a crowd in body paint	A topless girl is covered in paint	#
+neutral	A nude lady is walking in front of a crowd in body paint	A young, topless woman is covered in paint	#
+contradiction	A crowd of people is near the water	A crowd of people is far from the water	#
+entailment	A group of children in uniforms is standing at a gate and one is kissing the mother	A group of children wearing the same clothes is waiting at a gate and one is kissing the mother	#
+neutral	A man is in a parking lot and is playing tennis against a large wall	A man is in a parking lot and is playing tennis against a friend	#
+neutral	A man is in a parking lot and is playing tennis against a large wall	There is no man pointing at a car	#
+entailment	A group of people is on a beach	A group of people is near the sea	#
+neutral	A group of people is on a beach	A group of people is on a mountain	#
+entailment	A man, a woman and two girls are walking on the beach	Four people are walking on the beach	#
+neutral	A group of people is on a beach	Four people are walking on the beach	#
+neutral	A man, a woman and two girls are walking on the beach	A group of people is on a mountain	#
+entailment	A man, a woman and two girls are walking on the beach	A group of people is on a beach	#
+neutral	A girl with a black bag is on a crowded train	A cramped black train is on the bag of a girl	#
+neutral	A girl with a black bag is on a crowded train	An Asian woman in a crowd is not carrying a black bag	#
+entailment	A dog is chasing another and is holding a stick in its mouth	A dog is chasing another and is holding a piece of wood in its mouth	#
+neutral	Two dogs are running and carrying an object in their mouths	A dog is chasing a stick and holding another dog in its mouth	#
+entailment	A dog is chasing another and is holding a stick in its mouth	Two dogs are running and carrying an object in their mouths	#
+neutral	A soccer ball is rolling into a goal net	A soccer player is kicking a ball out of the goal	#
+neutral	A soccer ball is rolling into a goal net	A soccer player is kicking a ball into the goal	#
+contradiction	A man is sitting on a chair and rubbing his eyes	There is no man sitting on a chair and rubbing his eyes	#
+entailment	A man with tattoos is lounging on a couch and holding a pencil	A tattooed man is on a sofa and is holding a pencil	#
+neutral	A man with tattoos is lounging on a couch and holding a pencil	A man with tattoos is lounging on a couch and is looking for a pencil	#
+neutral	A man is sitting on a chair and rubbing his eyes	A man with tattoos is lounging on a couch and is looking for a pencil	#
+neutral	A man with tattoos is lounging on a couch and holding a pencil	There is no man sitting on a chair and rubbing his eyes	#
+neutral	A man with tattoos is lounging on a couch and holding a pencil	A man is sitting on a chair and rubbing his eyes	#
+neutral	A brown and white dog is running through the tall grass	A black and tan dog is running through the low and green grass	#
+entailment	A white and tan dog is running through the tall and green grass	A brown and white dog is running through the tall grass	#
+contradiction	A man is sitting near a bike and is writing a note	There is no man writing a note near a bike	#
+neutral	A man is wearing clothes that are covered with paint and is sitting outside in a busy area writing something	A man is standing near a bike and is writing on a piece paper	#
+neutral	A man is sitting near a bike and is writing a note	A man with paint covered clothes is sitting outside in a busy area writing something	#
+entailment	Some people are walking	People are walking	#
+neutral	Some people are walking	A group of scouts are camping in the grass	#
+entailment	A group of scouts are hiking through the grass	Some people are walking	#
+neutral	Two men are taking a break from a trip on a snowy road	Two men are breaking into a car during a trip on a snowy road	#
+neutral	Two men with bikes are on the side of a snowy road	Two men with cars are on the side of a snowy road	#
+neutral	Two men are holding fishing poles	Two men are standing near the water and are holding tools used for fishing	#
+neutral	A woman is performing a trick on a ramp with a bicycle	A woman is jumping with a bicycle	#
+neutral	A woman is performing a trick on a ramp with a bicycle	A woman is performing a trick on a ramp with a car	#
+neutral	The helmeted girl is perching on a bike	A woman is performing a trick on a ramp with a car	#
+neutral	A woman is performing a trick on a ramp with a bicycle	The helmeted girl is perching on a bike	#
+neutral	A lady is surfing and riding a wave	A boy is surfing and riding a wave	#
+neutral	A lady is surfing and riding a wave	A blonds girl is surfing	#
+contradiction	Two children and an adult are standing next to a tree limb	Two children and an adult are not standing next to a tree limb	#
+neutral	Two children and an adult are standing next to a tree limb	Two children are climbing a tree	#
+neutral	Two children and an adult are standing next to a tree limb	Two children are hanging on a large branch	#
+neutral	A man dressed in black is riding a bike	A man is performing a trick on a bike	#
+neutral	A laughing child is holding a water gun and getting sprayed with water	A child with a gun that sprays water is laughing and getting hit by other boys	#
+neutral	Two daschunds are playing with a red ball	Two dogs are playing with a small red ball	#
+neutral	Two brown dogs are fighting over a red ball and are playing in the grass	Two dogs are playing with a small red ball	#
+entailment	The black and white dog is running and a person stands behind it	The dog, which is black and white, is running and a person stands behind it	#
+neutral	The black and white dog is running and a person stands behind it	A little dog is sprinting and the person who owns it is trying to catch it	#
+neutral	The black and white dog is running and a person stands behind it	A little dog is slowing down and the owner is quitting chasing it	#
+entailment	A man wearing a dyed black shirt is sitting at the table and laughing	A black shirt is being worn by a man who is sitting at the table and laughing	#
+contradiction	A man wearing a dyed black shirt is sitting at the table and laughing	There is no man wearing a shirt dyed black, sitting at the table and laughing	#
+neutral	A man is sitting comfortably at a table	A man wearing a dyed black shirt is sitting at the table and laughing	#
+entailment	A woman who is wearing a pink boa is riding a bicycle down a bridge built for pedestrians	A woman who is wearing a pink scarf is riding a bike down a bridge built for pedestrians	#
+neutral	A woman who is wearing a pink boa is riding a bicycle down a bridge built for pedestrians	The woman wearing silver pants, pink bellbottoms and a pink scarf isn't riding a bike	#
+neutral	A woman who is wearing a pink boa is riding a bicycle down a bridge built for pedestrians	The woman wearing silver pants, pink bellbottoms and a pink scarf is riding a bike	#
+neutral	A biker is wearing gear which is black	There is no man wearing a black helmet and pushing a bicycle	#
+neutral	One man is wearing a black helmet and pushing a bicycle	A biker is naked	#
+entailment	The man in a grey t-shirt is sitting on a rock in front of the waterfall	The man in a t-shirt dyed grey is sitting on a rock in front of a waterfall	#
+contradiction	The man in a grey t-shirt is sitting on a rock in front of the waterfall	There is no man in a grey t-shirt sitting on a rock in front of the waterfall	#
+neutral	A woman is sitting and looking at the waterfall	A rocker is sitting with a t-shirt that has a man over a grey waterfall on the front	#
+contradiction	A dog, which is brown, and a black one are running in the grass	There is no dog running in the grass	#
+neutral	A dark black dog and a light brown dog are playing in the backyard	A black man is running in brown grass and racing a dog	#
+entailment	A white and brown dog is walking through the water with difficulty	A white and brown dog is pacing through the water with difficulty	#
+neutral	The children are playing in front of a large door	A group of boys are quiet in front of a large door made of wood	#
+neutral	A black, red, white and pink dress is being worn by a woman	A woman is taking off a cloak, which is very large, and revealing extravagant apparel	#
+neutral	A woman is taking off a cloak, which is very large, and revealing an extravagant dress	A black, red, white and pink dress is being worn by a woman	#
+entailment	A young lady with light brown hair is wearing a red necklace, a sweatshirt and earrings and is smiling	A lady of young age, with light brown hair, is wearing a red necklace, a sweatshirt and earrings and is smiling	#
+contradiction	A young lady with light brown hair is wearing a red necklace, a sweatshirt and earrings and is smiling	There is no young lady with light brown hair wearing a red necklace, a sweatshirt and earrings and smiling	#
+neutral	A young lady with light brown hair is wearing a red necklace, a sweatshirt and earrings and is smiling	A red sweatshirt with a smiling lady upon it is suited to be worn with light brown hair, earrings and a necklace 	#
+neutral	A young lady with light brown hair is wearing a red necklace, a sweatshirt and earrings and is smiling	The teenage girl is wearing beads that are red	#
+neutral	A fearful little boy is on a climbing wall	A fearful little boy is on the ground	#
+neutral	A boy is climbing up a wall artificially built for climbing and is attached to a rope	A climbing boy rescues the fearful cat from over the wall	#
+neutral	A fearful little boy is on a climbing wall	A boy is effortlessly climbing up a wall artificially built for climbing and is attached to a rope	#
+neutral	A boy is climbing up a wall artificially built for climbing and is attached to a rope	A fearful little boy is on a climbing wall	#
+entailment	The man is tossing a kid into the swimming pool that is near the ocean	One man is tossing a kid into the swimming pool that is near the ocean	#
+neutral	The man is tossing a kid into the swimming pool that is near the ocean	A kid swimming in the ocean is tossing a coin into the pool, near the man	#
+neutral	A father is launching the daughter in a swimming pool	The man is tossing a kid into the swimming pool that is near the ocean	#
+neutral	One man is climbing a cliff with a rope	A person is standing in front of a rock with a rope, which is pink	#
+entailment	A person is climbing a rock with a rope, which is pink	One man is climbing the cliff with a rope	#
+neutral	A person is climbing a rock with a rope, which is pink	One man is descending a cliff with a rope	#
+neutral	A person is climbing a rock with a rope, which is pink	A social climber is tying a man to a cliff with a rope	#
+entailment	A young child is climbing a rock climbing wall which is indoors	A young kid is climbing a rock climbing wall which is indoors	#
+neutral	A young child is climbing a rock climbing wall which is indoors	A child is indoors watching a program about some young climbers on a rock wall.	#
+contradiction	The cyclist is performing a trick in the air	The cyclist isn't performing a trick in the air	#
+neutral	One man is doing a bicycle trick in midair	The cyclist isn't performing a trick in the air	#
+neutral	One man is doing a bicycle trick in midair	The air is tricking a performing cyclist	#
+entailment	A dog, which is black, and a white one are staring at each other in the street	A dog, which is black, and another one, which is white, are staring at each other in the street	#
+neutral	A dog, which is black, and a white one are staring at each other in the street	One white dog is staring at the black street	#
+contradiction	Two dogs of different breeds are looking at each other across a street	There are no dogs of different breeds looking at each other across a street	#
+neutral	A dog next to a tree, which is probably a pine, is biting a bucket	A dog in a bucket is biting a tree which is probably a pine	#
+contradiction	A dog which is furry and black is in a back yard and is carrying a basket in its mouth	There is no dog which is furry and black in a back yard carrying a basket in its mouth.	#
+neutral	A dog next to a tree, which is probably a pine, is biting a bucket	There is no dog which is furry and black in a back yard carrying a basket in its mouth.	#
+neutral	A dog which is furry and black is in a back yard and is carrying a basket in its mouth	A dog next to a tree, which is probably a pine, is dropping a bucket	#
+contradiction	Two large persons are sitting on a park bench and they have a bottle of soda between them	Two large persons are standing near a park bench and they have nothing between them	#
+neutral	A man and a woman are sitting comfortably on the bench	Two persons of large size are sitting on a park bench and they have a bottle of soda between them	#
+neutral	A few men in a competition are running outside	One man is leading the race	#
+neutral	A few men in a competition are running outside	A man is leading the race	#
+contradiction	A man with a camera is studying the subject	There is no man with a camera studying the subject	#
+neutral	A man with a camera is studying the subject	The study subject is a camera man	#
+neutral	A man with a camera is studying the subject	The man in the purple hat isn't operating a camera that makes videos	#
+neutral	The man in the purple hat is operating a camera that makes videos	The subject is being studied by a man with a camera	#
+neutral	The man in the purple hat is operating a camera that makes videos	There is no man with a camera studying the subject	#
+neutral	The man in the purple hat is operating a camera that makes videos	A man with a camera is studying the subject	#
+neutral	A married couple is walking down the aisle	The bride is leaving the groom after the wedding	#
+neutral	A married couple is walking down the aisle	The bride and the groom are leaving after the wedding	#
+entailment	The presentation is being watched by a classroom of students	The presentation is being attended by a classroom of students	#
+neutral	The presentation is being watched by a classroom of students	A classroom is empty	#
+neutral	A boy on a hill covered in snow is wearing a red jacket and a black hat and is sliding on his knees	A boy at the bottom of a hill covered in snow is naked and is sitting on his knees	#
+neutral	A boy on a hill covered in snow is wearing a red jacket and a black hat and is sliding on his knees	A boy on a red and black slide is wearing a jacket and a hat and has knees which are covered in snow	#
+entailment	A boy on a hill covered in snow is wearing a red jacket and a black hat and is sliding on his knees	The kid is still in the snow	#
+neutral	The kid is sliding in the snow	A boy at the bottom of a hill covered in snow is naked and is sitting on his knees	#
+contradiction	The dog is snapping at some droplets of water	The dog isn't snapping at some droplets of water	#
+neutral	A dog is excitedly playing with water in the grass	A snap is depicting some water falling in droplets on the dog	#
+neutral	The dog is snapping at some droplets of water	There is no dog excitedly playing with water in the grass	#
+neutral	The dog is snapping at some droplets of water	A dog is excitedly playing with water in the grass	#
+entailment	Two people are in the snow, wearing clothes that provide camouflage	Some people are in the snow, wearing clothes that provide camouflage	#
+neutral	Two people are in the snow, wearing clothes that provide camouflage	Two men are walking two dogs with golden coats in the snow	#
+neutral	Two people are in the snow, wearing clothes that provide camouflage	Two people are walking two dogs with golden coats in the snow	#
+neutral	A person in biking gear is standing steadily in front of some mountains 	The mountain gear is steadily placed in front of the standing biker	#
+neutral	A man with equipment used for climbing is hanging from a white, vertical rock.	A man with equipment used for climbing is under a vertical, white rock	#
+neutral	A woman with a ponytail is climbing a wall of rock	A woman is tailing a pony near a rock climbing wall	#
+neutral	A man with equipment used for climbing is hanging from a white, vertical rock.	A woman with pigtails is climbing a rock wall	#
+neutral	A woman with a ponytail is climbing a wall of rock	The climbing equipment to rescue a man is hanging from a white, vertical rock	#
+neutral	A man with equipment used for climbing is hanging from a white, vertical rock.	A woman with a ponytail is climbing a wall of rock	#
+neutral	A black and a white dog are joyfully running on the grass	A black person in white is joyfully running with the dog on the grass	#
+contradiction	A lot of people are in an ice skating park	Not a lot of people are in an ice skating park	#
+neutral	An ice skating rink placed outdoors is full of people	An ice skater is outdoors performing on a rink full of people	#
+neutral	A lot of people are in an ice skating park	An ice skater is outdoors performing on a rink full of people	#
+contradiction	An ice skating rink placed outdoors is full of people	There aren't many people in the ice skating park	#
+entailment	An ice skating rink placed outdoors is full of people	A lot of people are in an ice skating park	#
+entailment	The girl in the blue and white uniform is cheering	Some cheers are being performed by the girl in the blue and white uniform	#
+neutral	The girl in the blue and white uniform is cheering	A girl in a uniform, which is blue, is lowering her arm	#
+neutral	A girl in a uniform, which is blue, is raising her arm.	The girl in the blue and white uniform is cheering	#
+entailment	People are on a beach full of sand by the ocean and are enjoying a sunny day	People are on a beach full of sand by the ocean and are enjoying a day full of sun	#
+entailment	People are on a beach full of sand by the ocean and are enjoying a sunny day	A bunch of people is on the shore	#
+neutral	The man is doing a wheelie with a motorcycle on ground which is mostly barren	The man is on ground which is mostly barren, filming a wheelie done with a motorcycle.	#
+neutral	A man in a blue jumpsuit is courageously performing a wheelie on a motorcycle	The man is getting off a motorcycle onto ground which is mostly barren	#
+neutral	The man is doing a wheelie with a motorcycle on ground which is mostly barren	A courageous performer is doing a wheelie with a motorcycle over a man in a blue jumpsuit	#
+neutral	Two people are kissing near a crowd	A lady is being kissed by a man	#
+neutral	Two people are kissing near a crowd	A woman is being kissed by a man	#
+contradiction	The young girl is blowing a bubble that is huge	The young girl is blowing a bubble that is very small	#
+neutral	The young girl is blowing a bubble that is huge	The girl in a dyed red shirt isn't blowing a bubble	#
+neutral	A young child is wearing green boots and playing in a puddle full of mud	Some green boots in a puddle full of mud are targeted by a playful young child wearing a scarf	#
+neutral	A young child is wearing green boots and playing in a puddle full of mud	A little boy is jumping into a puddle in the street	#
+neutral	A little boy is jumping into a puddle on the street	A young child is wearing boots made of green rubber and playing in a puddle full of mud	#
+entailment	Two young kids are eating corndogs	Two young children are eating corndogs	#
+entailment	Two toddlers are eating corndogs in a wagon, which is really small	Two young children are eating corndogs	#
+entailment	Two toddlers are eating corndogs in a wagon, which is really small	Two young kids are eating corndogs	#
+entailment	A man in a shirt dyed purple is looking at a man in a black shirt who is doing a funny face	A man in a shirt dyed purple is looking at a man in a black shirt who is doing a face which looks funny	#
+neutral	A man in a shirt dyed purple is looking at a man in a black shirt who is doing a funny face	A man in a purple shirt is dying another shirt black, which has a man looking at a dog doing a funny face painted on it.	#
+neutral	A man in a shirt dyed purple is looking at a man in a black shirt who is doing a funny face	There is no man in a pose being watched by another man	#
+neutral	A man doing a pose is being watched by another man	A man in a shirt dyed purple is walking away from a man in a black shirt, who is serious	#
+entailment	A horse is tossing the cowboy wearing pants of blue and red color	The cowboy in blue and red pants is being tossed by a horse	#
+neutral	A horse is tossing the cowboy wearing pants of blue and red color	The cowboy is tossing the blue and red pants towards the horse	#
+neutral	A man is falling off a horse on a track and is laid in the wild	The cowboy is tossing the blue and red pants towards the horse	#
+neutral	A man is falling off a horse on a track and is laid in the wild	A horse is tossing the cowboy wearing pants of blue and red color	#
+entailment	The man and the boy are standing at the bottom of the stairs, which are outdoors	A man and a boy are standing at the bottom of some stairs, which are outdoors	#
+neutral	The man and the boy are standing at the bottom of the stairs, which are outdoors	The man is standing outdoor and the boy is falling over the bottom of the stairs	#
+neutral	An adult is in the amphitheater and is talking to a boy	The man is standing outdoor and the boy is falling over the bottom of the stairs	#
+neutral	The man and the boy are standing at the bottom of the stairs, which are outdoors	An adult is in the amphitheater and is talking to a boy	#
+neutral	A boy in a red shirt is in front of a long blue wall and is suspiciously raising an eyebrow at the camera	A boy in a red shirt is behind a long blue wall and is lowering an eyebrow, facing the camera	#
+neutral	A boy in a red shirt is in front of a long blue wall and is suspiciously raising an eyebrow at the camera	There is no boy standing in front of the blue building in the space reserved for handicapped people	#
+neutral	A boy in a red shirt is in front of a long blue wall and is suspiciously raising an eyebrow at the camera	A boy is standing in front of the blue building in the space reserved for handicapped people	#
+neutral	The Jockeys are racing horses on the field, which is completely green	The Jockeys are slowing down their horses on the field, which is completely green	#
+neutral	Some horses are racing furiously over the green grass and jumping an obstacle	The Jockeys are slowing down their horses on the field, which is completely green	#
+neutral	Some horses are racing furiously over the green grass and jumping an obstacle	The green field for horse races is completely full of Jockeys	#
+entailment	A woman is wearing sunglasses of large size and is holding newspapers in both hands	The woman is wearing sunglasses of large size and is holding newspapers in both hands	#
+contradiction	A woman is wearing sunglasses of large size and is holding newspapers in both hands	There is no woman wearing sunglasses of large size and holding newspapers in both hands	#
+neutral	An old woman is wearing a rose patterned shirt and is clumsily carrying two newspapers	The woman is wearing sunglasses of large size and is holding newspapers in both hands	#
+neutral	An old woman is wearing a rose patterned shirt and is clumsily carrying two newspapers	There is no woman wearing sunglasses of large size and holding newspapers in both hands	#
+neutral	An old woman is wearing a rose patterned shirt and is clumsily carrying two newspapers	A woman is wearing sunglasses of large size and is holding newspapers in both hands	#
+neutral	The snowboarder is leaping over white snow	A leap over white snow is greatly appealing to the snowboarders	#
+entailment	The snowboarder is leaping over white snow	A person who is practicing snowboarding jumps into the air	#
+contradiction	A dog is near the red ball in the air	A dog is far from the red ball in the air	#
+neutral	A dog, which is small, is playing on the green grass	A dog, which is small, is running out of the green grass	#
+neutral	A dog, which is small, is playing on the green grass	A small kid is playing with a green toy dog on the grass	#
+neutral	A dog is near the red ball in the air	A small kid is playing with a green toy dog on the grass	#
+neutral	A dog, which is small, is playing on the green grass	A dog is near a ball colored in red, which is in the air	#
+neutral	A dog is near the red ball in the air	A dog, which is small, is playing on the green grass	#
+neutral	The person is riding a motorbike on a sandy track	A man is riding a motorbike in the event related to motocross	#
+neutral	A person is riding a motorbike in the event related to motocross	The person isn't riding a motorbike on a sandy track	#
+contradiction	The young girl with a pink shirt is peacefully lying on the grass	The young girl with a pink shirt isn't peacefully lying on the grass	#
+neutral	A girl is wearing a pink shirt with white writing on it and is lying in the grass	The young girl with a shirt dyed pink is peacefully lying on the grass	#
+neutral	The young girl with a pink shirt is peacefully lying on the grass	A girl is naked and is standing on the grass	#
+neutral	A large dog is running on the grass with a tennis ball in its mouth	A large tennis ball is being used to teach a dog to run in the grass and catch it with its mouth	#
+neutral	A dog, which is large and gray, is carrying a ball in its mouth and running across the grass	A large, gray ball is hitting a running dog, which is carrying some grass in its mouth	#
+neutral	A large dog is running on the grass with a tennis ball in its mouth	A dog, which is large and gray, is difficultly carrying a ball in its mouth and running across the grass	#
+neutral	A dog, which is large and gray, is carrying a ball in its mouth and running across the grass	A dog of large size is running on the grass with a tennis ball in its mouth	#
+neutral	A dog, which is large and gray, is carrying a ball in its mouth and running across the grass	There is no large dog running on the grass with a tennis ball in its mouth	#
+entailment	A dog, which is large and gray, is carrying a ball in its mouth and running across the grass	A large dog is running on the grass with a tennis ball in its mouth	#
+entailment	The man is standing on a rocky mountain and gray clouds are in the background	The man is standing on a mountain, which is rocky, and gray clouds are in the background	#
+neutral	A topless person with a back pack is in front of a pile of rocks and clouds are in the background	A fully dressed person is behind a pile of rocks and a clear sky is in the background	#
+neutral	The man is standing on a rocky mountain and gray clouds are in the background	A fully dressed person is behind a pile of rocks and a clear sky is in the background	#
+neutral	The man is standing on a rocky mountain and gray clouds are in the background	A black topless person is packing a pile of rocks and a front of clouds are in the background	#
+neutral	A dog is catching a ball	A dog is furiously chasing a ball through dirt	#
+entailment	A dog is chasing a ball through dirt	A dog is catching a ball	#
+contradiction	A blond child is holding a yellow bottle	There is no blond child holding a yellow bottle	#
+neutral	A blond child is holding a yellow bottle	A boy has a blue face and dirt on the shirt	#
+contradiction	The man in a cowboy hat is walking through a market and is putting a hand in his pocket	The man in a cowboy hat is not walking through a market and is not putting a hand in his pocket	#
+neutral	A man in a hat is walking through a store	The man in a cowboy hat is not walking through a market and is not putting a hand in his pocket	#
+neutral	A man in a hat is walking through a store	The man in a cowboy hat is walking through a market and is putting a hand in his pocket	#
+entailment	A large white crane is flying near the water	A crane, which is large and white, is flying near the water	#
+neutral	A large white crane is flying near the water	A white bird is swiftly taking off from the water	#
+neutral	A white bird is landing swiftly in the water	A crane, which is large and white, is flying near the water	#
+entailment	A dog with golden fur is in the water	A dog with a golden coat is in the water	#
+neutral	A dog with golden fur is in the water	A brown dog is calmly standing in the water	#
+entailment	The girl is carrying a sign and a group of people is following her	The girl is carrying a sign and is being followed by a group of people	#
+contradiction	The girl is carrying a sign and a group of people is following her	The girl is not carrying a sign and no group of people is following her	#
+neutral	A man in a big city is holding a sign and begging for money	A man in a small city is doing charity work	#
+entailment	A homeless man is holding up a sign and is begging for money	A homeless man is holding up a sign and is pitifully begging for money	#
+neutral	A man in a big city is holding a sign and begging for money	A homeless man is putting down a sign and refusing some charity	#
+neutral	A homeless man is holding up a sign and is begging for money	A man in a small city is doing charity work	#
+entailment	A dog is chasing the tail of an animal in the grass	The tail of an animal is being chasing by a dog in the grass	#
+neutral	A small dog is chasing a large brown cow	The tail of an animal is being chasing by a dog in the grass	#
+neutral	A small dog is chasing a large brown cow	A dog is walking away from the tail of an animal in the grass	#
+contradiction	The small child is wading through the water and is being guided by another person	The small child is not wading through the water and is not being guided by another person	#
+contradiction	A young child is splashing in the water	There is no young child splashing in the water	#
+neutral	The small child is wading through the water and is being guided by another person	A young child is watering a plant with splashes	#
+neutral	The small child is wading through the water and is being guided by another person	A young child is splashing in the water	#
+entailment	A woman is looking curiously at a man	A man is being curiously looked at by a woman	#
+neutral	A woman is looking curiously at a man	A man and a woman are outside and are wearing light colored shirts	#
+neutral	A woman is looking curiously at a man	A man and a woman are in a beige room, wearing dark colored shirts and a monitor is in the background	#
+neutral	A brown dog is staring attentively at a brown and white dog	The little dog is grabbing the bedroom slipper with its mouth funnily	#
+neutral	A brown dog is staring attentively at a brown and white dog	The little dog is dropping the bedroom slipper from its mouth	#
+entailment	A person in a blue jacket is jumping off of a tall cement wall	A person in a blue colored jacket is jumping off of a tall cement wall	#
+neutral	A person in a blue jacket is jumping off of a tall cement wall	The man is not performing a large jump	#
+neutral	A woman in jeans is sitting on the saddle of a horse	A woman in jeans is standing near a horse with a saddle	#
+contradiction	A person wearing jeans is sitting on top of a horse saddle	There is no person wearing jeans sitting on top of a horse saddle	#
+entailment	A woman in jeans is sitting on the saddle of a horse	A person wearing jeans is sitting on top of a horse saddle	#
+entailment	The brown dogs are playfully fighting on the sandy beach	The brown dogs are playfully fighting on the sandy shore	#
+contradiction	The brown dogs are playfully fighting on the sandy beach	The brown dogs are not playfully fighting on the sandy beach	#
+neutral	A man is standing beside a large and colorful birdcage	The man is sitting next to a birdcage	#
+neutral	A brown and black dog is running through the leaves	A dog and a black man are running through brown leaves	#
+neutral	A dog in a colored coat is running across the yard	A dog in the yard is running across colored coats	#
+neutral	A brown and black dog is running through the leaves	There is no dog in a colored coat running across the yard	#
+neutral	A dog in a colored coat is running across the yard	A dog and a black man are running through brown leaves	#
+neutral	A black and white dog is holding a baseball in its mouth	A black and white dog is dropping a baseball from its mouth	#
+neutral	A black and white dog is holding a baseball in its mouth	A brown and white dog is holding a baseball in its mouth	#
+entailment	A boy wearing red shorts is jumping into a paddling pool	A kid wearing red shorts is jumping into a paddling pool	#
+neutral	A boy wearing red shorts is jumping into a paddling pool	A young boy wearing a red swimsuit is jumping out of a blue kiddies pool	#
+entailment	A group of racing dogs is wearing striped uniforms and is running down a track	A group of dogs bred for racing is wearing striped uniforms and is running down a track	#
+contradiction	A group of racing dogs is wearing striped uniforms and is running down a track	There is no group of racing dogs wearing striped uniforms and running down a track	#
+neutral	A group of dogs are racing and have muzzles on their noses	A group of dogs bred for racing is wearing striped uniforms and is running down a track	#
+entailment	Two people are standing in the ocean and watching the sunset	Two people are standing in the ocean and looking at the sunset	#
+entailment	The person in the blue jacket is wearing a colorful helmet	A person in a blue jacket is wearing a colorful helmet	#
+neutral	A race car driver is standing up and pointing his hand at the sky	The person in the blue jacket is putting down a colorful helmet	#
+neutral	The person in the blue jacket is wearing a colorful helmet	A race car driver is sitting down and is motionless	#
+neutral	A race car driver is standing up and pointing his hand at the sky	The person in the blue jacket is wearing a colorful helmet	#
+entailment	A boy and a girl in swimsuits are wearing arm floats	A boy and a girl in swimsuits are wearing floats for their arms	#
+contradiction	The boy and the girl are playing and wearing arm floats	The boy and the girl are not playing and wearing arm floats	#
+neutral	A boy and a girl in swimsuits are wearing arm floats	The boy and the girl are playing and wearing arm floats	#
+contradiction	A woman in a yellow shirt is surfing on a pink surfboard	There is no woman in a yellow shirt surfing on a pink surfboard	#
+neutral	A surfer is riding the wave	A rider is waving at a surfer	#
+neutral	A surfer is riding the wave	There is no woman in a yellow shirt surfing on a pink surfboard	#
+entailment	Four people are sitting on a low cement ledge	Some people are sitting on a low cement ledge	#
+contradiction	The group of people is sitting on a rocky ledge and a scenic view is behind them	The group of people is not sitting on a rocky ledge with a scenic view behind them	#
+neutral	The group of people is sitting on a rocky ledge and a scenic view is behind them	Four people are sitting on a low cement ledge	#
+contradiction	Two girls are laughing and other girls are watching them	There is no girl laughing and there is no other girl watching	#
+entailment	A group of Asian girls are standing together	The group of Asian girls are standing together	#
+neutral	A group of Asian girls are standing together	Two girls are laughing breathlessly and other girls are watching them	#
+neutral	A group of Asian girls are standing together	Two girls are laughing and other girls are watching them	#
+contradiction	A bicyclist is holding a bike over his head in a group of people	A lone bicyclist is putting down a bike	#
+contradiction	A cold cyclist is celebrating	There is no cold cyclist celebrating	#
+neutral	A cold cyclist is celebrating	A bike is being held over his head by a bicyclist in a group of people	#
+neutral	A cold cyclist is celebrating	A bicyclist is holding a bike over his head in a group of people	#
+entailment	A big dog and a small white dog are playing together	A big dog and a small dog with a white coat are playing together	#
+neutral	Two dogs are playing together on the grass	A big dog and a small dog with a white coat are playing together	#
+entailment	A malnourished looking dog is standing on its hind legs and preparing to jump	The malnourished looking dog is standing on its hind legs and is preparing to jump	#
+entailment	The cop is sitting on a police bike	The cop is sitting on a police bicycle	#
+entailment	A policeman is sitting on a motorcycle	The cop is sitting on a police bike	#
+entailment	Two women are wearing bikinis on the sandy beach	Two women are wearing bikinis on the beach which is sandy	#
+neutral	Two women are wearing bikinis on the sandy beach	Two women are wearing bikinis and walking on the sand	#
+contradiction	Two women are wearing bikinis and are walking on the sand	There are no women wearing bikinis on the sandy beach	#
+entailment	Two women are wearing bikinis and are walking on the sand	Two women are wearing bikinis on the sandy beach	#
+entailment	A large group of cheerleaders is walking in a parade	Many cheerleaders are walking in a parade	#
+contradiction	A large group of cheerleaders is walking in a parade	There is no large group of cheerleaders walking in a parade	#
+neutral	A large group of cheerleaders is walking in a parade	The cheerleaders are not parading and are not wearing black, pink and white uniforms	#
+entailment	The man is sitting outside under a purple umbrella	The man is sitting outdoors under a purple umbrella	#
+entailment	A shoeless woman is sitting on a blanket under a lavender umbrella	A woman, who is shoeless, is sitting on a blanket under a lavender umbrella	#
+neutral	A shoeless woman is sitting on a blanket under a lavender umbrella	A shoeless woman is standing over a blanket near a lavender umbrella	#
+neutral	A shoeless woman is sitting on a blanket under a lavender umbrella	The man is sitting outside under a purple umbrella	#
+contradiction	A woman is playing with two young boys at a park	There is no woman playing with two young boys at a park	#
+contradiction	A woman is standing near three children	There is no woman standing near three children	#
+neutral	A woman is playing with two young boys at a park	A lady is standing near three children	#
+neutral	A woman is standing near three children	There is no woman playing with two young boys at a park	#
+entailment	A tan dog is running through the snow	A dog, which is tan, is running through the snow	#
+entailment	A yellow dog is running on white snow on a sunny day	A dog, which is tan, is running through the snow	#
+neutral	A girl is wearing jeans and a pink shirt and is running	A girl is running with a pink shirt and is not wearing jeans	#
+entailment	The little girl in a pink shirt is running under a tree in the desert	A little girl in a pink shirt is running under a tree in the desert	#
+neutral	The little girl in a pink shirt is running under a tree in the desert	A girl is running with a pink shirt and is not wearing jeans	#
+neutral	A girl is wearing jeans and a pink shirt and is running	The little girl in a pink shirt is running under a tree in the desert	#
+contradiction	The white dog wearing reindeer ears is near a brown dog	The white dog is not wearing reindeer ears and isn't near a brown dog	#
+entailment	A white dog is wearing a Christmas reindeer headband and is playing with a brown dog in the grass	A white dog is wearing a Christmas reindeer headband and is playing with a dog with a brown coat in the grass	#
+entailment	A white dog is wearing a Christmas reindeer headband and is playing with a brown dog in the grass	The white dog wearing reindeer ears is near a brown dog	#
+contradiction	A young boy is riding a dirt bike through the mud	There is no young boy riding a dirt bike through the mud	#
+neutral	A young child is riding a bike on a rough dirt path	The young boy is riding a dirt bike through the mud	#
+neutral	A woman in a red dress is playing an instrument	The woman in a red costume is leaning against a brick wall and playing an instrument	#
+entailment	A young child is wearing a white coat and playing a game	A child, who is young, is wearing a white coat and playing a game	#
+contradiction	The child is playing with toys outdoors	There is no young child wearing a white coat and playing a game	#
+neutral	A young child is wearing a white coat and playing a game	The child is playing with toys indoors	#
+entailment	The man is wearing a wetsuit and is riding a surfboard	The person is wearing a wetsuit and is riding a surfboard	#
+entailment	A surfer is leaning on a surfboard	The surfer is leaning on a surfboard	#
+neutral	The man is wearing a wetsuit and is riding a surfboard	A surfer is leaning on a surfboard	#
+neutral	A waterfall is flowing into a shallow pool	The people are walking on the road beside a waterfall, which is beautiful	#
+neutral	The people are walking on the road beside a beautiful waterfall	A waterfall is flowing calmly into a shallow pool	#
+entailment	A sheepdog is grouping a herd of sheep	The sheepdog is grouping a herd of sheep	#
+neutral	A sheepdog is grouping a herd of sheep	A dog is scattering a pack of white sheep on a dusty farm	#
+contradiction	The dark skinned male is standing on one hand in front of a yellow building	The dark skinned male is not standing on one hand in front of a yellow building	#
+neutral	A bike rider in a black and red uniform is standing on a dirt bike	A black bike rider in a red bike uniform is standing in the dirt	#
+neutral	A person is riding a bike	A person who rides bikes, in a black and red uniform, is standing on a dirt bike	#
+entailment	A man in a purple suit is standing by a purple case and is playing a guitar	A man in a purple colored suit is standing by a purple case and is playing a guitar	#
+contradiction	The man is playing the guitar and has the guitar case open for donations	The man is putting away the guitar in the guitar case	#
+neutral	A man in a purple suit is standing by a purple case and is playing a guitar	The man is putting away the guitar in the guitar case	#
+neutral	A couple is sitting on a patio and looking at the ocean	Some adults are sitting in the chairs and are watching the ocean	#
+contradiction	A small boy in a yellow shirt is laughing on the beach	There is no small boy in a yellow shirt laughing on the beach	#
+neutral	A small boy in a yellow shirt is laughing on the beach	A little boy is topless and is serious	#
+neutral	Two men are riding an orange raft on the shore	Two men are getting off of an orange raft on the shore	#
+neutral	Two men are riding an orange raft on the shore	The orange rescue boat is rushing across the water	#
+entailment	A person is standing in a vast field of glacial ice	One person is standing in a vast field of glacial ice	#
+contradiction	A person is standing in a vast field of glacial ice	There is no person standing in a vast field of glacial ice	#
+contradiction	A woman is snowboarding down an incline and another woman is standing behind her	There is no woman snowboarding down an incline and there is no other woman standing behind her	#
+neutral	A blond boy is sliding down a sand dune on a skateboard	There is no woman snowboarding down an incline and there is no other woman standing behind her	#
+entailment	The man is taking a picture of himself and another guy	A picture of himself and another guy is being taken by the man	#
+entailment	A man is holding up an electronic device	A person is holding up an electronic device	#
+entailment	The man is taking a picture of himself and another guy	A person is holding up an electronic device	#
+entailment	A little black dog is chasing a little brown dog	A dog, which is little and black, is chasing a little brown dog	#
+neutral	A little black dog is chasing a little brown dog	A brown dog and a black dog are in the grass	#
+neutral	A girl in a brown dress is being surrounded by children and is closing her eyes	The sun is not shining on the face of the girl who is in a yellow dress	#
+neutral	Several women are wearing pink bunny ears and are pointing to the right	Several women are taking off pink bunny ears and are pointing to the left	#
+neutral	Women are wearing bunny ears and race numbers and are pointing at something in the distance	A group of women are wearing pink bunny ears and are pointing to the right	#
+contradiction	Several women are wearing pink bunny ears and are pointing to the right	Women are not wearing bunny ears and race numbers and are not pointing at something in the distance	#
+neutral	Women are wearing bunny ears and race numbers and are pointing at something in the distance	Several women are wearing pink bunny ears and are pointing to the right	#
+contradiction	The ice hockey goalkeeper is wearing a yellow jersey and is defending the goal	The ice hockey goalkeeper is not wearing a yellow jersey and is not defending the goal	#
+neutral	A small boy is standing in the forest	A small boy is sitting in the forest	#
+neutral	A small boy is standing in the forest	A young child is standing in front of some trees	#
+neutral	Two people are looking at a gold statue	Two young men are playing outside near a golden statue	#
+contradiction	The bicyclist is riding on a city street	The bicyclist is not riding on a city street	#
+contradiction	A woman is wearing a blue helmet and is riding a bicycle in a parking lot	There is no woman wearing a blue helmet and riding a bicycle in a parking lot	#
+neutral	A woman is wearing a blue helmet and is riding a bicycle in a parking lot	The bicyclist is speeding on a city street	#
+contradiction	A pet dog is standing on the bank and is looking at another brown dog in the pond	There is no pet dog standing on the bank and looking at another brown dog in the pond	#
+contradiction	The tan dog is watching a brown dog that is swimming in a pond	The tan dog is not watching a brown dog that is swimming in a pond	#
+neutral	The tan dog is watching a brown dog that is swimming in a pond	There is no pet dog standing on the bank and looking at another brown dog in the pond	#
+neutral	A young girl is dancing	A young girl is standing challengingly on one leg	#
+neutral	A young girl is dancing	A young girl is standing on both legs	#
+neutral	A young girl is standing on one leg	A young girl is standing still	#
+entailment	A bee is clinging to a yellow flower	A yellow flower is being clung to by a bee	#
+neutral	A small bee is landing on a bunch of yellow flowers	A yellow flower is being clung to by a bee	#
+neutral	Four people are walking across thick snow and the sun is setting	Four people are standing in thick snow and the sun is rising	#
+neutral	Some people are treading through the snow of the beautiful snowy landscape	Four people are standing in thick snow and the sun is rising	#
+neutral	Four people are walking across thick snow and the sun is setting	Some people are treading through the snow of the beautiful snowy landscape	#
+contradiction	Four boys are kneeling next to each other in front of a ball	There are no boys kneeling next to each other in front of a ball	#
+neutral	Four boys are kneeling next to each other in front of a ball	The young boys are not posing with a green soccer ball in a park	#
+neutral	The young boys are posing with a green soccer ball in a park	Four boys are kneeling next to each other in front of a ball	#
+entailment	A tan dog is running through the brush	A dog, which is tan, is running through the brush	#
+neutral	A white dog with beige spots is running through a field	A dog, which is tan, is running through the brush	#
+neutral	A horse and its rider are leaping over a barrier	The horse is leaping over the rider at the barrier	#
+neutral	A horse is leaping a hurdle and has a rider on its back	The horse is leaping over the rider at the barrier	#
+neutral	A football player in a red and white uniform is being lifted by two teammates	Some football players in red and white are jumping and hugging	#
+neutral	A football player in a red and white uniform is being lifted by two teammates	There are no football players in red and white jumping and hugging each other	#
+neutral	Football players in red and white are jumping and hugging each other	A football player in a red and white uniform is being lifted by two teammates	#
+neutral	A woman in a white dress and a woman in a blue dress are standing on a stage	Two girls in their teens are wearing fancy dresses at an event	#
+neutral	A woman in a white dress and a woman in a blue dress are standing on a stage	Two teenage girls are wearing fancy dresses at an event	#
+neutral	Two women with black hair are standing in front of a plywood wall	Two young women with folded arms are looking away from the screen	#
+entailment	A group of students in uniforms is listening attentively at the front of the class	Some students in uniforms are listening attentively at the front of the class	#
+contradiction	A group of students in uniforms is listening attentively at the front of the class	A group of students in uniforms is ignoring the front of the class	#
+entailment	A classroom full of students is looking in the same direction inside a bamboo structure	A classroom full of students is looking attentively in the same direction inside a bamboo structure	#
+entailment	A boy is jumping off a platform and two other boys are standing and watching	A boy is jumping off a platform and two other boys are standing and staring at him	#
+contradiction	A boy is jumping off a platform and two other boys are standing and watching	Nobody is jumping off a platform	#
+neutral	Three boys are jumping off a platform	A boy is jumping off a platform and two other boys are standing and staring at him	#
+neutral	A group of kids is playing on a colorful structure	There is no one climbing on the grotto with a pink interior	#
+entailment	Four middle eastern children, three girls and one boy, are climbing on the grotto with a pink interior	A group of kids is playing on a colorful structure	#
+neutral	A group of people is sitting on both sides of a red stone structure	A group of people is standing on both sides of a red stone structure	#
+entailment	The group of people is sitting on the ground outside a monument	Some people are sitting on the ground outside a monument	#
+neutral	A group of people is sitting on both sides of a red stone structure	Some people are sitting on the ground outside a monument	#
+neutral	A group of people is sitting on both sides of a red stone structure	The group of people is not sitting on the ground outside a monument	#
+neutral	A black bird is sitting on a dead tree	A black bird is taking flight from a dead tree	#
+neutral	A child is making a snow ball	A child is smashing a snow ball	#
+entailment	A child is making a snow ball	A child in orange is playing outdoors with a snowball	#
+neutral	A child is making a snow ball	A kid in orange is playing outside with a snowball	#
+neutral	The people are sitting on a bench in front of a restaurant	The people are sitting in a restaurant in front of the beach	#
+entailment	Two people are sitting in lawn chairs and are reading books	Some people are sitting in lawn chairs and are reading books	#
+neutral	Two people are sitting in lawn chairs and are reading books	Two people in two chairs are talking	#
+contradiction	A large brown dog and a small grey dog are standing on a rocky surface	There is no large brown dog and small grey dog standing on a rocky surface	#
+neutral	A large brown dog and a small grey dog are standing on a rocky surface	The brown dog is sniffing the back of a small black dog	#
+entailment	The men in brown shorts are walking on the rocks beside a river	The man in brown colored shorts is walking on the rocks beside a river	#
+neutral	Three boys are walking on rocks along a river	The men in brown shorts are not walking on the rocks beside a river	#
+neutral	The men in brown shorts are walking on the rocks beside a river	Three boys are walking on rocks along a river	#
+neutral	A dog is jumping for a Frisbee in the snow	A black dog in the snow is leaping off the ground and catching a stick	#
+neutral	A black dog in the snow is jumping off the ground and catching a stick	There is no dog jumping for a Frisbee in the snow	#
+neutral	A man is holding a mask in his raised hand	A man elegantly dressed in black is wearing an elaborate black mask	#
+neutral	A man dressed in black is wearing an elaborate black mask	A man is holding a mask in his raised hand	#
+neutral	Two children are crouching under some metal bars	Two children are leaning on a rusty ledge	#
+neutral	Two children are crouching under some metal bars	Two children are peering over a rusty ledge	#
+contradiction	The player in purple, white and black is playing near the end of the field	The player in purple, white and black is not playing near the end of the field	#
+entailment	A man is wearing a sports uniform and is running down the field	A sports uniform is being worn by a man who is running down the field	#
+entailment	A man on a bicycle is riding on the beach	A man on a bike is riding on the shore	#
+neutral	A large duck is flying over a rocky stream	A large duck is perching over a rocky stream	#
+neutral	A seabird is flying over some rocks	A large stream is full of rocks, ducks and flies	#
+contradiction	The kids are chasing each other in the sand	The kids are not chasing each other in the sand	#
+entailment	A little boy is running on the ground and playing with a little girl	The little boy is running on the ground and playing with a little girl	#
+neutral	The kids are chasing each other in the sand	A little boy is running on the ground and playing with a little girl	#
+neutral	A father is pushing his daughter on a go-kart and another girl is watching	A girl is pushing a go-kart and a daughter is watching her father	#
+neutral	A father is pushing his daughter on a go-kart and another girl is watching	Two small children are playing with a toy car in the street	#
+neutral	A dog is running uphill	There is no dog running up a grassy hill	#
+neutral	A golden dog is running through a field of tall grass	A golden dog is sitting in a field of tall grass	#
+neutral	A brown dog is running through tall green grass	A golden dog is running through a field of tall grass	#
+neutral	Two dogs are playing on the beach	There are no white dogs running and jumping along a beach	#
+neutral	The large brown dog is running outside in the dirt	A dog is sitting by a fence on a dirt track	#
+neutral	The large brown dog is running outside in the dirt	A dog is running alongside a fence on a dirt track	#
+entailment	A girl is jumping off a rock and another is standing on it	One girl is jumping off a rock and another is standing on it	#
+neutral	A girl is jumping off a rock and another is standing on it	A young girl in a coat made for winter is jumping off a boulder into the sand at a beach	#
+neutral	A young girl in a winter coat is jumping off a boulder into the sand at a beach	A girl is jumping off a rock and another is standing on it	#
+neutral	The man with brown hair is wearing sunglasses and is sitting at a table with cans of soda and other drinks	A young man with brown hair and sunglasses is sitting in front of some cans of soda	#
+neutral	A woman wearing a blue and white uniform with a white and blue hat is keeping her mouth open and is near others dressed in the same fashion	A woman wearing casual clothing is keeping her mouth closed and is near other people dressed differently	#
+neutral	A woman wearing a blue and white uniform with a white and blue hat is keeping her mouth open and is near others dressed in the same fashion	A woman is wearing a blue shirt with a white vest and a white cap and is talking and marching	#
+entailment	A bearded man is standing by a shopping cart and is holding a cardboard sign	One bearded man is standing by a shopping cart and is holding a cardboard sign	#
+neutral	A man is holding a sign and is seeking money	A bearded man is sitting by a shopping cart and is dropping a cardboard sign	#
+neutral	A bearded man is standing by a shopping cart and is holding a cardboard sign	A man is seeking a sign and is holding some money	#
+neutral	A snowboarder is doing a flip over a mound of snow	There is nobody jumping in the air on a board	#
+neutral	A snowboarder is doing a flip over a mound of snow	Somebody is jumping in the air on a board	#
+neutral	A large crowd in warm clothing is posing for a camera	Two men, a woman, and two young boys are standing in front of a large gathering of people outside a building	#
+neutral	Four people are performing music outdoors	Four people are silently standing outdoors	#
+neutral	Four people are performing music outdoors	A white man is staging a hat and a playing guitar	#
+neutral	A man in a white hat is playing guitar on stage	Four people are silently standing outdoors	#
+entailment	A man is participating in a bmx race	A man is participating in a race for bmxs	#
+contradiction	A man is participating in a bmx race	A man is not participating in a bmx race	#
+neutral	A man is participating in a bmx race	There is no man in a red uniform making a jump in a dirt bike race	#
+neutral	A man in a red uniform is making a jump in a dirt bike race	A man is participating in a bmx race	#
+entailment	A happy family is posing by the fireplace	A family, which looks happy, is posing by the fireplace	#
+neutral	A happy family is posing by the fireplace	A sad family is posing by the fireplace	#
+neutral	A family is posing by the mantel and the Christmas tree	A happy family is posing by the fireplace	#
+neutral	Two boys are wearing brown shirts and are tugging at a rope on a wooden platform	Two girls are wearing brown shirts and are tugging at a rope on a wooden platform	#
+neutral	Two twin preteen boys are dueling with sticks	Two boys are wearing brown shirts and are enthusiastically tugging at a rope on a wooden platform	#
+neutral	Two boys are wearing brown shirts and are tugging at a rope on a wooden platform	Two twin preteen kids are dueling with sticks	#
+neutral	Two boys are wearing brown shirts and are tugging at a rope on a wooden platform	Two twin preteen boys are playing with cards	#
+neutral	Two boys are wearing brown shirts and are tugging at a rope on a wooden platform	Two twin preteen boys are dueling with sticks	#
+neutral	A soccer player is being tackled by his opponent	Some people playing rugby are tackling each other	#
+neutral	A soccer player is being tackled by his opponent	Rugby players are tackling each other	#
+entailment	A white dog is standing on the leaves on the ground	One white dog is standing on the leaves on the ground	#
+neutral	A child in light colored clothing is standing with his arms extended outward	A child in light colored clothing is lying with his arms crossed	#
+neutral	Two girls are playing inside a jumper house	A child in clothing which is light colored is standing with his arms extended outward	#
+neutral	A child in light colored clothing is standing with his arms extended outward	Two girls are happily playing inside a jumper house	#
+neutral	Two girls are playing inside a jumper house	A child in light colored clothing is standing with his arms extended outward	#
+entailment	The boy and girl are playing on the outdoor gym	A boy and a girl are playing on the outdoor gym	#
+entailment	Some children are playing on a playground	Some kids are playing on a playground	#
+entailment	The motocross rider is wearing blue and black pants	Blue and black pants are being worn by the motocross rider	#
+neutral	The motocross rider is wearing blue and black pants	A biker with a blue jacket, black pants and a white helmet is driving recklessly on dirt and people watch	#
+neutral	A biker with a blue jacket, black pants and a white helmet is driving on dirt and people are watching	The motocross rider is wearing blue and black pants	#
+neutral	A female wearing pink gloves and a brown jacket is smiling in the snow	A young Asian woman with pink gloves is standing in the snow	#
+neutral	A man is drinking orange juice and walking	A man is spilling orange juice and standing still	#
+contradiction	A man is drinking orange juice and walking on a sunny day	There is no man drinking orange juice and walking on a sunny day	#
+entailment	A man is drinking orange juice and walking on a sunny day	A person is drinking orange juice and walking	#
+entailment	A man is drinking orange juice and walking on a sunny day	A man is drinking orange juice and walking	#
+entailment	A man on inline skates is skating at a skate park	A man on inline skates is skating at a park built for skating	#
+neutral	A man on inline skates is skating at a skate park	A trick is being performed by a rollerblader on a ramp	#
+neutral	A black dog is standing in shallow water	A black dog is standing in deep water	#
+neutral	A black dog with a red collar is putting its face in the water	A black dog is standing in shallow water	#
+entailment	The crowd is watching a football game	A football game is being watched by the crowd	#
+contradiction	The crowd is watching a football game	The crowd is not watching a football game	#
+neutral	A group of football players is running in the field	A group of football players is standing still in the field	#
+neutral	The crowd is watching a football game	A group of people playing football is running in the field	#
+neutral	The crowd is watching a football game	A group of football players is running in the field	#
+contradiction	A group of people is standing together and looking at the camera	There is no group of people standing together and looking at the camera	#
+entailment	An oriental man and two women are facing a camera	The group of people is standing together and looking at the camera	#
+contradiction	An oriental man and two women are facing a camera	There is no group of people standing together and looking at the camera	#
+entailment	An oriental man and two women are facing a camera	A group of people is standing together and looking at the camera	#
+contradiction	A child is sitting in a red and yellow toy car	There is no child sitting in a red and yellow toy car	#
+entailment	A small girl is riding in a toy car	The small girl is riding in the toy car	#
+contradiction	A small girl is riding in a toy car	A small girl is getting out of a toy car	#
+neutral	A little boy in red clothes is jumping into the air	A child in a red outfit is dangerously jumping on a trampoline	#
+neutral	A little boy in red clothes is jumping into the air	There is no child in a red outfit jumping on a trampoline	#
+entailment	A child in a red outfit is jumping on a trampoline	A little boy in red clothes is jumping into the air	#
+neutral	A black dog is playing with a brown dog on the sand	A black dog is attacking a brown dog on the sand	#
+contradiction	A brown dog and a black dog are playing in the sand	There is no brown dog and black dog playing in the sand	#
+contradiction	A black dog is playing with a brown dog on the sand	There is no brown dog and black dog playing in the sand	#
+neutral	A woman and three men are posing for a photo	A woman is posing for three men for a photo	#
+neutral	A wet boy is jumping around on dirty and wet grass	There is no young boy covered in grass jumping near a wooden fence	#
+contradiction	The black dog is running through the grass	The black dog is not running through the grass	#
+contradiction	The black dog is running through the grass	The black dog is walking through the tall grass	#
+entailment	A dog is standing with its two front paws on a rock in a field	The dog is standing with its two front paws on a rock in the field	#
+contradiction	A dog is standing with its two front paws on a rock in a field	There is no dog standing with its two front paws on a rock in the field	#
+neutral	Two small boys dressed in tuxedos are sitting on a red carpeted floor	Two small boys dressed in tuxedos are standing on a red carpeted floor	#
+neutral	Two small boys dressed in tuxedos are sitting on a red carpeted floor	Some boys being dressed with a carpet are sitting on two red tuxedos 	#
+neutral	A man is standing on a sidewalk	A man is sitting on a sidewalk	#
+neutral	A man is standing on a sidewalk	There is no man standing next to a bus	#
+neutral	A dog with a blue blanket is running through the grass	A dog with a muzzle and a blue jacket is resting in the yard	#
+neutral	A dog with a blue blanket is running through the grass	A dog with a blue muzzle is running around the yard with a jacket	#
+neutral	A dog with a muzzle and a blue jacket is running around the yard	There is no dog with a blue blanket running through the grass	#
+neutral	A brown dog is running across the yard with a toy in its mouth	A brown dog is dropping a colored toy from its mouth	#
+neutral	A brown dog is running across the yard with a toy in its mouth	A brown dog is carrying a colored toy in the grass	#
+contradiction	A person with a green shirt is jumping high over the grass	A person without shirt is jumping high over the green grass	#
+contradiction	A young boy is jumping in the air with his knees bent and arms spread	There is no young boy jumping in the air with his knees bent and arms spread	#
+neutral	A dog is catching a ball in mid air	A dog is caught mid air with a ball	#
+contradiction	A brown and white dog is jumping in the air with a tennis ball in its mouth	A brown and white dog is resting on the ground with a tennis ball in its mouth	#
+neutral	A dog is catching a ball in mid air	A brown and white dog is resting on the ground with a tennis ball in its mouth	#
+neutral	A brown and white dog is jumping in the air with a tennis ball in its mouth	A ball is being caught by a dog in mid air	#
+neutral	A brown and white dog is jumping in the air with a tennis ball in its mouth	A dog is missing the ball in mid air	#
+entailment	A brown and white dog is jumping in the air with a tennis ball in its mouth	A dog is caught mid air with a ball	#
+neutral	The man is doing a wheelie on a mountain bike	A man is riding on a bicycle with one wheel only	#
+entailment	A brown duck with a green head is flapping its wings in the water	A bird is flapping its wings on the water	#
+neutral	The elderly lady is waiting on the sidewalk	A lady in a fur hat and fur coat is standing outside a building	#
+neutral	The elderly lady is waiting on the sidewalk	A woman in a fur hat and fur coat is sitting outside a building	#
+neutral	A woman in a fur hat and fur coat is standing outside a building	The elderly lady is waiting on the sidewalk	#
+neutral	A young child is running outside over the fallen leaves	A young child is lying down on a gravel road that is covered with dead leaves	#
+entailment	The man in the straw hat is smoking a cigarette	A cigarette is being smoked by the man in the straw hat	#
+entailment	The man in the straw hat is smoking a cigarette	A person is wearing a straw hat and smoking a cigarette	#
+entailment	A man is wearing a straw hat and smoking a cigarette	The man in the straw hat is smoking a cigarette	#
+neutral	A man is wearing a blue checkered shirt and riding a unicycle in the street	A man is standing shirtless in the street	#
+contradiction	A man is wearing a blue checkered shirt and riding a unicycle in the street	There is no man wearing a long sleeved blue shirt and jeans and riding a unicycle down a street	#
+entailment	Three men are staring at the big green hills in the distance	Three men are looking into the distance	#
+neutral	The men are climbing a mountain	One man is climbing a wall made of rock and another man is holding a rope	#
+neutral	One man is climbing a rock wall and another man is holding a rope	The men are not climbing a mountain	#
+entailment	Two children are playing on a statue	Some children are playing on a statue	#
+contradiction	Two children are playing on a statue	There are no children playing on a statue	#
+neutral	Two children are playing on a statue	A climber is parking with the children by a small statue	#
+contradiction	A blonde lady is looking at a tower	There is no blonde lady looking at a tower	#
+entailment	A woman is looking at the view of a city	The woman is looking at the view of a city	#
+neutral	A woman is looking at the view of a city	There is no blonde lady looking at a tower	#
+neutral	A blonde lady is looking at a tower	A woman is looking at the view of a city	#
+entailment	A man is standing on the top of the rocks with clouds behind them	One man is standing on the top of the rocks with clouds behind them	#
+neutral	A man is standing on the top of the rocks with clouds behind them	A man is standing behind the rocks with clouds on top of them	#
+neutral	A person is standing on a mountain top	One man is standing on the top of the rocks with clouds behind them	#
+neutral	A man is standing on the top of the rocks with clouds behind them	A person is sitting on a mountain top	#
+neutral	A smiling boy in winter clothes is waving his mittened hands outside a building in the snow	A child, who is young, dressed for cold weather, is standing outside	#
+neutral	A young child dressed for cold weather is standing outside	The smiling boy in winter clothes is waving his mittened hands outside the building in the snow	#
+neutral	A child is swimming underwater in a pool	A child is swimming on the water's surface in a pool	#
+neutral	A child is smiling at the camera and swimming underwater	A child is swimming on the water's surface in a pool	#
+neutral	A child is swimming underwater in a pool	A kid is smiling at the camera and swimming underwater	#
+neutral	A man and a young boy are riding in a yellow kayak	A man and a young boy are jumping off of a yellow kayak	#
+neutral	A man and a child are kayaking through gentle waters	A yellow kayak is being ridden by a man and a young boy	#
+entailment	A dog is chasing a ball on the grass	A ball is being chased by a dog on the grass	#
+neutral	A dog is chasing a ball on the grass	A dog is losing a ball on the grass	#
+entailment	A dog is chasing a ball in the grass	A ball is being chased by a dog on the grass	#
+neutral	A dog is chasing a ball in the grass	A dog is losing a ball on the grass	#
+entailment	A dog is chasing a ball on the grass	A dog is chasing a ball in the grass	#
+contradiction	A tan dog is jumping up and catching a tennis ball	There is no tan dog jumping up and catching a tennis ball	#
+neutral	A red dog is jumping and catching a tennis ball in its mouth	A dog with a tan coat is jumping up and catching a tennis ball	#
+neutral	A red dog is jumping and catching a tennis ball in its mouth	A tan dog is jumping up and catching a tennis ball	#
+neutral	A man is sitting on a train and resting his hand against his face	A man is standing on a train and resting his hand on his lap	#
+neutral	A man is sitting on a train and resting his hand against his face	The hairy man is sitting on a train	#
+neutral	A man is sitting on a train and resting his hand against his face	The bearded man is not sitting on a train	#
+neutral	A man is sitting on a train and resting his hand against his face	The bearded man is sitting on a train	#
+neutral	The little girl is swinging and the woman is standing behind her	A small child is showing excitement on a swing set at the park	#
+entailment	A man is performing a trick on a surfboard in the water	A person is performing a trick on a surfboard in the water	#
+entailment	A surfer is riding the wave	The wave is being ridden by a surfer	#
+entailment	A surfer is riding the wave	A rider is surfing the wave	#
+neutral	The group of people is sitting in a dim room	The group of dim people is sitting in a room	#
+contradiction	A man and two women in a darkened room are sitting at a table with candles	The group of people is not sitting in a dim room	#
+entailment	A man and two women in a darkened room are sitting at a table with candles	The group of people is sitting in a dim room	#
+entailment	Two guys are sitting around a table and holding beers in their hands	Two blokes are sitting around a table and holding beers in their hands	#
+neutral	Two guys are sitting around a table and holding beers in their hands	A man in a white shirt and sunglasses and a man in a black shirt and sunglasses are sitting at a table with four bottles of beer	#
+neutral	Two guys are sitting around a table and holding beers in their hands	A man in a white shirt and sunglasses and a man in a black shirt and sunglasses are sitting at a table with four beer bottles	#
+contradiction	A dog is chasing a ball	There is no dog chasing a ball	#
+neutral	A dog is chasing a ball	The dog is not catching a blue ball	#
+neutral	The dog is catching a blue ball	The dog is chasing the ball	#
+neutral	The woman is wearing a red jacket and holding a glass in front of the man in a white t-shirt	The woman is holding a white jacket and a red glass in front of the man wearing a t-shirt	#
+neutral	The woman is wearing a red jacket and holding a glass in front of the man in a white t-shirt	A person is wearing a red jacket and carefully holding a beer	#
+neutral	The woman is wearing a red jacket and holding a glass in front of the man in a white t-shirt	A person is shirtless and is putting down the beer	#
+neutral	A person is wearing a red jacket and holding a beer	The woman is wearing a red jacket and holding a glass in front of the man in a white t-shirt	#
+entailment	Two brown dogs are playing with a frisbee in the water	Two brown dogs are playing with the frisbee in the water	#
+neutral	Two brown dogs are playing with a frisbee in the water	Two brown dogs are leaving a frisbee in the water	#
+contradiction	A girl in pink is twirling a ribbon	There is no girl in pink twirling a ribbon	#
+neutral	A child is playing with a water spout outdoors and the rest of his family is watching	A boy is holding a hose next to a man and another boy is watching	#
+neutral	A football player is running past an official carrying a football	A football player is carrying an official past a rolling football	#
+contradiction	A football player in a purple jersey is running with the ball for a touchdown	There is no football player in a purple jersey running with the ball for a touchdown	#
+neutral	A football player in a purple jersey is running with the ball for a touchdown	A person playing football is running past an official carrying a football	#
+neutral	A football player in a purple jersey is running with the ball for a touchdown	A football player is running into an official carrying a football	#
+neutral	A football player in a purple jersey is running with the ball for a touchdown	A football player is running past an official carrying a football	#
+contradiction	A young girl in blue is jumping in the air	There is no girl in blue jumping in the air	#
+entailment	A young girl in a blue leotard is jumping in the air	The young girl in blue is jumping in the air	#
+contradiction	A young girl in a blue leotard is jumping in the air	There is no girl in blue jumping in the air	#
+neutral	A young girl in blue is jumping in the air	A young girl in a blue leotard is jumping on the ground	#
+entailment	A young girl in a blue leotard is jumping in the air	A young girl in blue is jumping in the air	#
+neutral	A little boy is sitting in a green tunnel with a smile on his face	A little boy is crawling in a green tunnel with a smile on his face	#
+entailment	A small boy in a striped shirt is sliding out of a green tube	A little boy in a striped shirt is sliding out of a green tube	#
+neutral	A small boy in a striped shirt is sliding out of a green tube	A small shirtless boy is sliding into a green tube	#
+neutral	A little boy is sitting in a green tunnel with a smile on his face	A small shirtless boy is sliding into a green tube	#
+neutral	A small boy in a striped shirt is sliding out of a green tube	A little boy is crawling in a green tunnel with a smile on his face	#
+contradiction	The person is flying through the air on a bicycle	The person is not flying through the air on a bicycle	#
+entailment	A person on a bike is jumping through the air and the sun is flaring through the bike frame	The person is flying through the air on the bicycle	#
+neutral	A person on a bike is jumping through the air and the sun is flaring through the bike frame	The person is not flying through the air on a bicycle	#
+contradiction	The bunch of men are playing rugby on a muddy field	The bunch of men are not playing rugby on a muddy field	#
+entailment	The bunch of men are playing rugby on a muddy field	Rugby is being played by some men	#
+neutral	The bunch of men are playing rugby on a muddy field	Some men are idling	#
+neutral	The bike rider is looking at an accident of another bike rider	A person is looking at a motocross bike that is lying on its side and another is racing by	#
+contradiction	A woman in a purple top is walking a bicycle between two stone columns	There is no woman in a purple top walking a bicycle between two stone columns	#
+neutral	A girl dressed in purple and blue is walking beside her bike at night	A naked girl is walking beside her bike at night	#
+neutral	A girl dressed in purple and blue is walking beside her bike at night	A woman in a top which is purple is walking a bicycle between two stone columns	#
+neutral	A girl dressed in purple and blue is walking beside her bike at night	A woman in a purple top is walking a bicycle between two stone columns	#
+neutral	A man in a red jacket is standing next to a yellow kayak on some rocks by the ocean	A man is wearing a red jacket and standing beside a yellow canoe on some rocks with water in the background	#
+contradiction	The black dog is walking along a tree trunk bridge over water	The black dog is not walking along a tree trunk bridge over water	#
+contradiction	A dog is crossing a river on a bridge made from a fallen tree	There is no dog crossing a river on a bridge made from a fallen tree	#
+contradiction	The black dog is walking along a tree trunk bridge over water	There is no dog crossing a river on a bridge made from a fallen tree	#
+entailment	The black dog is walking along a tree trunk bridge over water	A tree is falling over a bridge made over the river which a dog is crossing	#
+neutral	A child in a green and white sports uniform is running over the grass	There is no little boy wearing a green soccer strip and running on the grass	#
+neutral	A little boy is wearing a green soccer strip and is running on the grass	A child in a green and white sports uniform is resting on the grass	#
+neutral	A child in a green and white sports uniform is running over the grass	A little boy is wearing a green soccer strip and is running on the grass	#
+neutral	A girl in a black hat is wearing a bikini at the beach	A black girl with no bikini is wearing a hat at the beach	#
+entailment	A young lady in a bikini is lying on the beach	A lady who looks young is lying on the beach	#
+neutral	A young lady in a bikini is lying on the beach	A young lady in a bikini is standing on the beach	#
+neutral	A young lady in a bikini is lying on the beach	A girl in a black hat is wearing a bikini at the beach	#
+entailment	A man is performing a handstand on the beach	A handstand is being performed by a man on the beach	#
+entailment	The man is doing a handstand on the wet sand at the edge of the water at the beach	A handstand is being performed by a man on the beach	#
+neutral	A young boy is playing in the park with his mother	The boy in blue is running away from the woman in blue	#
+neutral	A young boy is playing in the park with his mother	A boy in blue is running towards a woman in blue	#
+contradiction	A little boy with brown hair is jumping off of a brown chair onto the floor	There is no little boy with brown hair jumping off of a brown chair onto the floor	#
+contradiction	A young boy is jumping off a chair	A young boy is jumping onto a chair	#
+neutral	Two kids are bouncing on colorful balls	Some children are wearing black tights and hopping	#
+neutral	A little girl is smiling and wearing a fake nose and glasses	The blonde girl with the pink top is not smiling and not wearing funny glasses with a large nose attached	#
+entailment	The blonde girl with the pink top is smiling and wearing funny glasses with a large nose attached	The little girl is smiling and wearing a fake nose and glasses	#
+entailment	The blonde girl with the pink top is smiling and wearing funny glasses with a large nose attached	A little girl is smiling and wearing a fake nose and glasses	#
+contradiction	A man is squirting water into the mouth of a white dog with a squirt gun	There is no man squirting water into the mouth of a white dog with a squirt gun	#
+neutral	A man is squirting water into the mouth of a white dog with a squirt gun	The man is spraying a super soaker into the mouth of the dog	#
+contradiction	A man is spraying a super soaker into the mouth of a dog	There is no man squirting water into the mouth of a white dog with a squirt gun	#
+neutral	A man is spraying a super soaker into the mouth of a dog	A man is squirting water into the mouth of a white dog with a squirt gun	#
+neutral	A child is experiencing a new world	A child is falling asleep	#
+neutral	A boy under an umbrella is being held by his father who is wearing a blue coat	A child is amazedly experiencing a new world	#
+neutral	A child is experiencing a new world	A boy under an umbrella is being held by his father who is wearing a coat dyed in blue	#
+neutral	A child is experiencing a new world	A boy under an umbrella is being let go by his father who is wearing a blue coat	#
+neutral	A dog is playing alone on a beach covered by snow	There is no dog walking along a snowdrift	#
+entailment	A light brown dog is running up a street	The light brown dog is running up a street	#
+entailment	A great dog is climbing a steep hill	A great dog is wildly climbing a steep hill	#
+neutral	A great dog is climbing a steep hill	The light brown dog is running up a street	#
+neutral	A great dog is climbing a steep hill	There is no light brown dog running up a street	#
+neutral	A great dog is climbing a steep hill	A light brown dog is running up a street	#
+entailment	People are walking through a crowded street	People are walking through a street which is crowded	#
+neutral	People are walking through a crowded street	A man and a woman are idling in a city street	#
+entailment	A surfer is riding a big wave across dark green water	A surfer is riding a big wave	#
+entailment	A surfer is riding a big wave across dark green water	The surfer is riding a big wave	#
+entailment	The shirtless man in striped shorts and sunglasses is standing near a man in a white shirt and sunglasses	The shirtless man in striped shorts and sunglasses is standing near a person in a white shirt and sunglasses	#
+entailment	The muscular black man is dancing and the man behind him is wearing green beads	The muscular man is dancing and the man behind him is wearing green beads	#
+neutral	The muscular black man is dancing and the man behind him is wearing green beads	The muscular white man is dancing and the man behind him is wearing green beads	#
+neutral	The shirtless man in striped shorts and sunglasses is standing near a man in a white shirt and sunglasses	The muscular white man is dancing and the man behind him is wearing green beads	#
+neutral	The muscular black man is dancing and the man behind him is wearing green beads	The shirtless man in striped shorts and sunglasses is not standing near a man in a white shirt and sunglasses	#
+neutral	The muscular black man is dancing and the man behind him is wearing green beads	The shirtless man in striped shorts and sunglasses is standing near a man in a white shirt and sunglasses	#
+neutral	A snowboarding man is jumping through the air	A person wearing grey pants is airborne on a snowboard	#
+contradiction	A tennis player with a green headband is hitting the ball	A tennis player with a green headband is missing the ball	#
+entailment	A man is crouching and holding a camera	A person is crouching and holding a camera	#
+neutral	A man is crouching and holding a camera	A woman is crouching and holding a camera	#
+contradiction	A man is squatting in brush and taking a photograph	There is no man squatting in brush and taking a photograph	#
+entailment	A man is squatting in brush and taking a photograph	A person is crouching and holding a camera	#
+neutral	A man is squatting in brush and taking a photograph	A woman is crouching and holding a camera	#
+neutral	Some dogs are playing in a stream	Two dogs are looking at something that is moving in the water	#
+neutral	Two dogs are looking at something that is splashing in the water	Some dogs are playing in a river	#
+neutral	Two dogs are looking at something that is splashing in the water	Some dogs are playing in a stream	#
+contradiction	A brown dog is jumping in the air	There is no brown dog jumping in the air	#
+entailment	The brown dog is jumping in the air	A brown dog is jumping in the air	#
+neutral	A man on a motorcycle is riding on a track and waving	The person on the motorcycle is holding up his arm	#
+entailment	Two adults are standing on a scooter in a field of yellow flowers	Two adults are standing on a scooter in a field of flowers	#
+entailment	Two people wearing helmets are riding over the yellow and white flowers	Two people wearing helmets are driving over the yellow and white flowers	#
+neutral	A person is riding a bike along a muddy trail	A person is riding a dirt bike down a dirt hill	#
+entailment	A man in blue is riding a horse on a dirt road	A man in blue is riding a animal on a dirt road	#
+neutral	A man in blue is riding a horse on a dirt road	A woman in blue is riding a horse on a dirt road	#
+neutral	A man in blue is riding a horse on a dirt road	A man is riding a dirty horse on a blue road	#
+neutral	A man in a blue cowboy hat is riding a white horse	A woman in blue is riding a horse on a dirt road	#
+neutral	A man in a blue cowboy hat is riding a white horse	A man is riding a dirty horse on a blue road	#
+entailment	Three people are driving ATVs	ATVs are being driven by three people	#
+entailment	Three people are driving four wheel ATVs in a field	ATVs are being driven by three people	#
+entailment	Two white dogs and one brown dog are chasing a ball	Two white dogs and one brown dog are chasing a toy	#
+entailment	Two white dogs are playing with a brown dog and a ball	Two white dogs and one brown dog are chasing a toy	#
+entailment	A white race car is driving through a puddle	A white racing vehicle is driving through a puddle	#
+neutral	A white rally car is throwing mud into the air and is approaching a bend in the track	A black rally car is throwing mud into the air and is approaching a bend in the track	#
+neutral	A white race car is driving through a puddle	The white rally car is throwing mud into the air and is approaching a bend in the track	#
+entailment	A white rally car is throwing mud into the air and is approaching a bend in the track	A white racing vehicle is driving through a puddle	#
+neutral	A white rally car is throwing mud into the air and is approaching a bend in the track	There is no white race car driving through a puddle	#
+contradiction	A dog is jumping at a shiny blue soccer ball in a field of dry leaves	There is no dog jumping at a shiny blue soccer ball in a field of dry leaves	#
+neutral	A little black dog is wearing a red collar and is in the leaves with a blue ball	An animal is jumping at a shiny blue soccer ball in a field of dry leaves	#
+neutral	A dog is running towards a ball	There is no dog running through a field and chasing a ball	#
+entailment	Four athletes are with a man in a crowded stadium	Four athletes are with a person in a crowded stadium	#
+neutral	Four athletes are with a man in a crowded stadium	Four athletes are with a woman in a crowded stadium	#
+entailment	A person in a pink jacket is running onto the field	A person in pink is running onto the field	#
+neutral	A person in a pink jacket is running onto the field	Four athletes are with a man in a crowded stadium	#
+contradiction	An Asian woman is holding a fur scarf	There is no Asian woman holding a fur scarf	#
+entailment	A woman dressed in elegant clothing is inside a crowd of people and is looking down	An elegant woman is inside a crowd of people and is looking down	#
+neutral	An Asian woman is holding a fur scarf	A woman dressed in elegant clothing is inside a crowd of people and is looking up	#
+neutral	A woman dressed in elegant clothing is inside a crowd of people and is looking down	A fur scarf is being held by an Asian woman	#
+contradiction	A boy in a white t-shirt is splashing in shallow water	There is no boy in a white t-shirt splashing in shallow water	#
+neutral	A boy in a white t-shirt is splashing in shallow water	A boy is running through the sea at the beach	#
+entailment	A basketball player is on the court floor and another one is grabbing the ball	A basketball player is on the court floor and the ball is being grabbed by another one	#
+entailment	A black sheep is standing near three white dogs	A black sheep is standing close to three white dogs	#
+neutral	The white dogs are looking curiously at the black llama	A black sheep is standing close to three white dogs	#
+neutral	The white dogs are looking curiously at the black llama	A black sheep is standing near three white dogs	#
+entailment	Two poodles are in the snow and one is jumping high	Two poodles are in the snow and one is jumping	#
+neutral	Two poodles are in the snow and one is jumping high	A grey dog is jumping toward a black and white dog in the water	#
+neutral	Two poodles are in the snow and one is jumping high	A grey dog is jumping toward a black and white dog in the snow	#
+entailment	The man surrounded by photographers is wearing a gray suit and glasses	The man surrounded by men with a camera is wearing a gray suit and glasses	#
+contradiction	The man surrounded by photographers is wearing a gray suit and glasses	A man in a suit is not being surrounded by photographers	#
+contradiction	The kids are wearing bathing suits and water is splashing around	The kids are not wearing suits and water is splashing around	#
+neutral	Children in swimming suits are playing in the water	The boys are wearing bathing suits and water is splashing around	#
+contradiction	People are dangling from straps and kicking at each other	Nobody is dangling from straps and kicking at each other	#
+entailment	A man dressed in black and white is holding up the tennis racket and is waiting for the ball	A player dressed in black and white is holding up the tennis racket and is waiting for the ball	#
+entailment	A tennis player in mid game is holding a racquet	A racquet is being held by a tennis player in mid game	#
+neutral	A man dressed in black and white is holding up the tennis racket and is waiting for the ball	A racquet is being held by a tennis player in mid game	#
+neutral	A man dressed in black and white is holding up the tennis racket and is waiting for the ball	A tennis player in mid game is holding a racquet	#
+entailment	A brown and white dog is playing on the grass	A brown and white dog is playing on the lawn	#
+neutral	A dog is playing on the green grass	A brown and white cat is playing on the grass	#
+neutral	A brown and white dog is playing on the grass	A dog is playing in the green field	#
+neutral	The young boy in the blue shirt is jumping into the water	A young boy is diving into a still lake	#
+neutral	A young boy is jumping into a still lake	The young boy in the blue shirt is not jumping into the water	#
+neutral	Two people are carrying colorful baskets and blankets and walking near a building	Two people are carrying gray baskets and blankets and walking near a building	#
+neutral	Two people are carrying colorful baskets and blankets and walking near a building	Two people are walking with laden baskets and colorful blankets	#
+neutral	A brown dog is running through a snowy trail	A white dog is running through a snowy trail	#
+entailment	A brown dog is running through a snowy trail	A dog is running on a snowy path	#
+neutral	Two boys are doing martial arts on a blue mat	Two boys in white outfits and red protective gear are sparring on a mat	#
+entailment	A black and white dog is playing with a broken volleyball	A black and white dog is playing with a broken ball	#
+entailment	A black and white dog is playing with a tattered volleyball in a brown field	A black and white dog is playing with a broken volleyball	#
+entailment	A young boy in a helmet is riding a bike on the road	A bike is ridden on the road by a young boy in a helmet 	#
+entailment	The little boy is riding a bicycle in a race	A bicycle is being ridden by the little boy in a race	#
+neutral	The little boy is riding a bicycle in a race	The little girl is riding a bicycle in a race	#
+neutral	A young boy in a helmet is riding a bike on the road	The little girl is riding a bicycle in a race	#
+neutral	A topless woman is being covered in mud	A topless woman is being smeared with a brown substance and a blurry crowd is in the background	#
+neutral	Two kids and a man are playing games at an arcade	Two kids and a woman are playing games at an arcade	#
+entailment	Some cheerleaders are taking a break	Some cheerleaders are relaxing	#
+neutral	Some cheerleaders are taking a break	Some cheerleaders are dancing	#
+neutral	Some cheerleaders are taking a break	A female cheerleader is sitting on the knee of a man	#
+neutral	A female cheerleader is sitting on the knee of a male cheerleader	Some cheerleaders are taking a break	#
+entailment	A group of people is holding drinks and pointing at the camera	Drinks are being held by people pointing at the camera	#
+entailment	Several young people are posing for a photo and holding beers	Several young people are posing for a photo and holding drinks	#
+neutral	Several young people are posing for a photo and holding beers	Several old people are posing for a photo and holding beers	#
+neutral	Several young people are posing for a photo and holding beers	A group of people is holding food and pointing at the camera	#
+neutral	A woman in blue has a yellow ball in the mitt	A woman in blue has a yellow ball in the hand	#
+entailment	The girl in blue is chasing the base runner with a number on the jersey	The girl in blue is chasing the player with a number on the jersey	#
+neutral	The girl in blue is chasing the base runner with a number on the jersey	A man in blue has a yellow ball in the mitt	#
+entailment	A man in a purple hat is climbing a rocky wall with bare hands	A rocky wall is climbed by a man in a purple hat with bare hands	#
+neutral	A man in a purple hat is climbing a rocky wall with bare hands	The young man is not rock climbing	#
+neutral	A man in a purple hat is climbing a rocky wall with bare hands	The young man is rock climbing	#
+entailment	A blond woman is sitting on the roof of a yellow vehicle and two people are inside	A woman with blond hair is sitting on the roof of a yellow vehicle and two people are inside	#
+neutral	Two people are driving a jeep and a lady is sitting on the top of it	A blond woman is sitting on the roof of a yellow vehicle and two people are outside	#
+neutral	A brown and white dog is jumping over a red, yellow and white hurdle	A brown and white dog is passing under a red, yellow and white hurdle	#
+neutral	A brown and white dog is jumping over a red, yellow and white hurdle	A large brown cat is jumping over a red hurdle	#
+neutral	A brown and white dog is jumping over a red, yellow and white hurdle	A large brown dog is jumping over a red hurdle	#
+contradiction	A yellow dog is drinking water from the faucet	A yellow dog is not drinking water from the faucet	#
+neutral	The yellow dog is drinking water from a bottle	A yellow dog is not drinking water from the faucet	#
+contradiction	A yellow dog is drinking water from the faucet	The yellow dog is drinking water from a bottle	#
+entailment	Adults and children standing and playing in front of steps near a wooded area	Adults and children standing and playing in front of a stair near a wooded area	#
+neutral	Adults and children standing and playing in front of steps near a wooded area	The adults and children are being grouped near an outdoor seating arrangement	#
+neutral	The adults and children are being gathered near an outdoor seating arrangement	Adults and children standing and playing in front of a stair near a wooded area	#
+entailment	A girl has black and orange patches on the cheeks	A girl has colored patches on the cheeks	#
+neutral	A girl has black and orange patches on the cheeks	A girl is standing alone and wears a black shirt and pink beads	#
+neutral	A girl is standing in a group and is wearing a black shirt and pink beads	A girl has black and orange patches on the cheeks	#
+entailment	Two large dogs are frolicking in a grassy field	Two large dogs are frolicking in a field	#
+entailment	Two dogs are running through high grass	Two animals are running through high grass	#
+neutral	Two dogs are running through high grass	Two large dogs are frolicking in a grassy field	#
+entailment	A black dog is walking along rocky terrain	A black dog is moving along rocky terrain	#
+entailment	A black dog is running across a rocky landscape	A black dog is moving along rocky terrain	#
+neutral	A black dog is walking along rocky terrain	A white dog is running across a rocky landscape	#
+entailment	Some young dirt bikers are getting a dirt bike up a sandy hill	Some young bikers are getting a dirt bike up a sandy hill	#
+neutral	Some young dirt bikers are getting a dirt bike up a sandy hill	Some old dirt bikers are getting a dirt bike up a sandy hill	#
+neutral	A young man is pushing a motocross bike up a dirt hill	Some young bikers are getting a dirt bike up a sandy hill	#
+neutral	A young man is pushing a motocross bike up a dirt hill	Some old dirt bikers are getting a dirt bike up a sandy hill	#
+neutral	Some young dirt bikers are getting a dirt bike up a sandy hill	A young man is pushing a motocross bike down a dirt hill	#
+entailment	Pedestrians and cars are moving through a traffic jam in a big city	Pedestrians and cars are moving through a traffic jam in the big city	#
+entailment	Some people and vehicles are on a crowded street	Pedestrians and cars are moving through a traffic jam in the big city	#
+neutral	Two brown and white dogs are fighting on a grassy area in front of a tree	Two brown and white dogs are fighting on a grassy area behind a tree	#
+neutral	A soccer player is sitting on the field and is drinking water	A soccer player is sitting on the field and is drinking beer	#
+entailment	A man is sitting on the grass and drinking from a water bottle	A man is sitting on the lawn and drinking from a water bottle	#
+neutral	A man is sitting on the grass and drinking from a water bottle	A woman is sitting on the grass and is drinking from a water bottle	#
+neutral	A soccer player is sitting on the field and is drinking water	A woman is sitting on the grass and is drinking from a water bottle	#
+neutral	A soccer player is sitting on the field and is drinking water	A man is sitting on the grass and drinking from a water bottle	#
+neutral	The dog is running through the wet sand	There is no dog running on the beach	#
+entailment	A chubby faced boy is wearing sunglasses	A chubby faced boy is wearing dark glasses	#
+entailment	A chubby faced boy is wearing sunglasses	Sunglasses are being worn by a boy	#
+neutral	A chubby faced boy is wearing sunglasses	A girl is wearing sunglasses	#
+entailment	A chubby faced boy is wearing sunglasses	A boy is wearing sunglasses	#
+neutral	Kids are being dressed in costumes and playing a game	A young boy with painted face is standing next to some other children	#
+neutral	A young girl with painted face is standing next to some other children	Kids are not dressed in costumes and playing a game	#
+entailment	Dogs are racing on a track	Dogs are running on a track	#
+contradiction	Dogs are racing on a track	There is no dog racing on a track	#
+neutral	A horse is racing	There is no dog racing on a track	#
+contradiction	Some bikers are getting airborne on a track near water and a skyline	Some bikers are not getting airborne on a track near water and a skyline	#
+neutral	Two bmx bikers are jumping dirt ramps in front of a body of water	Some bikers are doing acrobatics on a track near water and a skyline	#
+neutral	Two bmx bikers are jumping dirt ramps in front of a body of water	Some bikers are not getting airborne on a track near water and a skyline	#
+neutral	Two bmx bikers are jumping dirt ramps in front of a body of water	Some bikers are getting airborne on a track near water and a skyline	#
+neutral	A man is doing a trick on a skateboard	A man is doing a trick on a bike	#
+entailment	A man is doing a skateboard trick on an outdoor park porch	A man is doing a skateboard trick on a park porch	#
+entailment	A man is doing a skateboard trick on an outdoor park porch	A person is doing a trick on a skateboard	#
+entailment	A racer in full gear is wearing a helmet with sponsor logos and is riding a red sport motorcycle	A man in a motocross uniform is wearing a helmet and rides a red motorcycle	#
+neutral	A racer in full gear is wearing a helmet with sponsor logos and is riding a red sport motorcycle	A person in a motocross uniform is wearing a helmet and rides a red motorcycle	#
+entailment	People are sitting at square tables in a red room	People are sitting at tables in a red room	#
+neutral	People are sitting at square tables in a red room	Several people are sitting at little tables in a darkened room	#
+neutral	Several people are sitting at small tables in a darkened room	People are sitting at tables in a red room	#
+neutral	Several people are sitting at small tables in a darkened room	People are sitting at square tables in a red room	#
+neutral	A boy in a striped shirt is jumping in front of a water fountain	A boy is jumping on the side of a stone water fountain in front of a building	#
+neutral	A boy is jumping off the side of a stone water fountain in front of a building	A boy in a striped shirt is playing in front of a water fountain	#
+neutral	A boy is jumping off the side of a stone water fountain in front of a building	A boy in a striped shirt is jumping behind a water fountain	#
+entailment	A girl in blue is sliding down a green slide	A girl in blue is sliding down a slide	#
+entailment	The young girl in blue is having fun on a slide	The young girl in blue is enjoying a slide	#
+neutral	A girl in blue is sliding down a green slide	The young girl in blue is having fun on a swing	#
+neutral	A black man is walking next to a building in a big city	A man is looking into the distance and people is walking between buildings behind	#
+entailment	A black dog is jumping off a dock into a pond	A black dog is jumping off a dock into water	#
+entailment	A black dog is jumping off a dock into a pond	A black dog is jumping on a dock into a pond	#
+neutral	A black dog is jumping from a dock into the water	A white dog is jumping from a dock into the water	#
+neutral	A little girl is smiling and running outside	A bride in a white dress is running	#
+entailment	A skier in black is catching a tiny bit of air	A skier dressed in black is catching a tiny bit of air	#
+neutral	A man is skiing down a snowy hill	A skier in white is catching a tiny bit of air	#
+contradiction	A child is playing slip and slide in the grass	A child is not playing slip and slide in the grass	#
+neutral	A child is playing slip and slide in the grass	A child is splashing in a pool for children and other kids are playing in the background	#
+neutral	A child is playing slip and slide in the grass	A child is splashing in a pool for children and other children are playing in the background	#
+entailment	Two men are standing together and one is looking through binoculars	Two men are looking out and binoculars are being held by one of them	#
+contradiction	A motorcyclist on a bike is leaning into a sharp corner	There is no motorcyclist on a bike leaning into a sharp corner	#
+entailment	A motorcyclist on a bike is leaning into a sharp corner	A man on a motorcycle is turning around a corner	#
+neutral	A motorcyclist on a bike is leaning into a sharp corner	A woman on a motorcycle is going around a corner	#
+contradiction	A man on a motorcycle is going around a corner	There is no motorcyclist on a bike leaning into a sharp corner	#
+neutral	A man on a motorcycle is going around a corner	A motorcyclist on a bike is leaning into a sharp corner	#
+entailment	A man with a backwards hat is sitting on the ground	A person with a backwards hat is sitting on the ground	#
+entailment	A young man in a white shirt and gold and black hat is sitting with crossed legs	A young person in a white shirt and gold and black hat is sitting with crossed legs	#
+entailment	A young oriental girl is standing above the crowd and is playing with a pinwheel	A young oriental girl is standing above people and is playing with a pinwheel	#
+neutral	A young oriental girl is standing above the crowd and is playing with a pinwheel	A girl in blue sweater is holding a multicolor toy and is sitting on the shoulders of a woman with grey hair	#
+neutral	A girl in blue sweater is holding a multicolor toy and is sitting on the shoulders of a man with grey hair	A young oriental girl is standing above people and is playing with a pinwheel	#
+neutral	A young man on a bmx bicycle is jumping off a masonry pyramid	A man on a bike is jumping on a pyramid-shaped ramp	#
+entailment	A bicyclist is jumping on a pyramid-shaped ramp	A young man on a bmx bicycle is jumping off a masonry pyramid	#
+entailment	A man with no shirt is holding a football	A football is being held by a man with no shirt	#
+neutral	A man with no shirt is holding a football	A shirtless man is playing football in a gym	#
+entailment	The man is going into the water	The person is going into the water	#
+neutral	Two people are sitting on a park bench on a sunny day	Two people are sitting on a park bench on a rainy day	#
+neutral	Two women dressed in white and black are sitting on a bench	Two people are sitting on a park bench on a rainy day	#
+entailment	Five people are standing in the grass with three dogs	Five people are standing in the grass with some dogs	#
+neutral	Five people are standing with three dogs in the green field beside the road	Five people are standing with three dogs in the park beside the road	#
+entailment	Five people are standing with three dogs in the green field beside the road	Five people are standing in the grass with some dogs	#
+neutral	A girl in gold and purple is holding a rainbow afghan	A girl is carrying a lot of colorful scarves on the beach	#
+entailment	A light brown dog is running in the water	A light brown dog is sprinting in the water	#
+neutral	A light brown dog is running in the water	A tan dog is playing in the water on the bank of a pond	#
+neutral	A light brown dog is running in the water	A tan dog is splashing in the water on the bank of a river	#
+neutral	A tan dog is splashing in the water on the bank of a pond	A light brown dog is sprinting in the water	#
+entailment	The child is splashing water in a small blue pool	The child is splashing water in a pool	#
+entailment	A man in a hat is standing outside of a green jeep	A man in a hat is standing outside of a green vehicle	#
+contradiction	A man in a hat is standing outside of a green jeep	A man with no hat is standing outside of a green jeep	#
+neutral	A man is standing on a dirt hill next to a black jeep	A man in a hat is standing outside of a green vehicle	#
+neutral	A man in a hat is standing outside of a green jeep	A man is standing on a black jeep on a dirt hill	#
+neutral	A man in a hat is standing outside of a green jeep	A man is standing on a dirt hill next to a black jeep	#
+neutral	A black dog and a small white and black dog are looking up at a kitchen countertop	A black cat and a small white and black cat are looking up at a kitchen countertop	#
+entailment	A large dog and a small dog are standing next to the kitchen counter and are investigating	A large dog and a small dog is standing on the kitchen counter and investigate	#
+neutral	A black dog and a small white and black dog are looking up at a kitchen countertop	A large dog and a small dog are standing next to the kitchen counter and are sniffing	#
+neutral	A large dog and a small dog are standing next to the kitchen counter and are investigating	Two dogs are looking up at a kitchen countertop	#
+neutral	A dog is rolling on the ground	A dog is sleeping on the ground	#
+neutral	A dirty tan dog is rolling in the dirt and looking right at the camera	A dog is sleeping on the ground	#
+entailment	An Arabic man is wearing a white hat	A white hat is being worn by an Arabic man	#
+entailment	A man with a white hat and brown shirt is behind a woman in red and is looking to the left	A man with a white hat and brown shirt is behind a woman in red and is looking to the side	#
+neutral	An Arabic man is wearing a white hat	A man with a white hat and brown shirt is behind a woman in red and is looking to the side	#
+neutral	A man with a white hat and brown shirt is behind a woman in red and is looking to the left	An Arabic man is wearing a white hat	#
+neutral	Little kids are playing in a water fountain in front of lots of people	Little kids are playing in a water fountain in front of few people	#
+entailment	Children are playing in a fountain that is spraying water from the ground	Children are playing in ground fountains	#
+neutral	Children are playing in a fountain that is spraying water from the ground	Animals are playing in fountains that spray water from the ground	#
+neutral	Little kids are playing in a water fountain in front of lots of people	Animals are playing in fountains that spray water from the ground	#
+contradiction	A cyclist on a yellow bike is airborne	There is no cyclist on a yellow bike airborne	#
+neutral	A man is wearing a beret and is riding the bicycle on a recreation trail	A woman is wearing a beret and is riding the bicycle on a recreation trail	#
+neutral	A man is wearing a beret and is riding the bicycle on a recreation trail	An old man with a grey beard is not riding a bike	#
+entailment	Five adults are sitting on stone steps	Five adults are sitting on steps made of stone	#
+entailment	People are sitting against a wall	People are sitting near a wall	#
+neutral	Five adults are sitting on stone steps	People are sitting near a wall	#
+neutral	Five adults are sitting on stone steps	People is standing against a wall	#
+neutral	People are sitting against a wall	Five adults are sitting on stone steps	#
+entailment	A man is rock climbing and a city and a bay are in the background	A person is rock climbing and a city and a bay are in the background	#
+neutral	A man is rock climbing, pausing and calculating the route	A person is rock climbing and a city and a bay are in the background	#
+neutral	A man is rock climbing, pausing and calculating the route	A man is rock climbing and a city and a bay are in the background	#
+neutral	A little girl in a pink shirt is playing t-ball and taking a swing	A girl is hitting a little tee with a baseball	#
+neutral	A little girl is hitting a baseball off a tee	A little boy in a pink shirt is playing t-ball and taking a swing	#
+neutral	A group of people is gathering at a stand at the fair	The people are running at a carnival	#
+contradiction	Rollerbladers are rolling in formation down a hill	Rollerbladers are not rolling in formation down a hill	#
+neutral	Rollerbladers are rolling in formation down a hill	A group of rollerbladers is lining up on the street	#
+entailment	A woman is marching with a pair of dogs	A woman is walking with a pair of dogs	#
+neutral	A woman is marching with a pair of dogs	A woman is showing a dog with very short hair at a dog show	#
+contradiction	A skateboarder is making a jump off a ramp	No skateboarder is making a jump off a ramp	#
+neutral	A skateboarder is making a jump off a ramp	A woman dressed in black is wearing inline skates and performing a trick on a rail	#
+neutral	A man dressed in black is wearing inline skates and performing a trick on a rail	A skateboarder is jumping off a ramp	#
+neutral	A man dressed in black is wearing inline skates and performing a trick on a rail	A skateboarder is making a jump off a ramp	#
+entailment	Three children are running down a grassy hillside	Three children are running down a hillside covered by grass	#
+neutral	Three children are running down hill	Three children are running up a grassy hillside	#
+contradiction	A black and orange bird is standing in the grass	A black and orange bird is not standing in the grass	#
+entailment	A shirtless man is posing with a girl who is hiking in a park	A shirtless person is posing with a girl who is hiking in a park	#
+entailment	A shirtless man is posing with a girl who is hiking in a park	A man without a shirt is posing with the arms spread near a woman	#
+neutral	A man without a shirt is posing with the arms spread next to a woman	A shirtless woman is posing with a girl who is hiking in a park	#
+entailment	Two white puppies are playing near a pool	Two white puppies are playing near water	#
+neutral	Two white dogs are running together	Two black puppies are playing near a pool	#
+neutral	A group of people are standing around a sound mixing table	A group of people are not looking at sound equipment	#
+contradiction	A young couple is lying on a bed together	A young couple is not lying in bed	#
+neutral	Three people are walking across a rope and wood bridge over a river	Three people are walking across a rope and steel bridge over a river	#
+neutral	Three people are walking across a rope and wood bridge over a river	People are not walking across a rope bridge over a rocky stream	#
+neutral	People are walking across a rope bridge over a rocky stream	Three people are walking across a rope and wood bridge over a river	#
+neutral	Four people are walking on a bridge over a body of water	Four people are sitting on a bridge over a body of water	#
+contradiction	Several people are walking in line across a bridge	Several people are not walking in line across a bridge	#
+entailment	A young boy is jumping into water	A young kid is jumping into water	#
+neutral	A child is wearing a yellow jacket and is jumping down from a rock	A young boy is jumping into water	#
+neutral	A girl is skipping rope on a sidewalk	A boy is jumping rope on a sidewalk near a parking garage	#
+entailment	A girl is jumping rope on a sidewalk near a parking garage	A girl is skipping rope on a sidewalk	#
+neutral	People are clustered around a bonfire at night	People are clustered around a bonfire at morning	#
+entailment	Two dogs are running through the park	Two animals are running through the park	#
+entailment	A boy is speeding down a steep slide	A kid is speeding down a steep slide	#
+neutral	A boy is speeding down a steep slide	A boy is wearing all black and is sliding down a blow up yellow slide	#
+neutral	A small white dog is running across a lawn	A brown and white dog with a brown and black bandanna is quickly running 	#
+neutral	A brown and white dog with a brown and black bandanna is running very fast	A small white dog is running in a lawn	#
+neutral	A brown and white dog with a brown and black bandanna is running very fast	A small white dog is running across a lawn	#
+neutral	A black dog on a leash is walking in the water	A white dog on a leash is walking in the water	#
+entailment	A black dog on a leash is walking in the water	The dog is on a leash and is walking in the water	#
+neutral	A little girl in a green coat and a boy holding a red sled are walking in the snow	A little girl in a green coat and a boy holding a red sled are lying in the snow	#
+neutral	A little girl in a green coat and a boy holding a red sled are walking in the snow	A child is wearing a coat and is carrying a red sled near a child in a green and black coat	#
+neutral	A boy is sitting in a seat	A toddler is sitting in a seat	#
+neutral	A boy is sitting in a seat	A toddler is sitting down	#
+neutral	A dog is catching a black frisbee	A dog is biting a black frisbee	#
+neutral	A large wet yellow dog is retrieving a toy	A large wet yellow dog is holding a toy	#
+neutral	A large wet yellow dog is retrieving a toy	A large wet yellow cat is retrieving a toy	#
+neutral	A woman is walking in a city street	A man is wearing a long black jacket and a brown hat and is walking past a park with a lot of blooming trees	#
+entailment	Two people are riding motorbikes	Motorbikes are being ridden by two people	#
+neutral	Dirt bikers are riding on a trail	Two people are not riding motorbikes	#
+neutral	Two people are riding motorbikes	Dirt bikers are riding on a trail	#
+entailment	A man is leaning against a pole and is surrounded by people	A man is leaning against a pole and is surrounded	#
+neutral	A man and a woman are standing in front of an art gallery and are looking at a map	A man and a woman are standing in front of an art gallery and are looking at a signboard 	#
+neutral	A man and a woman are standing in front of an art gallery and are looking at a map	A man and a woman are sitting in front of an art gallery and are looking at a map	#
+contradiction	A little dog is running on the sand	No little dog is running on the sand	#
+entailment	One boy in orange shorts is standing on a rock cliff over the water and the other boy in black shorts is jumping of it into the water	Two males are standing on a cliff edge and one is jumping into the sea	#
+entailment	A boy in blue shirt is looking at his hand near a stack of blocks on table	The boy in blue shirt is looking at his hand near the stack of blocks on table	#
+neutral	A boy in blue shirt is looking at his hand near a stack of blocks on table	A woman in blue shirt is looking at her hand near a stack of blocks on table	#
+neutral	A boy is playing a game with wooden blocks	A woman in blue shirt is looking at her hand near a stack of blocks on table	#
+neutral	A woman in a bikini is pulling a dog on a leash at the beach	A woman in a bikini is pulling a cat on a leash at the beach	#
+neutral	A woman in a bikini is pulling a dog on a leash at the beach	A woman is standing at the beach with an animal on a leash	#
+neutral	A woman is standing at the beach with a dog on a leash	A woman in a bikini is pulling a dog on a leash at the beach	#
+entailment	A small group of people are standing and two are sitting on the couch	A small group of people are standing and two are sitting on the sofa	#
+neutral	A small group of people are standing and two are sitting on the couch	A group of five young adults are lounging indoors	#
+neutral	The red and brown dog is digging its nose inside a holiday gift bag	The dog has its head inside a red and green gift bag	#
+neutral	The rider is biking in the snow and wearing a red jacket	A cyclist is biking in a snowy forest at day	#
+neutral	A cyclist is biking in a snowy forest at night	The rider is biking in the snow and wearing a red jacket	#
+neutral	A young girl in a bikini is jumping on the beach	A young girl in a bikini is sitting on the beach	#
+neutral	A young girl in a bikini is jumping on the beach	A girl with a bikini is playing in the dunes	#
+neutral	A little kid is wearing a hat and is walking in the wet sand	A white hat is being worn by a boy which is running on the beach	#
+neutral	A boy is wearing a white hat and is running on the beach	A little kid is wearing a hat and is walking in the dry sand	#
+entailment	A man in a black hat is reaching for a box	A person in a black hat is reaching for a box	#
+neutral	A young girl with a heart tank top is raising her hands as she is sliding	A blond kid is going down a slide and throwing up his arms	#
+neutral	A blond child is going down a slide and throwing up his arms	A young girl with a heart tank top is raising her hands as she is sliding	#
+entailment	A brown dog is running after a black dog on a rocky shore	A brown dog is running after a dark dog on a rocky shore	#
+neutral	A brown dog is running after a black dog on a rocky shore	Two dogs are playing on a beach	#
+entailment	Two dogs are playing on a rocky beach	Two dogs are playing on a beach made of rocks	#
+entailment	A black dog is approaching a golden dog on pebbly beach	A black animal is approaching a golden dog on pebbly beach	#
+neutral	A black dog is approaching a golden dog on pebbly beach	Two dogs are playing on a sandy beach	#
+neutral	Two dogs are playing on a rocky beach	A black dog is approaching a golden dog on pebbly beach	#
+entailment	A large white dog is jumping in the air over a snowy area	A large white animal is jumping up in the snow	#
+neutral	A large white dog is jumping in the air over a snowy area	A small white dog is jumping up in the snow	#
+neutral	Two young boys are wearing hats and sticking their colored tongues out	Two young girls are wearing hats and sticking their colored tongues out	#
+neutral	Two young boys are wearing hats and sticking their colored tongues out	Two kids are not sticking out blue and green colored tongues	#
+entailment	A dog is standing on the side of a mountain	A dog is standing on a mountain	#
+neutral	A white dog is standing on a grassy hillside	A dog is standing on the side of a mountain	#
+contradiction	Two boys are laying in the ocean close to the beach	Two boys are laying in the ocean far to the beach	#
+neutral	Two children are rolling in muddy water	Two boys are laying in the water close to the beach	#
+neutral	Two children are rolling in muddy water	Two boys are laying in the ocean close to the beach	#
+neutral	A brown and black dog is pointing the nose upwards	A black and brown cat is eyeing a fly	#
+neutral	A large man is sitting in a military accessories store	A small man is sitting in a military accessories store	#
+entailment	A grey dog is bouncing a soccer ball on its head in a grass field	A grey dog is bouncing a soccer ball on its head on a lawn	#
+contradiction	A grey dog is bouncing a soccer ball on its head in a grass field	A grey dog is bouncing a tennis ball on its head in a grass field	#
+entailment	A young black child is standing on the edge of a body of water near some buckets	A young black child is waiting on the edge of a body of water near some buckets	#
+contradiction	A boy next to some buckets of rags is holding an object	A boy next to some buckets of rags is not holding an object	#
+neutral	A young black child is standing on the edge of a body of water near some buckets	A boy next to some buckets of rags is not holding an object	#
+neutral	A boy next to some buckets of rags is holding an object	A young black child is waiting on the edge of a body of water near some buckets	#
+neutral	A boy next to some buckets of rags is holding an object	A young white child is not standing on the edge of a body of water near some buckets	#
+contradiction	Two children are playing soccer in the park	Two children are not playing soccer in the park	#
+neutral	A woman is wearing a colorful shirt and a lot of jewelry	A man with Indian clothing and henna on his hand is going through paperwork	#
+neutral	A girl with Indian clothing and henna on her hand is going through paperwork	The woman is wearing a colorful shirt and a lot of jewelry	#
+neutral	A woman is wearing a colorful shirt and a lot of jewelry	A girl with Indian clothing and henna on her hand is going through paperwork	#
+contradiction	A man is standing in the middle of a gym and is wearing a jersey	There is no man standing in the middle of a gym and is wearing a jersey	#
+neutral	A man in a black jersey is standing in a gym	A woman in a black jersey is standing in a gym	#
+neutral	A man is standing in the middle of a gym and is wearing a jersey	A man in a jersey which is black is standing in a gym	#
+contradiction	A snowboarder is jumping off the snow	There is no snowboarder jumping off the snow	#
+entailment	The snowboarder is jumping off a snow covered hill	The snowboarder is jumping off a snowy hill	#
+entailment	The snowboarder is jumping off a snow covered hill	A snowboarder is jumping off the snow	#
+entailment	A lady is wearing a black dress and is carrying a white cross	A lady is dressed in black and is carrying a white cross	#
+entailment	A woman in a black dress is pulling a cart and is standing in front of two men who are seated on a park bench	A woman in a black dress is pulling a cart and is standing near two men who are seated on a park bench	#
+neutral	A lady is wearing a black dress and is carrying a white cross	A man in a black dress is pulling a cart and is standing in front of two men who are seated on a park bench	#
+neutral	A woman in a black dress is pulling a cart and is standing in front of two men who are seated on a park bench	A boy is wearing a black dress and is carrying a white cross	#
+neutral	A lady is wearing a black dress and is carrying a white cross	A woman in a black dress is pulling a cart and is standing in front of two men who are seated on a park bench	#
+neutral	A boy is standing next to the opening of a fountain	A girl is standing next to the opening of a fountain	#
+neutral	A boy in a swimsuit is sitting on top of a circular fountain	The boy is standing next to the opening of a fountain	#
+neutral	A brown and white dog is jumping on the sidewalk	A little brown and white dog is running on the road	#
+entailment	A distant person with a blue backpack is hiking in rocky area	A distant person with a blue backpack is hiking area full of rocks	#
+entailment	A distant person with a blue backpack is hiking in rocky area	The person is walking	#
+entailment	A distant person with a blue backpack is hiking in rocky area	The person is hiking	#
+neutral	A yellow dog is chasing a ball	A dog is turning on the grass and pursuing a flying ball	#
+contradiction	A lady is standing on the street and is surrounded by school children	No lady is standing on the street and is surrounded by school children	#
+neutral	A girl in a strange outfit is riding the bike	A bike is being ridden by a woman wearing paint and costume pieces on a busy street	#
+entailment	A dog is running with a volleyball	A dog is running with a ball	#
+neutral	A girl in a band is playing the flute	A boy in a band is playing the flute	#
+entailment	A girl in a uniform is playing the flute with a marching band	A girl in a band is playing an instrument	#
+entailment	A man is standing at the wheel of a classic American car that has its door and trunk open	A person is standing at the wheel of a classic American car that has its door and trunk open	#
+neutral	A man is standing at the wheel of a classic American car that has its door and trunk open	A woman is standing at the wheel of a classic American car that has its door and trunk open	#
+neutral	The man in blue is posing for a picture next to a car	The woman in blue is posing for a picture next to a car	#
+neutral	A woman is sitting near a flower bed and is overlooking a tunnel	Two people are standing on a bench	#
+neutral	A woman is sitting near a flower bed and is overlooking a tunnel	Two people are sitting on a bench	#
+neutral	A man by a brick wall is wearing a mask around his mouth and a hair net	A woman by a brick wall is wearing a mask around her mouth and a hair net	#
+neutral	A man by a brick wall is wearing a mask around his mouth and a hair net	A man is wearing a clear plastic cap and a face mask	#
+neutral	Two dogs are in a kennel on their hind legs and are facing one another	Two dogs are playing with each other	#
+neutral	A black dog and a yellow dog are playing with each other	Two cats are in a kennel on their hind legs and are facing one another	#
+neutral	A black dog and a yellow dog are playing with each other	Two dogs are in a kennel on their hind legs and are facing one another	#
+entailment	Two dogs and two people are walking in the woods	Two dogs and two people are walking in a wood	#
+neutral	Two women with dogs are walking on a forest path	Two dogs and two people are sitting in the woods	#
+neutral	A man is snowboarding down a railing in the snow	A woman is snowboarding down a railing in the snow	#
+entailment	A man is skiing down a hill and over a red obstacle	A man is skiing down a hill and jumping a red obstacle	#
+entailment	Two men are taking a break from construction	Two men are taking a break from work	#
+neutral	Two construction workers are sitting up on the side of a building	Two construction workers are sitting up on the top of a building	#
+neutral	Two men are taking a break from construction	Two construction workers are sitting up on the side of a building	#
+neutral	A skateboarder is jumping in the air	A man in a red shirt is doing a trick with the rollerblades	#
+neutral	A skateboarder is jumping in the air	A man in a red shirt is doing a trick with the skateboard	#
+entailment	Three friends are making faces for the camera	Three friends are making faces for a photo	#
+neutral	Two men and a girl in front of a wood panel wall are posing with funny faces	Three enemies are making faces for the camera	#
+neutral	Two men and a girl in front of a wood panel wall are posing with funny faces	The friends are making faces for the camera	#
+neutral	Three friends are making faces for the camera	Two men and a girl in front of a wood panel wall are posing with funny faces	#
+neutral	Four people are walking along a city sidewalk and the one in the green hat is talking on a cell phone	A group of people is not walking down the street and a person in a green hat is on the phone	#
+neutral	A group of people is walking down the street and a person in a green hat is on the phone	Four people are walking along a city sidewalk and the one in the green hat is not talking on a cell phone	#
+entailment	Four people are walking along a city sidewalk and the one in the green hat is talking on a cell phone	A group of people is walking down the street and a person in a green hat is on the phone	#
+neutral	A person is standing in the snow at the edge of a mountain	A woman is standing at dusk on an almost pristine, snowy road, that is lit only by headlights	#
+neutral	Three women are sitting together near woven walls	Three men are sitting together near woven walls	#
+neutral	Three women are sitting in a village	Three women are running in a village	#
+neutral	Three women are sitting together near woven walls	Three women are sitting in a village	#
+neutral	A surfer in a black wetsuit is riding a foamy wave	A surfer is surfing a big wave	#
+contradiction	A person with a red hooded jacket and a black backpack is walking near a rocky wall	A person with a red hooded jacket and a black backpack is not walking near a rocky wall	#
+entailment	A man in a red jacket and khaki pants is walking through an American state	A person in a red jacket and khaki pants is walking through an American state	#
+neutral	A man in a red jacket and khaki pants is walking through an American state	A person with a red hooded jacket and a black backpack is not walking near a rocky wall	#
+neutral	A person with a red hooded jacket and a black backpack is walking near a rocky wall	A man in a red jacket and khaki pants is walking through an American state	#
+entailment	The players is maneuvering for the soccer ball	The players is maneuvering for the ball	#
+entailment	Two children are playing in the surf	Two children are playing	#
+neutral	A kid is splashing in the ocean	Two children are not playing in the surf	#
+neutral	Two children are playing in the surf	A kid is splashing in the pool	#
+entailment	A man is wearing a purple shirt and black leather chaps and is posing for the camera	A model is wearing a purple shirt and black leather chaps and is posing for the camera	#
+contradiction	A man is wearing a purple shirt and black leather chaps and is posing for the camera	A man is not wearing a purple shirt and black leather chaps and is posing for the camera	#
+neutral	The man dressed in leather chaps and a purple shirt is standing in front of someone lookers	A man is not wearing a purple shirt and black leather chaps and is posing for the camera	#
+entailment	Two dogs are running and trying to catch a soccer ball	Two dogs are running and trying to catch a ball	#
+neutral	Two dogs are running and trying to catch a soccer ball	Two cats on a lawn are playing with a plastic toy	#
+neutral	Two dogs on a lawn are playing with a plastic toy	Two dogs are running and trying to catch a ball	#
+neutral	A dog is in the sand that is blowing in the wind	A cat is in a sandy area with the sand that is being stirred up into the air and several plants are in the background	#
+entailment	The black and white dog is running outdoors	A black and white dog is running outdoors	#
+neutral	The black and white dog is running outdoors	The black and white dog is sitting on a green yard	#
+entailment	The black and white dog is running in a green yard	The black and white dog is running outdoors	#
+neutral	A woman wearing a blue shirt and high heels is standing on the sidewalk next to a man	A couple standing on the curb	#
+neutral	A woman wearing a blue shirt and high heels is standing on the sidewalk next to a man	A man and a woman are jumping on the curb	#
+neutral	A dog is jumping in the shade of some trees	A dog is jumping on a trees in the shades	#
+neutral	A dog is jumping high into the air in the country	No dog is jumping in the shade of some trees	#
+neutral	A dog is jumping high into the air in the country	A dog is jumping on a trees in the shades	#
+neutral	A dog is jumping high into the air in the country	A dog is jumping in the shade of some trees	#
+neutral	A man on a green bike is performing tricks on a dirt ramp	A stuntman on a bike is in the air near a body of water	#
+neutral	A person on a bike is in the air near a body of water	A man on a green car is performing tricks on a dirt ramp	#
+entailment	A young swimmer is sitting in a bathing suit and waiting for the next race	A kid is waiting wearing swim gear	#
+neutral	A kid is sitting wearing swim gear	A young swimmer is sitting in a bathing suit and waiting for the next race	#
+neutral	A black dog and a tan dog are fighting	A black dog and a white dog are wrestling on the floor	#
+contradiction	Four dogs are playing in a grassy area	Four dogs are not playing in a grassy area	#
+entailment	A cluster of four brown dogs are playing in a field of brown grass	Four dogs are playing in a area covered by grass	#
+entailment	A cluster of four brown dogs are playing in a field of brown grass	Four dogs are playing in a grassy area	#
+contradiction	The dog is having a rest in the park	The dog is having a rest in the living room	#
+neutral	A big brown and white spotted dog is lying on a jacket on the street	A big brown and white spotted dog is lying on a cloth on the street	#
+neutral	A big brown and white spotted dog is lying on a jacket on the street	A small brown and white spotted dog is lying on a jacket on the street	#
+neutral	A big brown and white spotted dog is lying on a jacket on the street	The dog is having a rest in the park	#
+neutral	A woman is playing with a brown dog on a garden path	A woman is playing with a brown cat on a garden path	#
+neutral	A woman is petting a dog near a stone path	A woman is playing with a brown cat on a garden path	#
+neutral	Two men are walking through the water	Two men are standing in the ocean	#
+neutral	Two men are walking through the water	Two men are swimming in deep water	#
+neutral	Two men are standing in deep water	Two men are walking through the water	#
+entailment	A white car and a yellow car are racing down the track	Two cars are racing down the track	#
+neutral	A white car and a yellow car are racing down the track	A white bike and a yellow bike are racing down the track	#
+entailment	Two race cars are on a road in front of a grassy parking area	Two cars for racing are on a road in front of a grassy parking area	#
+neutral	A white car and a yellow car are racing down the track	No race car is on a road in front of a grassy parking area	#
+neutral	Two race cars are on a road in front of a grassy parking area	A white car and a yellow car are racing down the track	#
+entailment	A man on a yellow sport bike is doing a wheelie and a friend on a black bike is catching up	A biker on a yellow sport bike is doing a wheelie and a friend on a black bike is catching up	#
+neutral	The orange rider is driving a motorcycle on one wheel	A man on a yellow sport bike is doing a wheelie and a friend on a white bike is catching up	#
+contradiction	A group of children is playing tambourines	A group of children is not playing tambourines	#
+entailment	A group of children in a church basement is playing maracas and tambourines	Tambourines are being played by a group of children	#
+entailment	A group of children in a church basement is playing maracas and tambourines	A group of children is playing tambourines	#
+contradiction	A dog is running through the snow	No dog is running through the snow	#
+entailment	A brown dog is running in the snow	A dog is running through the white snow	#
+entailment	A brown dog is running in the snow	A dog is running through the snow	#
+neutral	An elderly man is sitting on a bench	A young man is sitting on a bench	#
+neutral	An elderly woman is sitting on a bench and is wearing a gray jacket and black pants	An elder man is sitting on a bench and is wearing a gray jacket and black pants	#
+neutral	An elderly man is sitting on a bench	The woman is sitting on a bench and is wearing a gray jacket and black pants	#
+entailment	An elderly woman is sitting on a bench and is wearing a gray jacket and black pants	An old person is sitting on a bench	#
+neutral	An elderly woman is sitting on a bench and is wearing a gray jacket and black pants	An elderly man is sitting on a bench	#
+neutral	A dog is fetching a stick out of very clear water	A dog is fetching a stick out of very dirty water	#
+entailment	A small black and white dog is carrying a stick and is swimming	A small black and white dog is biting a stick and is swimming	#
+neutral	A small black and white dog is carrying a stick and is swimming	A big black and white dog is carrying a stick and is swimming	#
+neutral	A dog is fetching a stick out of very clear water	A small black and white dog is biting a stick and is swimming	#
+neutral	A dog is fetching a stick out of very clear water	A big black and white dog is carrying a stick and is swimming	#
+neutral	A dog is fetching a stick out of very clear water	A small black and white dog is carrying a stick and is swimming	#
+neutral	The girl in the blue coverall is painting	The woman is holding the paintbrush next to the artist's easel 	#
+neutral	The girl in the blue coverall is painting	There is no lady holding the paintbrush next to the artist's easel 	#
+neutral	The lady is holding the paintbrush next to the artist's easel 	The girl in the blue coverall is painting	#
+neutral	A yellow dog is running down a sandy path	A golden retriever is not running	#
+entailment	A black and white dog is jumping for a ball	The black and white dog is jumping for the ball	#
+neutral	A dog is standing on one leg and is waiting for a soccer ball	The black and white dog is jumping for the ball	#
+entailment	People are riding two camels at the beach	People are riding two camels on the sand	#
+neutral	A man is standing in the water at the base of a waterfall	The man is standing in a lake near a waterfall	#
+neutral	A man is standing in the water at the base of a waterfall	The man is swimming in a body of water near a waterfall	#
+entailment	A man is standing in the water at the base of a waterfall	The man is standing in a body of water near a waterfall	#
+contradiction	A brown and white dog is running through the river	A brown and white dog is not running through the river	#
+entailment	A dog is emerging from a lake	An animal is emerging from a lake	#
+neutral	A brown and white dog is running through the river	An animal is emerging from a lake	#
+neutral	A dog is emerging from a lake	A brown and white dog is running through the river	#
+neutral	A brown and white dog is catching a dirty tennis ball in a dirt field	A brown and white dog is biting a dirty tennis ball in a dirt field	#
+neutral	A dog is running on the sand and chasing a ball	A brown and white dog is biting a dirty tennis ball in a dirt field	#
+neutral	A dog is running on the sand and chasing a ball	A brown and white dog is catching a dirty tennis ball in a dirt field	#
+entailment	A shirtless man is escorting a horse that is pulling a carriage along a paved road	A shirtless man is escorting a horse that is pulling a carriage along a road	#
+entailment	A shirtless man is escorting a horse that is pulling a carriage along a paved road	A shirtless man is leading a carriage that is being pulled by a horse	#
+neutral	A shirtless man is escorting a horse that is pulling a carriage along a paved road	A shirtless woman is leading a horse that is pulling a carriage	#
+entailment	A shirtless man is escorting a horse that is pulling a carriage along a paved road	A shirtless man is leading a horse that is pulling a carriage	#
+neutral	A little girl and a woman wearing a yellow shirt are getting splashed by a city fountain	The young girl is playing on the edge of a fountain and an older woman is watching her	#
+entailment	A bicyclist is performing a trick over a heavily graphitized wall	A bicyclist is performing a trick over wall full of graffiti	#
+neutral	A cyclist is performing a jump on a bicycle	A bicyclist is performing a trick over wall full of graffiti	#
+neutral	A bicyclist is performing a trick over a heavily graphitized wall	A cyclist is performing a jump on a bicycle	#
+neutral	A woman is crouching down next to a dog and is smiling at a little girl sitting on the sidewalk	A man is crouching down next to a dog and is smiling at a little girl sitting on the sidewalk	#
+neutral	A woman is showing a small dog to an infant	A woman is crouching down next to a dog and is smiling at a young girl sitting on the sidewalk	#
+neutral	A woman is crouching down next to a dog and is smiling at a little girl sitting on the sidewalk	A woman is showing a small cat to an infant	#
+neutral	A woman is showing a small dog to an infant	A woman is crouching down next to a dog and is smiling at a little girl sitting on the sidewalk	#
+neutral	A boy wearing a striped shirt is running barefoot on the sandy hill	A girl wearing a striped shirt is running barefoot on the sandy hill	#
+neutral	A boy wearing a striped shirt is running barefoot on the sandy hill	A boy is running on the beach	#
+neutral	A boy is running through the sand	A girl wearing a striped shirt is running barefoot on the sandy hill	#
+contradiction	The motorcycle racer is riding a red and black bike	No motorcycle racer is riding a red and black bike	#
+neutral	The motorcycle racer is riding a red and black bike	A woman is leaning on a racing motorcycle	#
+neutral	The motorcycle racer is riding a red and black bike	A man is leaning on a racing motorcycle	#
+neutral	A woman is shooting at target practice	A man is shooting at target practice	#
+entailment	A woman is wearing ear protection and is firing a gun at an indoor shooting range	A woman is firing at target practice	#
+contradiction	A little boy is sticking his tongue out for the camera and another boy is looking on	A little boy is sticking his tongue out for the camera and another boy is not looking	#
+neutral	Two young boys are looking up at the camera and one is sticking out his tongue	A little boy is sticking his tongue out for the camera and another boy is not looking	#
+entailment	A little boy is sticking his tongue out for the camera and another boy is looking on	Two young boys are looking up at the camera and one is sticking out his tongue	#
+entailment	A dog is running on concrete and is holding a blue ball	A dog is running on concrete and is holding a ball	#
+neutral	A dog is running on concrete and is holding a blue ball	The large dog is walking outside and is carrying a colorful toy in its mouth	#
+neutral	A man is climbing a rope	There is no man holding a mask in his raised hand	#
+neutral	A boy wearing a striped shirt is running barefoot on the sandy hill	A woman is wearing a blue helmet and is riding a bicycle in a parking lot	#
+neutral	A boy is standing next to the opening of a fountain	The man is standing on a rocky mountain and gray clouds are in the background	#
+neutral	A father is pushing his daughter on a go-kart and another girl is watching	A white dog is standing on fallen leaves	#
+neutral	A big dog and a small white dog are playing together	Two construction workers are sitting up on the top of a building	#
+neutral	The man is doing a wheelie with a motorcycle on ground which is mostly barren	There is no child holding a squirt gun	#
+neutral	A bike rider in a black and red uniform is standing on a dirt bike	Five adults are sitting on stone steps	#
+neutral	A cat is playing with a watermelon	A woman is looking at the view of a city	#
+neutral	A person in a black jacket is doing tricks on a motorbike	The girl, who is little, is carefully combing her hair into a pony tail	#
+neutral	A large dog and a small dog are standing next to the kitchen counter and are investigating	A smiling boy in winter clothes is waving his mittened hands outside a building in the snow	#
+neutral	A white and tan dog is running through the tall and green grass	The lady is eating slices of meat	#
+neutral	A child is playing with a water spout outdoors and the rest of his family is watching	A man is standing beside a birdcage which is large and colorful	#
+neutral	A man and two women in a darkened room are sitting at a table with candles	A man is abruptly falling off a horse on a track laid in the wild	#
+neutral	A brown puppy is gnawing a metallic post that is stuck in the ground	A malnourished looking dog is standing on its hind legs and preparing to jump	#
+neutral	A racer in full gear is wearing a helmet with sponsor logos and is riding a red sport motorcycle	The snowboarder is jumping off a snow covered hill	#
+neutral	A dog in a colored coat is running across the yard	A black and brown dog is eyeing an insect	#
+neutral	The person is riding a motorbike on a sandy track	A man is lifting barbells	#
