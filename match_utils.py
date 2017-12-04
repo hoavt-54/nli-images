@@ -16,49 +16,49 @@ def cosine_distance(y1,y2):
     y2_norm = tf.sqrt(tf.maximum(tf.reduce_sum(tf.square(y2), axis=-1), eps)) 
     return cosine_numerator / y1_norm / y2_norm
 
-def cal_relevancy_matrix(in_question_repres, in_passage_repres):
-    in_question_repres_tmp = tf.expand_dims(in_question_repres, 1) # [batch_size, 1, question_len, dim]
-    in_passage_repres_tmp = tf.expand_dims(in_passage_repres, 2) # [batch_size, passage_len, 1, dim]
-    relevancy_matrix = cosine_distance(in_question_repres_tmp,in_passage_repres_tmp) # [batch_size, passage_len, question_len]
+def cal_relevancy_matrix(in_premise_repres, in_hypothesis_repres):
+    in_premise_repres_tmp = tf.expand_dims(in_premise_repres, 1) # [batch_size, 1, premise_len, dim]
+    in_hypothesis_repres_tmp = tf.expand_dims(in_hypothesis_repres, 2) # [batch_size, hypothesis_len, 1, dim]
+    relevancy_matrix = cosine_distance(in_premise_repres_tmp,in_hypothesis_repres_tmp) # [batch_size, hypothesis_len, premise_len]
     return relevancy_matrix
 
-def mask_relevancy_matrix(relevancy_matrix, question_mask, passage_mask):
-    # relevancy_matrix: [batch_size, passage_len, question_len]
-    # question_mask: [batch_size, question_len]
-    # passage_mask: [batch_size, passsage_len]
-    relevancy_matrix = tf.multiply(relevancy_matrix, tf.expand_dims(question_mask, 1))
-    relevancy_matrix = tf.multiply(relevancy_matrix, tf.expand_dims(passage_mask, 2))
+def mask_relevancy_matrix(relevancy_matrix, premise_mask, hypothesis_mask):
+    # relevancy_matrix: [batch_size, hypothesis_len, premise_len]
+    # premise_mask: [batch_size, premise_len]
+    # hypothesis_mask: [batch_size, passsage_len]
+    relevancy_matrix = tf.multiply(relevancy_matrix, tf.expand_dims(premise_mask, 1))
+    relevancy_matrix = tf.multiply(relevancy_matrix, tf.expand_dims(hypothesis_mask, 2))
     return relevancy_matrix
 
-def cal_cosine_weighted_question_representation(question_representation, cosine_matrix, normalize=False):
-    # question_representation: [batch_size, question_len, dim]
-    # cosine_matrix: [batch_size, passage_len, question_len]
+def cal_cosine_weighted_premise_representation(premise_representation, cosine_matrix, normalize=False):
+    # premise_representation: [batch_size, premise_len, dim]
+    # cosine_matrix: [batch_size, hypothesis_len, premise_len]
     if normalize: cosine_matrix = tf.nn.softmax(cosine_matrix)
-    expanded_cosine_matrix = tf.expand_dims(cosine_matrix, axis=-1) # [batch_size, passage_len, question_len, 'x']
-    weighted_question_words = tf.expand_dims(question_representation, axis=1) # [batch_size, 'x', question_len, dim]
-    weighted_question_words = tf.reduce_sum(tf.multiply(weighted_question_words, expanded_cosine_matrix), axis=2)# [batch_size, passage_len, dim]
+    expanded_cosine_matrix = tf.expand_dims(cosine_matrix, axis=-1) # [batch_size, hypothesis_len, premise_len, 'x']
+    weighted_premise_words = tf.expand_dims(premise_representation, axis=1) # [batch_size, 'x', premise_len, dim]
+    weighted_premise_words = tf.reduce_sum(tf.multiply(weighted_premise_words, expanded_cosine_matrix), axis=2)# [batch_size, hypothesis_len, dim]
     if not normalize:
-        weighted_question_words = tf.div(weighted_question_words, tf.expand_dims(tf.add(tf.reduce_sum(cosine_matrix, axis=-1),eps),axis=-1))
-    return weighted_question_words # [batch_size, passage_len, dim]
+        weighted_premise_words = tf.div(weighted_premise_words, tf.expand_dims(tf.add(tf.reduce_sum(cosine_matrix, axis=-1),eps),axis=-1))
+    return weighted_premise_words # [batch_size, hypothesis_len, dim]
 
 
-def cal_cosine_weighted_image_representation(question_representation, cosine_matrix, normalize=False):
-    # question_representation: [batch_size, question_len, dim]
-    # cosine_matrix: [batch_size, passage_len, question_len]
+def cal_cosine_weighted_image_representation(premise_representation, cosine_matrix, normalize=False):
+    # premise_representation: [batch_size, premise_len, dim]
+    # cosine_matrix: [batch_size, hypothesis_len, premise_len]
     if normalize: cosine_matrix = tf.nn.softmax(cosine_matrix)
-    expanded_cosine_matrix = tf.expand_dims(cosine_matrix, axis=-1) # [batch_size, passage_len, question_len, 'x']
-    weighted_question_words = tf.expand_dims(question_representation, axis=1) # [batch_size, 'x', question_len, dim]
-    weighted_question_words = tf.reduce_sum(tf.multiply(weighted_question_words, expanded_cosine_matrix), axis=2)# [batch_size, passage_len, dim]
+    expanded_cosine_matrix = tf.expand_dims(cosine_matrix, axis=-1) # [batch_size, hypothesis_len, premise_len, 'x']
+    weighted_premise_words = tf.expand_dims(premise_representation, axis=1) # [batch_size, 'x', premise_len, dim]
+    weighted_premise_words = tf.reduce_sum(tf.multiply(weighted_premise_words, expanded_cosine_matrix), axis=2)# [batch_size, hypothesis_len, dim]
     if not normalize:
-        weighted_question_words = tf.div(weighted_question_words, tf.expand_dims(tf.add(tf.reduce_sum(cosine_matrix, axis=-1),eps),axis=-1))
-    return weighted_question_words # [batch_size, passage_len, dim]
+        weighted_premise_words = tf.div(weighted_premise_words, tf.expand_dims(tf.add(tf.reduce_sum(cosine_matrix, axis=-1),eps),axis=-1))
+    return weighted_premise_words # [batch_size, hypothesis_len, dim]
 
 
 
 def multi_perspective_expand_for_3D(in_tensor, decompose_params):
-    in_tensor = tf.expand_dims(in_tensor, axis=2) #[batch_size, passage_len, 'x', dim]
+    in_tensor = tf.expand_dims(in_tensor, axis=2) #[batch_size, hypothesis_len, 'x', dim]
     decompose_params = tf.expand_dims(tf.expand_dims(decompose_params, axis=0), axis=0) # [1, 1, decompse_dim, dim]
-    return tf.multiply(in_tensor, decompose_params)#[batch_size, passage_len, decompse_dim, dim]
+    return tf.multiply(in_tensor, decompose_params)#[batch_size, hypothesis_len, decompse_dim, dim]
 
 def multi_perspective_expand_for_2D(in_tensor, decompose_params):
     in_tensor = tf.expand_dims(in_tensor, axis=1) #[batch_size, 'x', dim]
@@ -69,9 +69,9 @@ def multi_perspective_expand_for_1D(in_tensor, decompose_params):
     in_tensor = tf.expand_dims(in_tensor, axis=0) #['x', dim]
     return tf.multiply(in_tensor, decompose_params) # [decompse_dim, dim]
 
-def cal_full_matching(passage_representation, full_question_representation, decompose_params):
-    # passage_representation: [batch_size, passage_len, dim]
-    # full_question_representation: [batch_size, dim]
+def cal_full_matching(hypothesis_representation, full_premise_representation, decompose_params):
+    # hypothesis_representation: [batch_size, hypothesis_len, dim]
+    # full_premise_representation: [batch_size, dim]
     # decompose_params: [decompose_dim, dim]
     def singel_instance(x):
         p = x[0]
@@ -80,15 +80,15 @@ def cal_full_matching(passage_representation, full_question_representation, deco
         p = multi_perspective_expand_for_2D(p, decompose_params) # [pasasge_len, decompose_dim, dim]
         q = multi_perspective_expand_for_1D(q, decompose_params) # [decompose_dim, dim]
         q = tf.expand_dims(q, 0) # [1, decompose_dim, dim]
-        return cosine_distance(p, q) # [passage_len, decompose]
-    elems = (passage_representation, full_question_representation)
-    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, passage_len, decompse_dim]
+        return cosine_distance(p, q) # [hypothesis_len, decompose]
+    elems = (hypothesis_representation, full_premise_representation)
+    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, hypothesis_len, decompse_dim]
    
 
 # match each time step against full image representation
 # for now full_img_repres = average(all_features)
-def cal_full_matching_img(passage_representation, full_img_representation, w_decompose_params, img_decompose_params):
-    # passage_representation: [batch_size, passage_len, dim]
+def cal_full_matching_img(hypothesis_representation, full_img_representation, w_decompose_params, img_decompose_params):
+    # hypothesis_representation: [batch_size, hypothesis_len, dim]
     # full_img_representation: [batch_size, full_img_dim]
     # decompose_params: [decompose_dim, dim]
     # img_decompose_params: [decompose_dim, img_dim] 
@@ -99,75 +99,75 @@ def cal_full_matching_img(passage_representation, full_img_representation, w_dec
         p = multi_perspective_expand_for_2D(p, w_decompose_params) # [pasasge_len, decompose_dim, dim]
         q = multi_perspective_expand_for_1D(q, img_decompose_params) # [decompose_dim, dim]
         q = tf.expand_dims(q, 0) # [1, decompose_dim, dim]
-        return cosine_distance(p, q) # [passage_len, decompose]
-    elems = (passage_representation, full_img_representation)
-    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, passage_len, decompse_dim]
+        return cosine_distance(p, q) # [hypothesis_len, decompose]
+    elems = (hypothesis_representation, full_img_representation)
+    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, hypothesis_len, decompse_dim]
 
 
 
 
 #match each time step against every image features
-def cal_maxpooling_matching_img(passage_rep, img_features, w_decompose_params, img_decompose_params):
-    # passage_representation: [batch_size, passage_len, dim]
+def cal_maxpooling_matching_img(hypothesis_rep, img_features, w_decompose_params, img_decompose_params):
+    # hypothesis_representation: [batch_size, hypothesis_len, dim]
     # img_features: [batch_size, features_num, img_dim]
     # w_decompose_params: [decompose_dim, dim]
     # img_decompose_params: [decompose_dim, img_dim]
     def singel_instance(x):
         p = x[0]
         q = x[1]
-        # p: [pasasge_len, dim], q: [question_len, dim]
+        # p: [pasasge_len, dim], q: [premise_len, dim]
         p = multi_perspective_expand_for_2D(p, w_decompose_params) # [pasasge_len, decompose_dim, dim]
         q = multi_perspective_expand_for_2D(q, img_decompose_params) # [features_num, decompose_dim, dim]
         p = tf.expand_dims(p, 1) # [pasasge_len, 1, decompose_dim, dim]
         q = tf.expand_dims(q, 0) # [1, features_num, decompose_dim, dim]
-        return cosine_distance(p, q) # [passage_len, features_num, decompose]
-    elems = (passage_rep, img_features)
-    matching_matrix = tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, passage_len, features_num, decompse_dim]
-    return tf.concat([tf.reduce_max(matching_matrix, axis=2), tf.reduce_mean(matching_matrix, axis=2)], 2)# [batch_size, passage_len, 2*decompse_dim]
+        return cosine_distance(p, q) # [hypothesis_len, features_num, decompose]
+    elems = (hypothesis_rep, img_features)
+    matching_matrix = tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, hypothesis_len, features_num, decompse_dim]
+    return tf.concat([tf.reduce_max(matching_matrix, axis=2), tf.reduce_mean(matching_matrix, axis=2)], 2)# [batch_size, hypothesis_len, 2*decompse_dim]
 
 
-def cal_maxpooling_matching(passage_rep, question_rep, decompose_params):
-    # passage_representation: [batch_size, passage_len, dim]
-    # qusetion_representation: [batch_size, question_len, dim]
+def cal_maxpooling_matching(hypothesis_rep, premise_rep, decompose_params):
+    # hypothesis_representation: [batch_size, hypothesis_len, dim]
+    # qusetion_representation: [batch_size, premise_len, dim]
     # decompose_params: [decompose_dim, dim]
     
     def singel_instance(x):
         p = x[0]
         q = x[1]
-        # p: [pasasge_len, dim], q: [question_len, dim]
+        # p: [pasasge_len, dim], q: [premise_len, dim]
         p = multi_perspective_expand_for_2D(p, decompose_params) # [pasasge_len, decompose_dim, dim]
-        q = multi_perspective_expand_for_2D(q, decompose_params) # [question_len, decompose_dim, dim]
+        q = multi_perspective_expand_for_2D(q, decompose_params) # [premise_len, decompose_dim, dim]
         p = tf.expand_dims(p, 1) # [pasasge_len, 1, decompose_dim, dim]
-        q = tf.expand_dims(q, 0) # [1, question_len, decompose_dim, dim]
-        return cosine_distance(p, q) # [passage_len, question_len, decompose]
-    elems = (passage_rep, question_rep)
-    matching_matrix = tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, passage_len, question_len, decompse_dim]
-    return tf.concat([tf.reduce_max(matching_matrix, axis=2), tf.reduce_mean(matching_matrix, axis=2)], 2)# [batch_size, passage_len, 2*decompse_dim]
+        q = tf.expand_dims(q, 0) # [1, premise_len, decompose_dim, dim]
+        return cosine_distance(p, q) # [hypothesis_len, premise_len, decompose]
+    elems = (hypothesis_rep, premise_rep)
+    matching_matrix = tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, hypothesis_len, premise_len, decompse_dim]
+    return tf.concat([tf.reduce_max(matching_matrix, axis=2), tf.reduce_mean(matching_matrix, axis=2)], 2)# [batch_size, hypothesis_len, 2*decompse_dim]
 
-def cal_maxpooling_matching_for_word(passage_rep, question_rep, decompose_params):
-    # passage_representation: [batch_size, passage_len, dim]
-    # qusetion_representation: [batch_size, question_len, dim]
+def cal_maxpooling_matching_for_word(hypothesis_rep, premise_rep, decompose_params):
+    # hypothesis_representation: [batch_size, hypothesis_len, dim]
+    # qusetion_representation: [batch_size, premise_len, dim]
     # decompose_params: [decompose_dim, dim]
     
     def singel_instance(x):
         p = x[0]
         q = x[1]
-        q = multi_perspective_expand_for_2D(q, decompose_params) # [question_len, decompose_dim, dim]
-        # p: [pasasge_len, dim], q: [question_len, dim]
+        q = multi_perspective_expand_for_2D(q, decompose_params) # [premise_len, decompose_dim, dim]
+        # p: [pasasge_len, dim], q: [premise_len, dim]
         def single_instance_2(y):
             # y: [dim]
             y = multi_perspective_expand_for_1D(y, decompose_params) #[decompose_dim, dim]
             y = tf.expand_dims(y, 0) # [1, decompose_dim, dim]
-            matching_matrix = cosine_distance(y, q)#[question_len, decompose_dim]
+            matching_matrix = cosine_distance(y, q)#[premise_len, decompose_dim]
             return tf.concat([tf.reduce_max(matching_matrix, axis=0), tf.reduce_mean(matching_matrix, axis=0)], 0) #[2*decompose_dim]
-        return tf.map_fn(single_instance_2, p, dtype=tf.float32) # [passage_len, 2*decompse_dim]
-    elems = (passage_rep, question_rep)
-    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, passage_len, 2*decompse_dim]
+        return tf.map_fn(single_instance_2, p, dtype=tf.float32) # [hypothesis_len, 2*decompse_dim]
+    elems = (hypothesis_rep, premise_rep)
+    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, hypothesis_len, 2*decompse_dim]
 
 
-def cal_attentive_matching(passage_rep, att_question_rep, decompose_params):
-    # passage_rep: [batch_size, passage_len, dim]
-    # att_question_rep: [batch_size, passage_len, dim]
+def cal_attentive_matching(hypothesis_rep, att_premise_rep, decompose_params):
+    # hypothesis_rep: [batch_size, hypothesis_len, dim]
+    # att_premise_rep: [batch_size, hypothesis_len, dim]
     def singel_instance(x):
         p = x[0]
         q = x[1]
@@ -176,12 +176,12 @@ def cal_attentive_matching(passage_rep, att_question_rep, decompose_params):
         q = multi_perspective_expand_for_2D(q, decompose_params) # [pasasge_len, decompose_dim, dim]
         return cosine_distance(p, q) # [pasasge_len, decompose_dim]
 
-    elems = (passage_rep, att_question_rep)
-    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, passage_len, decompse_dim]
+    elems = (hypothesis_rep, att_premise_rep)
+    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, hypothesis_len, decompse_dim]
 
-def cal_attentive_matching_img(passage_rep, att_image_rep, w_decompose_params, i_decompose_params):
-    # passage_rep: [batch_size, passage_len, dim]
-    # att_image_rep: [batch_size, passage_len, dim]
+def cal_attentive_matching_img(hypothesis_rep, att_image_rep, w_decompose_params, i_decompose_params):
+    # hypothesis_rep: [batch_size, hypothesis_len, dim]
+    # att_image_rep: [batch_size, hypothesis_len, dim]
     def singel_instance(x):
         p = x[0]
         q = x[1]
@@ -190,28 +190,28 @@ def cal_attentive_matching_img(passage_rep, att_image_rep, w_decompose_params, i
         q = multi_perspective_expand_for_2D(q, i_decompose_params) # [pasasge_len, decompose_dim, dim]
         return cosine_distance(p, q) # [pasasge_len, decompose_dim]
 
-    elems = (passage_rep, att_image_rep)
-    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, passage_len, decompse_dim]
+    elems = (hypothesis_rep, att_image_rep)
+    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, hypothesis_len, decompse_dim]
             #if with_max_attentive_match:
                 # forward max attentive-matching
-            #    max_att_fw = cal_max_question_representation(question_context_representation_fw, forward_relevancy_matrix)
+            #    max_att_fw = cal_max_premise_representation(premise_context_representation_fw, forward_relevancy_matrix)
             #    fw_max_att_decomp_params = tf.get_variable("fw_max_att_decomp_params", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-            #    fw_max_attentive_rep = cal_attentive_matching(passage_context_representation_fw, max_att_fw, fw_max_att_decomp_params)
-            #    all_question_aware_representatins.append(fw_max_attentive_rep)
+            #    fw_max_attentive_rep = cal_attentive_matching(hypothesis_context_representation_fw, max_att_fw, fw_max_att_decomp_params)
+            #    all_hypthesis_matching_representations.append(fw_max_attentive_rep)
             #    dim += MP_dim
 
                 # backward max attentive-matching
-            #    max_att_bw = cal_max_question_representation(question_context_representation_bw, backward_relevancy_matrix)
+            #    max_att_bw = cal_max_premise_representation(premise_context_representation_bw, backward_relevancy_matrix)
             #    bw_max_att_decomp_params = tf.get_variable("bw_max_att_decomp_params", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-            #    bw_max_attentive_rep = cal_attentive_matching(passage_context_representation_bw, max_att_bw, bw_max_att_decomp_params)
-            #    all_question_aware_representatins.append(bw_max_attentive_rep)
+            #    bw_max_attentive_rep = cal_attentive_matching(hypothesis_context_representation_bw, max_att_bw, bw_max_att_decomp_params)
+            #    all_hypthesis_matching_representations.append(bw_max_attentive_rep)
             #    dim += MP_dim
 
 
 def cross_entropy(logits, truth, mask):
-    # logits: [batch_size, passage_len]
-    # truth: [batch_size, passage_len]
-    # mask: [batch_size, passage_len]
+    # logits: [batch_size, hypothesis_len]
+    # truth: [batch_size, hypothesis_len]
+    # mask: [batch_size, hypothesis_len]
 
 #     xdev = x - x.max()
 #     return xdev - T.log(T.sum(T.exp(xdev)))
@@ -219,16 +219,16 @@ def cross_entropy(logits, truth, mask):
     xdev = tf.subtract(logits, tf.expand_dims(tf.reduce_max(logits, 1), -1))
     log_predictions = tf.subtract(xdev, tf.expand_dims(tf.log(tf.reduce_sum(tf.exp(xdev),-1)),-1))
 #     return -T.sum(targets * log_predictions)
-    result = tf.multiply(tf.multiply(truth, log_predictions), mask) # [batch_size, passage_len]
+    result = tf.multiply(tf.multiply(truth, log_predictions), mask) # [batch_size, hypothesis_len]
     return tf.multiply(-1.0,tf.reduce_sum(result, -1)) # [batch_size]
     
 def highway_layer(in_val, output_size, scope=None):
-    # in_val: [batch_size, passage_len, dim]
+    # in_val: [batch_size, hypothesis_len, dim]
     input_shape = tf.shape(in_val)
     batch_size = input_shape[0]
-    passage_len = input_shape[1]
+    hypothesis_len = input_shape[1]
 #     feat_dim = input_shape[2]
-    in_val = tf.reshape(in_val, [batch_size * passage_len, output_size])
+    in_val = tf.reshape(in_val, [batch_size * hypothesis_len, output_size])
     with tf.variable_scope(scope or "highway_layer"):
         highway_w = tf.get_variable("highway_w", [output_size, output_size], dtype=tf.float32)
         highway_b = tf.get_variable("highway_b", [output_size], dtype=tf.float32)
@@ -237,7 +237,7 @@ def highway_layer(in_val, output_size, scope=None):
         trans = tf.nn.tanh(tf.nn.xw_plus_b(in_val, full_w, full_b))
         gate = tf.nn.sigmoid(tf.nn.xw_plus_b(in_val, highway_w, highway_b))
         outputs = tf.add(tf.multiply(trans, gate), tf.multiply(in_val, tf.subtract(1.0, gate)), "y")
-    outputs = tf.reshape(outputs, [batch_size, passage_len, output_size])
+    outputs = tf.reshape(outputs, [batch_size, hypothesis_len, output_size])
     return outputs
 
 def multi_highway_layer(in_val, output_size, num_layers, scope=None):
@@ -248,26 +248,26 @@ def multi_highway_layer(in_val, output_size, num_layers, scope=None):
         in_val = highway_layer(in_val, output_size, scope=cur_scope_name)
     return in_val
 
-def cal_max_question_representation(question_representation, cosine_matrix):
-    # question_representation: [batch_size, question_len, dim]
-    # cosine_matrix: [batch_size, passage_len, question_len]
-    question_index = tf.arg_max(cosine_matrix, 2) # [batch_size, passage_len]
+def cal_max_premise_representation(premise_representation, cosine_matrix):
+    # premise_representation: [batch_size, premise_len, dim]
+    # cosine_matrix: [batch_size, hypothesis_len, premise_len]
+    premise_index = tf.arg_max(cosine_matrix, 2) # [batch_size, hypothesis_len]
     def singel_instance(x):
         q = x[0]
         c = x[1]
         return tf.gather(q, c)
-    elems = (question_representation, question_index)
-    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, passage_len, dim]
+    elems = (premise_representation, premise_index)
+    return tf.map_fn(singel_instance, elems, dtype=tf.float32) # [batch_size, hypothesis_len, dim]
 
-def cal_linear_decomposition_representation(passage_representation, passage_lengths, cosine_matrix,is_training, 
+def cal_linear_decomposition_representation(hypothesis_representation, hypothesis_lengths, cosine_matrix,is_training, 
                                             lex_decompsition_dim, dropout_rate):
-    # passage_representation: [batch_size, passage_len, dim]
-    # cosine_matrix: [batch_size, passage_len, question_len]
-    passage_similarity = tf.reduce_max(cosine_matrix, 2)# [batch_size, passage_len]
-    similar_weights = tf.expand_dims(passage_similarity, -1) # [batch_size, passage_len, 1]
+    # hypothesis_representation: [batch_size, hypothesis_len, dim]
+    # cosine_matrix: [batch_size, hypothesis_len, premise_len]
+    hypothesis_similarity = tf.reduce_max(cosine_matrix, 2)# [batch_size, hypothesis_len]
+    similar_weights = tf.expand_dims(hypothesis_similarity, -1) # [batch_size, hypothesis_len, 1]
     dissimilar_weights = tf.subtract(1.0, similar_weights)
-    similar_component = tf.multiply(passage_representation, similar_weights)
-    dissimilar_component = tf.multiply(passage_representation, dissimilar_weights)
+    similar_component = tf.multiply(hypothesis_representation, similar_weights)
+    dissimilar_component = tf.multiply(hypothesis_representation, dissimilar_weights)
     all_component = tf.concat([similar_component, dissimilar_component], 2)
     if lex_decompsition_dim==-1:
         return all_component
@@ -281,7 +281,7 @@ def cal_linear_decomposition_representation(passage_representation, passage_leng
         lex_lstm_cell_bw = tf.contrib.rnn.MultiRNNCell([lex_lstm_cell_bw])
 
         (lex_features_fw, lex_features_bw), _ = rnn.bidirectional_dynamic_rnn(
-                    lex_lstm_cell_fw, lex_lstm_cell_bw, all_component, dtype=tf.float32, sequence_length=passage_lengths)
+                    lex_lstm_cell_fw, lex_lstm_cell_bw, all_component, dtype=tf.float32, sequence_length=hypothesis_lengths)
 
         lex_features = tf.concat([lex_features_fw, lex_features_bw], 2)
     return lex_features
@@ -289,92 +289,92 @@ def cal_linear_decomposition_representation(passage_representation, passage_leng
 
 
 ## image_features bw and fw are the same. This way we can switch between image and text
-def match_passage_with_image(image_features_fw, image_features_bw, full_img_rep_fw, full_img_rep_bw, image_mask, 
-                                passage_context_representation_fw, passage_context_representation_bw, passage_mask,
+def match_hypothesis_with_image(image_features_fw, image_features_bw, full_img_rep_fw, full_img_rep_bw, image_mask, 
+                                hypothesis_context_representation_fw, hypothesis_context_representation_bw, hypothesis_mask,
                                 MP_dim, context_lstm_dim, scope=None, img_dim=100,
                                 with_img_full_match=True, with_img_maxpool_match=True, with_img_attentive_match=True,
                                 with_img_max_attentive_match=True):
 
     all_image_aware_representatins = []
     dim = 0
-    with tf.variable_scope(scope or "match_passage_with_image"):
+    with tf.variable_scope(scope or "match_hypothesis_with_image"):
 
-        passage_context_representation_fw = tf.multiply(passage_context_representation_fw, tf.expand_dims(passage_mask,-1))
-        passage_context_representation_bw = tf.multiply(passage_context_representation_bw, tf.expand_dims(passage_mask,-1))
+        hypothesis_context_representation_fw = tf.multiply(hypothesis_context_representation_fw, tf.expand_dims(hypothesis_mask,-1))
+        hypothesis_context_representation_bw = tf.multiply(hypothesis_context_representation_bw, tf.expand_dims(hypothesis_mask,-1))
 
 
-        img_forward_relevancy_matrix = cal_relevancy_matrix(image_features_fw, passage_context_representation_fw)
-        img_forward_relevancy_matrix = mask_relevancy_matrix(img_forward_relevancy_matrix, image_mask, passage_mask)
+        img_forward_relevancy_matrix = cal_relevancy_matrix(image_features_fw, hypothesis_context_representation_fw)
+        img_forward_relevancy_matrix = mask_relevancy_matrix(img_forward_relevancy_matrix, image_mask, hypothesis_mask)
 
-        img_backward_relevancy_matrix = cal_relevancy_matrix(image_features_bw, passage_context_representation_bw)
-        img_backward_relevancy_matrix = mask_relevancy_matrix(img_backward_relevancy_matrix, image_mask, passage_mask)
+        img_backward_relevancy_matrix = cal_relevancy_matrix(image_features_bw, hypothesis_context_representation_bw)
+        img_backward_relevancy_matrix = mask_relevancy_matrix(img_backward_relevancy_matrix, image_mask, hypothesis_mask)
         
 
         if MP_dim > 0:
             if with_img_full_match:
-                    #def cal_full_matching_img(passage_representation, full_img_representation, w_decompose_params, img_decompose_params):
-                    # forward Full-Matching: passage_context_representation_fw vs question_context_representation_fw[-1]
+                    #def cal_full_matching_img(hypothesis_representation, full_img_representation, w_decompose_params, img_decompose_params):
+                    # forward Full-Matching: hypothesis_context_representation_fw vs premise_context_representation_fw[-1]
                     fw_w_decomp_params = tf.get_variable("forward_word_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
                     fw_full_img_decomp_params = tf.get_variable("forward_full_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
-                    fw_full_img_match_rep = cal_full_matching_img(passage_context_representation_fw, full_img_rep_fw, fw_w_decomp_params, fw_full_img_decomp_params) #[batch_size, passage_len, decompse_dim]
+                    fw_full_img_match_rep = cal_full_matching_img(hypothesis_context_representation_fw, full_img_rep_fw, fw_w_decomp_params, fw_full_img_decomp_params) #[batch_size, hypothesis_len, decompse_dim]
                     all_image_aware_representatins.append(fw_full_img_match_rep)
                     dim += MP_dim
 
-                    # backward Full-Matching: passage_context_representation_bw vs question_context_representation_bw[0]
+                    # backward Full-Matching: hypothesis_context_representation_bw vs premise_context_representation_bw[0]
                     bw_w_decomp_params = tf.get_variable("backward_word_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
                     bw_full_img_decomp_params = tf.get_variable("backward_full_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
-                    bw_full_img_match_rep = cal_full_matching_img(passage_context_representation_bw, full_img_rep_bw, bw_w_decomp_params, bw_full_img_decomp_params) #[batch_size, passage_len, decompse_dim]
+                    bw_full_img_match_rep = cal_full_matching_img(hypothesis_context_representation_bw, full_img_rep_bw, bw_w_decomp_params, bw_full_img_decomp_params) #[batch_size, hypothesis_len, decompse_dim]
                     all_image_aware_representatins.append(bw_full_img_match_rep)
                     dim += MP_dim
 
             if with_img_maxpool_match:
-                    #def cal_maxpooling_matching_img(passage_rep, img_features, w_decompose_params, img_decompose_params):
+                    #def cal_maxpooling_matching_img(hypothesis_rep, img_features, w_decompose_params, img_decompose_params):
                     # forward Maxpooling-Matching
                     fw_w_decomp_params = tf.get_variable("forward_word_max_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
                     fw_max_img_decomp_params = tf.get_variable("forward_max_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
-                    fw_maxpooling_rep = cal_maxpooling_matching_img(passage_context_representation_fw, image_features_fw, fw_w_decomp_params, fw_max_img_decomp_params)
+                    fw_maxpooling_rep = cal_maxpooling_matching_img(hypothesis_context_representation_fw, image_features_fw, fw_w_decomp_params, fw_max_img_decomp_params)
                     all_image_aware_representatins.append(fw_maxpooling_rep)
                     dim += 2*MP_dim
 
                     # backward Maxpooling-Matching
                     bw_w_decomp_params = tf.get_variable("backward_word_max_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
                     bw_max_img_decomp_params = tf.get_variable("backward_max_img_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
-                    bw_maxpooling_rep = cal_maxpooling_matching_img(passage_context_representation_bw, image_features_bw, bw_w_decomp_params, bw_max_img_decomp_params)
+                    bw_maxpooling_rep = cal_maxpooling_matching_img(hypothesis_context_representation_bw, image_features_bw, bw_w_decomp_params, bw_max_img_decomp_params)
                     all_image_aware_representatins.append(bw_maxpooling_rep)
                     dim += 2*MP_dim
             if with_img_attentive_match:
                 # forward attentive-matching
-                # forward weighted question representation: [batch_size, question_len, passage_len] [batch_size, question_len, context_lstm_dim]
-                att_image_fw_contexts = cal_cosine_weighted_question_representation(image_features_fw, img_forward_relevancy_matrix)
+                # forward weighted premise representation: [batch_size, premise_len, hypothesis_len] [batch_size, premise_len, context_lstm_dim]
+                att_image_fw_contexts = cal_cosine_weighted_premise_representation(image_features_fw, img_forward_relevancy_matrix)
                 fw_w_attentive_decomp_params = tf.get_variable("forward_word_attentive_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
                 fw_i_attentive_decomp_params = tf.get_variable("forward_img_attentive_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
-                fw_attentive_rep = cal_attentive_matching_img(passage_context_representation_fw, att_image_fw_contexts, fw_w_attentive_decomp_params, fw_i_attentive_decomp_params)
+                fw_attentive_rep = cal_attentive_matching_img(hypothesis_context_representation_fw, att_image_fw_contexts, fw_w_attentive_decomp_params, fw_i_attentive_decomp_params)
                 all_image_aware_representatins.append(fw_attentive_rep)
                 dim += MP_dim
 
                 # backward attentive-matching
-                # backward weighted question representation
-                att_image_bw_contexts = cal_cosine_weighted_question_representation(image_features_bw, img_backward_relevancy_matrix)
+                # backward weighted premise representation
+                att_image_bw_contexts = cal_cosine_weighted_premise_representation(image_features_bw, img_backward_relevancy_matrix)
                 bw_w_attentive_decomp_params = tf.get_variable("backward_word_attentive_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
                 bw_i_attentive_decomp_params = tf.get_variable("backward_img_attentive_matching_decomp", shape=[MP_dim, img_dim], dtype=tf.float32)
-                bw_attentive_rep = cal_attentive_matching_img(passage_context_representation_bw, att_image_bw_contexts, bw_w_attentive_decomp_params, bw_i_attentive_decomp_params)
+                bw_attentive_rep = cal_attentive_matching_img(hypothesis_context_representation_bw, att_image_bw_contexts, bw_w_attentive_decomp_params, bw_i_attentive_decomp_params)
                 all_image_aware_representatins.append(bw_attentive_rep)
                 dim += MP_dim
 
             if True:
                 # forward max attentive-matching
-                max_att_fw = cal_max_question_representation(image_features_fw, img_forward_relevancy_matrix)
+                max_att_fw = cal_max_premise_representation(image_features_fw, img_forward_relevancy_matrix)
                 fw_w_max_att_decomp_params = tf.get_variable("fw_word_max_att_decomp_params", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
                 fw_i_max_att_decomp_params = tf.get_variable("fw_img_max_att_decomp_params", shape=[MP_dim, img_dim], dtype=tf.float32) 
-                fw_max_attentive_rep = cal_attentive_matching_img(passage_context_representation_fw, max_att_fw, fw_w_max_att_decomp_params, fw_i_max_att_decomp_params)
+                fw_max_attentive_rep = cal_attentive_matching_img(hypothesis_context_representation_fw, max_att_fw, fw_w_max_att_decomp_params, fw_i_max_att_decomp_params)
                 all_image_aware_representatins.append(fw_max_attentive_rep)
                 dim += MP_dim
 
                 # backward max attentive-matching
-                max_att_bw = cal_max_question_representation(image_features_bw, img_backward_relevancy_matrix)
+                max_att_bw = cal_max_premise_representation(image_features_bw, img_backward_relevancy_matrix)
                 bw_w_max_att_decomp_params = tf.get_variable("bw_word_max_att_decomp_params", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
                 bw_i_max_att_decomp_params = tf.get_variable("bw_img_max_att_decomp_params", shape=[MP_dim, img_dim], dtype=tf.float32)
-                bw_max_attentive_rep = cal_attentive_matching_img(passage_context_representation_bw, max_att_bw, bw_w_max_att_decomp_params, bw_i_max_att_decomp_params)
+                bw_max_attentive_rep = cal_attentive_matching_img(hypothesis_context_representation_bw, max_att_bw, bw_w_max_att_decomp_params, bw_i_max_att_decomp_params)
                 all_image_aware_representatins.append(bw_max_attentive_rep)
                 dim += MP_dim
 
@@ -392,95 +392,95 @@ def match_passage_with_image(image_features_fw, image_features_bw, full_img_rep_
 
 
 
-def match_passage_with_question(passage_context_representation_fw, passage_context_representation_bw, mask,
-                                question_context_representation_fw, question_context_representation_bw,question_mask,
+def match_hypothesis_with_premise(hypothesis_context_representation_fw, hypothesis_context_representation_bw, mask,
+                                premise_context_representation_fw, premise_context_representation_bw,premise_mask,
                                 MP_dim, context_lstm_dim, scope=None,
                                 with_full_match=True, with_maxpool_match=True, with_attentive_match=True, with_max_attentive_match=True):
 
-    all_question_aware_representatins = []
+    all_hypthesis_matching_representations = []
     dim = 0
-    with tf.variable_scope(scope or "match_passage_with_question"):
-        fw_question_full_rep = question_context_representation_fw[:,-1,:]
-        bw_question_full_rep = question_context_representation_bw[:,0,:]
+    with tf.variable_scope(scope or "match_hypothesis_with_premise"):
+        fw_premise_full_rep = premise_context_representation_fw[:,-1,:]
+        bw_premise_full_rep = premise_context_representation_bw[:,0,:]
 
-        question_context_representation_fw = tf.multiply(question_context_representation_fw, tf.expand_dims(question_mask,-1))
-        question_context_representation_bw = tf.multiply(question_context_representation_bw, tf.expand_dims(question_mask,-1))
-        passage_context_representation_fw = tf.multiply(passage_context_representation_fw, tf.expand_dims(mask,-1))
-        passage_context_representation_bw = tf.multiply(passage_context_representation_bw, tf.expand_dims(mask,-1))
+        premise_context_representation_fw = tf.multiply(premise_context_representation_fw, tf.expand_dims(premise_mask,-1))
+        premise_context_representation_bw = tf.multiply(premise_context_representation_bw, tf.expand_dims(premise_mask,-1))
+        hypothesis_context_representation_fw = tf.multiply(hypothesis_context_representation_fw, tf.expand_dims(mask,-1))
+        hypothesis_context_representation_bw = tf.multiply(hypothesis_context_representation_bw, tf.expand_dims(mask,-1))
 
-        forward_relevancy_matrix = cal_relevancy_matrix(question_context_representation_fw, passage_context_representation_fw)
-        forward_relevancy_matrix = mask_relevancy_matrix(forward_relevancy_matrix, question_mask, mask)
+        forward_relevancy_matrix = cal_relevancy_matrix(premise_context_representation_fw, hypothesis_context_representation_fw)
+        forward_relevancy_matrix = mask_relevancy_matrix(forward_relevancy_matrix, premise_mask, mask)
 
-        backward_relevancy_matrix = cal_relevancy_matrix(question_context_representation_bw, passage_context_representation_bw)
-        backward_relevancy_matrix = mask_relevancy_matrix(backward_relevancy_matrix, question_mask, mask)
+        backward_relevancy_matrix = cal_relevancy_matrix(premise_context_representation_bw, hypothesis_context_representation_bw)
+        backward_relevancy_matrix = mask_relevancy_matrix(backward_relevancy_matrix, premise_mask, mask)
 
         
         if MP_dim > 0:
             if with_full_match:
-                # forward Full-Matching: passage_context_representation_fw vs question_context_representation_fw[-1]
+                # forward Full-Matching: hypothesis_context_representation_fw vs premise_context_representation_fw[-1]
                 fw_full_decomp_params = tf.get_variable("forward_full_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                fw_full_match_rep = cal_full_matching(passage_context_representation_fw, fw_question_full_rep, fw_full_decomp_params) #[batch_size, passage_len, decompse_dim])
-                all_question_aware_representatins.append(fw_full_match_rep)
+                fw_full_match_rep = cal_full_matching(hypothesis_context_representation_fw, fw_premise_full_rep, fw_full_decomp_params) #[batch_size, hypothesis_len, decompse_dim])
+                all_hypthesis_matching_representations.append(fw_full_match_rep)
                 dim += MP_dim
 
-                # backward Full-Matching: passage_context_representation_bw vs question_context_representation_bw[0]
+                # backward Full-Matching: hypothesis_context_representation_bw vs premise_context_representation_bw[0]
                 bw_full_decomp_params = tf.get_variable("backward_full_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                bw_full_match_rep = cal_full_matching(passage_context_representation_bw, bw_question_full_rep, bw_full_decomp_params)
-                all_question_aware_representatins.append(bw_full_match_rep)
+                bw_full_match_rep = cal_full_matching(hypothesis_context_representation_bw, bw_premise_full_rep, bw_full_decomp_params)
+                all_hypthesis_matching_representations.append(bw_full_match_rep)
                 dim += MP_dim
 
 
             if with_maxpool_match:
                 # forward Maxpooling-Matching
                 fw_maxpooling_decomp_params = tf.get_variable("forward_maxpooling_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                fw_maxpooling_rep = cal_maxpooling_matching(passage_context_representation_fw, question_context_representation_fw, fw_maxpooling_decomp_params)
-                all_question_aware_representatins.append(fw_maxpooling_rep)
+                fw_maxpooling_rep = cal_maxpooling_matching(hypothesis_context_representation_fw, premise_context_representation_fw, fw_maxpooling_decomp_params)
+                all_hypthesis_matching_representations.append(fw_maxpooling_rep)
                 dim += 2*MP_dim
                 # backward Maxpooling-Matching
                 bw_maxpooling_decomp_params = tf.get_variable("backward_maxpooling_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                bw_maxpooling_rep = cal_maxpooling_matching(passage_context_representation_bw, question_context_representation_bw, bw_maxpooling_decomp_params)
-                all_question_aware_representatins.append(bw_maxpooling_rep)
+                bw_maxpooling_rep = cal_maxpooling_matching(hypothesis_context_representation_bw, premise_context_representation_bw, bw_maxpooling_decomp_params)
+                all_hypthesis_matching_representations.append(bw_maxpooling_rep)
                 dim += 2*MP_dim
             
             if with_attentive_match:
                 # forward attentive-matching
-                # forward weighted question representation: [batch_size, question_len, passage_len] [batch_size, question_len, context_lstm_dim]
-                att_question_fw_contexts = cal_cosine_weighted_question_representation(question_context_representation_fw, forward_relevancy_matrix)
+                # forward weighted premise representation: [batch_size, premise_len, hypothesis_len] [batch_size, premise_len, context_lstm_dim]
+                att_premise_fw_contexts = cal_cosine_weighted_premise_representation(premise_context_representation_fw, forward_relevancy_matrix)
                 fw_attentive_decomp_params = tf.get_variable("forward_attentive_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                fw_attentive_rep = cal_attentive_matching(passage_context_representation_fw, att_question_fw_contexts, fw_attentive_decomp_params)
-                all_question_aware_representatins.append(fw_attentive_rep)
+                fw_attentive_rep = cal_attentive_matching(hypothesis_context_representation_fw, att_premise_fw_contexts, fw_attentive_decomp_params)
+                all_hypthesis_matching_representations.append(fw_attentive_rep)
                 dim += MP_dim
 
                 # backward attentive-matching
-                # backward weighted question representation
-                att_question_bw_contexts = cal_cosine_weighted_question_representation(question_context_representation_bw, backward_relevancy_matrix)
+                # backward weighted premise representation
+                att_premise_bw_contexts = cal_cosine_weighted_premise_representation(premise_context_representation_bw, backward_relevancy_matrix)
                 bw_attentive_decomp_params = tf.get_variable("backward_attentive_matching_decomp", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                bw_attentive_rep = cal_attentive_matching(passage_context_representation_bw, att_question_bw_contexts, bw_attentive_decomp_params)
-                all_question_aware_representatins.append(bw_attentive_rep)
+                bw_attentive_rep = cal_attentive_matching(hypothesis_context_representation_bw, att_premise_bw_contexts, bw_attentive_decomp_params)
+                all_hypthesis_matching_representations.append(bw_attentive_rep)
                 dim += MP_dim
             
             if with_max_attentive_match:
                 # forward max attentive-matching
-                max_att_fw = cal_max_question_representation(question_context_representation_fw, forward_relevancy_matrix)
+                max_att_fw = cal_max_premise_representation(premise_context_representation_fw, forward_relevancy_matrix)
                 fw_max_att_decomp_params = tf.get_variable("fw_max_att_decomp_params", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                fw_max_attentive_rep = cal_attentive_matching(passage_context_representation_fw, max_att_fw, fw_max_att_decomp_params)
-                all_question_aware_representatins.append(fw_max_attentive_rep)
+                fw_max_attentive_rep = cal_attentive_matching(hypothesis_context_representation_fw, max_att_fw, fw_max_att_decomp_params)
+                all_hypthesis_matching_representations.append(fw_max_attentive_rep)
                 dim += MP_dim
 
                 # backward max attentive-matching
-                max_att_bw = cal_max_question_representation(question_context_representation_bw, backward_relevancy_matrix)
+                max_att_bw = cal_max_premise_representation(premise_context_representation_bw, backward_relevancy_matrix)
                 bw_max_att_decomp_params = tf.get_variable("bw_max_att_decomp_params", shape=[MP_dim, context_lstm_dim], dtype=tf.float32)
-                bw_max_attentive_rep = cal_attentive_matching(passage_context_representation_bw, max_att_bw, bw_max_att_decomp_params)
-                all_question_aware_representatins.append(bw_max_attentive_rep)
+                bw_max_attentive_rep = cal_attentive_matching(hypothesis_context_representation_bw, max_att_bw, bw_max_att_decomp_params)
+                all_hypthesis_matching_representations.append(bw_max_attentive_rep)
                 dim += MP_dim
 
 
-        all_question_aware_representatins.append(tf.reduce_max(forward_relevancy_matrix, axis=2,keep_dims=True))
-        all_question_aware_representatins.append(tf.reduce_mean(forward_relevancy_matrix, axis=2,keep_dims=True))
-        all_question_aware_representatins.append(tf.reduce_max(backward_relevancy_matrix, axis=2,keep_dims=True))
-        all_question_aware_representatins.append(tf.reduce_mean(backward_relevancy_matrix, axis=2,keep_dims=True))
+        all_hypthesis_matching_representations.append(tf.reduce_max(forward_relevancy_matrix, axis=2,keep_dims=True))
+        all_hypthesis_matching_representations.append(tf.reduce_mean(forward_relevancy_matrix, axis=2,keep_dims=True))
+        all_hypthesis_matching_representations.append(tf.reduce_max(backward_relevancy_matrix, axis=2,keep_dims=True))
+        all_hypthesis_matching_representations.append(tf.reduce_mean(backward_relevancy_matrix, axis=2,keep_dims=True))
         dim += 4
-    return (all_question_aware_representatins, dim)
+    return (all_hypthesis_matching_representations, dim)
         
 
 def gather_along_second_axis1(data, indices):
@@ -533,8 +533,8 @@ def gather_along_second_axis(x, idx):
 
 
 
-def bilateral_match_func(image_features, in_question_repres, in_passage_repres, in_question_dep_cons, in_passage_dep_cons,
-                        question_lengths, passage_lengths, question_mask, passage_mask, MP_dim, input_dim, 
+def bilateral_match_func(image_features, in_premise_repres, in_hypothesis_repres, in_premise_dep_cons, in_hypothesis_dep_cons,
+                        premise_lengths, hypothesis_lengths, premise_mask, hypothesis_mask, MP_dim, input_dim, 
                         with_filter_layer, context_layer_num, context_lstm_dim,is_training,dropout_rate,
                         with_match_highway,aggregation_layer_num, aggregation_lstm_dim,highway_layer_num,
                         with_aggregation_highway,with_lex_decomposition,lex_decompsition_dim,
@@ -543,49 +543,52 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
                         image_with_hypothesis_only=False, with_img_full_match=False, with_img_maxpool_match=False, 
                         with_img_attentive_match=True, with_img_max_attentive_match=True, image_context_layer=True, img_dim=100):
 
-    cosine_matrix = cal_relevancy_matrix(in_question_repres, in_passage_repres) # [batch_size, passage_len, question_len]
-    cosine_matrix = mask_relevancy_matrix(cosine_matrix, question_mask, passage_mask)
-    cosine_matrix_transpose = tf.transpose(cosine_matrix, perm=[0,2,1])# [batch_size, question_len, passage_len]
+    only_image = True
+    if not only_image:
+        cosine_matrix = cal_relevancy_matrix(in_premise_repres, in_hypothesis_repres) # [batch_size, hypothesis_len, premise_len]
+        cosine_matrix = mask_relevancy_matrix(cosine_matrix, premise_mask, hypothesis_mask)
+        cosine_matrix_transpose = tf.transpose(cosine_matrix, perm=[0,2,1])# [batch_size, premise_len, hypothesis_len]
 
     # ====word level matching======
-    question_aware_representatins = []
-    question_aware_dim = 0
-    passage_aware_representatins = []
-    passage_aware_dim = 0
+    hypthesis_matching_representations = []
+    premise_aware_dim = 0
+    premise_matching_representations = []
+    hypothesis_aware_dim = 0
 
     # max and mean pooling at word level
-    question_aware_representatins.append(tf.reduce_max(cosine_matrix, axis=2,keep_dims=True)) # [batch_size, passage_length, 1]
-    question_aware_representatins.append(tf.reduce_mean(cosine_matrix, axis=2,keep_dims=True))# [batch_size, passage_length, 1]
-    question_aware_dim += 2
-    passage_aware_representatins.append(tf.reduce_max(cosine_matrix_transpose, axis=2,keep_dims=True))# [batch_size, question_len, 1]
-    passage_aware_representatins.append(tf.reduce_mean(cosine_matrix_transpose, axis=2,keep_dims=True))# [batch_size, question_len, 1]
-    passage_aware_dim += 2
+    if not only_image:
+        hypthesis_matching_representations.append(tf.reduce_max(cosine_matrix, axis=2,keep_dims=True)) # [batch_size, hypothesis_length, 1]
+        hypthesis_matching_representations.append(tf.reduce_mean(cosine_matrix, axis=2,keep_dims=True))# [batch_size, hypothesis_length, 1]
+        premise_aware_dim += 2
+        premise_matching_representations.append(tf.reduce_max(cosine_matrix_transpose, axis=2,keep_dims=True))# [batch_size, premise_len, 1]
+        premise_matching_representations.append(tf.reduce_mean(cosine_matrix_transpose, axis=2,keep_dims=True))# [batch_size, premise_len, 1]
+        hypothesis_aware_dim += 2
     
 
-    if MP_dim>0:
+    if not only_image:#MP_dim>0:
         if with_max_attentive_match:
             # max_att word level
-            qa_max_att = cal_max_question_representation(in_question_repres, cosine_matrix)# [batch_size, passage_len, dim]
-            qa_max_att_decomp_params = tf.get_variable("qa_word_max_att_decomp_params", shape=[MP_dim, input_dim], dtype=tf.float32)
-            qa_max_attentive_rep = cal_attentive_matching(in_passage_repres, qa_max_att, qa_max_att_decomp_params)# [batch_size, passage_len, decompse_dim]
-            question_aware_representatins.append(qa_max_attentive_rep)
-            question_aware_dim += MP_dim
+            prem_max_att = cal_max_premise_representation(in_premise_repres, cosine_matrix)# [batch_size, hypothesis_len, dim]
+            prem_max_att_decomp_params = tf.get_variable("prem_word_max_att_decomp_params", shape=[MP_dim, input_dim], dtype=tf.float32)
+            prem_max_attentive_rep = cal_attentive_matching(in_hypothesis_repres, prem_max_att, prem_max_att_decomp_params)# [batch_size, hypothesis_len, decompse_dim]
+            hypthesis_matching_representations.append(prem_max_attentive_rep)
+            premise_aware_dim += MP_dim
 
-            pa_max_att = cal_max_question_representation(in_passage_repres, cosine_matrix_transpose)# [batch_size, question_len, dim]
-            pa_max_att_decomp_params = tf.get_variable("pa_word_max_att_decomp_params", shape=[MP_dim, input_dim], dtype=tf.float32)
-            pa_max_attentive_rep = cal_attentive_matching(in_question_repres, pa_max_att, pa_max_att_decomp_params)# [batch_size, question_len, decompse_dim]
-            passage_aware_representatins.append(pa_max_attentive_rep)
-            passage_aware_dim += MP_dim
+            hypo_max_att = cal_max_premise_representation(in_hypothesis_repres, cosine_matrix_transpose)# [batch_size, premise_len, dim]
+            hypo_max_att_decomp_params = tf.get_variable("hypo_word_max_att_decomp_params", shape=[MP_dim, input_dim], dtype=tf.float32)
+            hypo_max_attentive_rep = cal_attentive_matching(in_premise_repres, hypo_max_att, hypo_max_att_decomp_params)# [batch_size, premise_len, decompse_dim]
+            premise_matching_representations.append(hypo_max_attentive_rep)
+            hypothesis_aware_dim += MP_dim
     #print('context_layer_num: ', context_layer_num)
-    in_question_previous = [in_question_repres]
-    in_passage_previous = [in_passage_repres]
+    in_premise_previous = [in_premise_repres]
+    in_hypothesis_previous = [in_hypothesis_repres]
     with tf.variable_scope('context_MP_matching'):
         for i in xrange(context_layer_num): # support multiple context layer
             with tf.variable_scope('layer-{}'.format(i)):
                 with tf.variable_scope('context_represent'):
                     if i > 0:
-                        in_question_repres = tf.concat(in_question_previous, 2)
-                        in_passage_repres = tf.concat(in_passage_previous, 2)
+                        in_premise_repres = tf.concat(in_premise_previous, 2)
+                        in_hypothesis_repres = tf.concat(in_hypothesis_previous, 2)
                     # parameters
                     context_lstm_cell_fw = tf.contrib.rnn.BasicLSTMCell(context_lstm_dim)
                     context_lstm_cell_bw = tf.contrib.rnn.BasicLSTMCell(context_lstm_dim)
@@ -597,26 +600,26 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
 
 
 
-                    # question representation
-                    (question_context_representation_fw, question_context_representation_bw), _ = my_rnn.bidirectional_dynamic_rnn(
-                                        context_lstm_cell_fw, context_lstm_cell_bw, in_question_repres, dtype=tf.float32, 
-                                        sequence_length=question_lengths) # [batch_size, question_len, context_lstm_dim]
-                    in_question_repres = tf.concat([question_context_representation_fw, question_context_representation_bw], 2)
+                    # premise representation
+                    (premise_context_representation_fw, premise_context_representation_bw), _ = my_rnn.bidirectional_dynamic_rnn(
+                                        context_lstm_cell_fw, context_lstm_cell_bw, in_premise_repres, dtype=tf.float32, 
+                                        sequence_length=premise_lengths) # [batch_size, premise_len, context_lstm_dim]
+                    in_premise_repres = tf.concat([premise_context_representation_fw, premise_context_representation_bw], 2)
                    
 
 
 
 
-                    # passage representation
+                    # hypothesis representation
                     tf.get_variable_scope().reuse_variables()
-                    (passage_context_representation_fw, passage_context_representation_bw), _ = my_rnn.bidirectional_dynamic_rnn(
-                                        context_lstm_cell_fw, context_lstm_cell_bw, in_passage_repres, dtype=tf.float32, 
-                                        sequence_length=passage_lengths) # [batch_size, passage_len, context_lstm_dim]
-                    in_passage_repres = tf.concat([passage_context_representation_fw, passage_context_representation_bw], 2)
+                    (hypothesis_context_representation_fw, hypothesis_context_representation_bw), _ = my_rnn.bidirectional_dynamic_rnn(
+                                        context_lstm_cell_fw, context_lstm_cell_bw, in_hypothesis_repres, dtype=tf.float32, 
+                                        sequence_length=hypothesis_lengths) # [batch_size, hypothesis_len, context_lstm_dim]
+                    in_hypothesis_repres = tf.concat([hypothesis_context_representation_fw, hypothesis_context_representation_bw], 2)
                    
                     #concat all previous output
-                    in_question_previous.append(in_question_repres)
-                    in_passage_previous.append(in_passage_repres)
+                    in_premise_previous.append(in_premise_repres)
+                    in_hypothesis_previous.append(in_hypothesis_repres)
                 
         
 
@@ -646,43 +649,44 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
                 
                 
         # Multi-perspective matching
-        with tf.variable_scope('left_MP_matching'):
-            (matching_vectors, matching_dim) = match_passage_with_question(passage_context_representation_fw, 
-                                passage_context_representation_bw, passage_mask,
-                                question_context_representation_fw, question_context_representation_bw,question_mask,
+        if not only_image:
+            with tf.variable_scope('left_MP_matching'):
+                (matching_vectors, matching_dim) = match_hypothesis_with_premise(hypothesis_context_representation_fw, 
+                                hypothesis_context_representation_bw, hypothesis_mask,
+                                premise_context_representation_fw, premise_context_representation_bw,premise_mask,
                                 MP_dim, context_lstm_dim, scope=None,
                                 with_full_match=with_full_match, with_maxpool_match=with_maxpool_match, 
                                 with_attentive_match=with_attentive_match, with_max_attentive_match=with_max_attentive_match)
-            question_aware_representatins.extend(matching_vectors)
-            question_aware_dim += matching_dim
+                hypthesis_matching_representations.extend(matching_vectors)
+                premise_aware_dim += matching_dim
                 
-        with tf.variable_scope('right_MP_matching'):
-            (matching_vectors, matching_dim) = match_passage_with_question(question_context_representation_fw, 
-                                question_context_representation_bw, question_mask,
-                                passage_context_representation_fw, passage_context_representation_bw, passage_mask,
+            with tf.variable_scope('right_MP_matching'):
+                (matching_vectors, matching_dim) = match_hypothesis_with_premise(premise_context_representation_fw, 
+                                premise_context_representation_bw, premise_mask,
+                                hypothesis_context_representation_fw, hypothesis_context_representation_bw, hypothesis_mask,
                                 MP_dim, context_lstm_dim, scope=None,
                                 with_full_match=with_full_match, with_maxpool_match=with_maxpool_match, 
                                 with_attentive_match=with_attentive_match, with_max_attentive_match=with_max_attentive_match)
 
 
-            passage_aware_representatins.extend(matching_vectors)
-            passage_aware_dim += matching_dim
+                premise_matching_representations.extend(matching_vectors)
+                hypothesis_aware_dim += matching_dim
         
         # image matching
         if with_image:
             with tf.variable_scope('hypothesis_image_matching'):
-                (matching_vectors, matching_dim) = match_passage_with_image(image_features,image_features, full_img_rep, full_img_rep, image_mask, 
-                                passage_context_representation_fw, passage_context_representation_bw, passage_mask,
+                (matching_vectors, matching_dim) = match_hypothesis_with_image(image_features,image_features, full_img_rep, full_img_rep, image_mask, 
+                                hypothesis_context_representation_fw, hypothesis_context_representation_bw, hypothesis_mask,
                                 MP_dim, context_lstm_dim, scope=None,img_dim=100,
                                 with_img_full_match=with_img_full_match, with_img_max_attentive_match=with_img_max_attentive_match,
                                 with_img_maxpool_match=with_img_maxpool_match, with_img_attentive_match=with_img_attentive_match)
             
-                question_aware_representatins.extend(matching_vectors)
-                question_aware_dim += matching_dim
+                hypthesis_matching_representations.extend(matching_vectors)
+                premise_aware_dim += matching_dim
 
             with tf.variable_scope('image_hypo_matching'):
-                (matching_vectors, matching_dim) = match_passage_with_image( passage_context_representation_fw, passage_context_representation_bw, 
-                                passage_context_representation_fw[:,-1,:], passage_context_representation_bw[:,0,:], passage_mask,
+                (matching_vectors, matching_dim) = match_hypothesis_with_image( hypothesis_context_representation_fw, hypothesis_context_representation_bw, 
+                                hypothesis_context_representation_fw[:,-1,:], hypothesis_context_representation_bw[:,0,:], hypothesis_mask,
                                 image_features, image_features, image_mask,
                                 MP_dim, context_lstm_dim, scope=None,
                                 with_img_full_match=with_img_full_match, with_img_max_attentive_match=with_img_max_attentive_match,
@@ -694,19 +698,19 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
             if not image_with_hypothesis_only:
                 with tf.variable_scope('premise_image_matching'):
                 #with tf.variable_scope('hypothesis_image_matching', reuse=True):
-                    (matching_vectors, matching_dim) = match_passage_with_image(image_features,image_features, full_img_rep, full_img_rep, image_mask,
-                                question_context_representation_fw, question_context_representation_bw, question_mask,
+                    (matching_vectors, matching_dim) = match_hypothesis_with_image(image_features,image_features, full_img_rep, full_img_rep, image_mask,
+                                premise_context_representation_fw, premise_context_representation_bw, premise_mask,
                                 MP_dim, context_lstm_dim, scope=None,img_dim=100,
                                 with_img_full_match=with_img_full_match, with_img_max_attentive_match=with_img_max_attentive_match, 
                                 with_img_maxpool_match=with_img_maxpool_match, with_img_attentive_match=with_img_attentive_match)
 
-                    passage_aware_representatins.extend(matching_vectors)
-                    passage_aware_dim += matching_dim
+                    premise_matching_representations.extend(matching_vectors)
+                    hypothesis_aware_dim += matching_dim
 
                 with tf.variable_scope('image_premise_matching'):
                 #with tf.variable_scope('image_hypo_matching', reuse=True):
-                    (matching_vectors, matching_dim) = match_passage_with_image( question_context_representation_fw, question_context_representation_bw,
-                                question_context_representation_fw[:,-1,:], question_context_representation_bw[:,0,:], question_mask,
+                    (matching_vectors, matching_dim) = match_hypothesis_with_image( premise_context_representation_fw, premise_context_representation_bw,
+                                premise_context_representation_fw[:,-1,:], premise_context_representation_bw[:,0,:], premise_mask,
                                 image_features, image_features, image_mask,
                                 MP_dim, context_lstm_dim, scope=None,
                                 with_img_full_match=with_img_full_match, with_img_max_attentive_match=with_img_max_attentive_match,
@@ -717,25 +721,29 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
 
 
         
-    question_aware_representatins = tf.concat(question_aware_representatins, 2) # [batch_size, passage_len, question_aware_dim]
-    passage_aware_representatins = tf.concat(passage_aware_representatins, 2) # [batch_size, question_len, question_aware_dim]
+    hypthesis_matching_representations = tf.concat(hypthesis_matching_representations, 2) # [batch_size, hypothesis_len, premise_aware_dim]
+    if not only_image and not image_with_hypothesis_only:
+        premise_matching_representations = tf.concat(premise_matching_representations, 2) # [batch_size, premise_len, premise_aware_dim]
     #image_aware_representatins = None
     if with_image: image_aware_representatins = tf.concat(image_aware_representatins, 2)
     if is_training:
-        question_aware_representatins = tf.nn.dropout(question_aware_representatins, (1 - dropout_rate))
-        passage_aware_representatins = tf.nn.dropout(passage_aware_representatins, (1 - dropout_rate))
+        hypthesis_matching_representations = tf.nn.dropout(hypthesis_matching_representations, (1 - dropout_rate))
+        if not only_image and not image_with_hypothesis_only:
+            premise_matching_representations = tf.nn.dropout(premise_matching_representations, (1 - dropout_rate))
         if with_image: image_aware_representatins = tf.nn.dropout(image_aware_representatins, (1-dropout_rate))
     else:
-        question_aware_representatins = tf.multiply(question_aware_representatins, (1 - dropout_rate))
-        passage_aware_representatins = tf.multiply(passage_aware_representatins, (1 - dropout_rate))
+        hypthesis_matching_representations = tf.multiply(hypthesis_matching_representations, (1 - dropout_rate))
+        if not only_image and not image_with_hypothesis_only:
+            premise_matching_representations = tf.multiply(premise_matching_representations, (1 - dropout_rate))
         if with_image: image_aware_representatins = tf.multiply(image_aware_representatins, (1-dropout_rate))
         
     # ======Highway layer======
     if with_match_highway:
         with tf.variable_scope("left_matching_highway"):
-            question_aware_representatins = multi_highway_layer(question_aware_representatins, question_aware_dim,highway_layer_num)
-        with tf.variable_scope("right_matching_highway"):
-            passage_aware_representatins = multi_highway_layer(passage_aware_representatins, passage_aware_dim,highway_layer_num)
+            hypthesis_matching_representations = multi_highway_layer(hypthesis_matching_representations, premise_aware_dim,highway_layer_num)
+        if not only_image and not image_with_hypothesis_only:
+            with tf.variable_scope("right_matching_highway"):
+                premise_matching_representations = multi_highway_layer(premise_matching_representations, hypothesis_aware_dim,highway_layer_num)
         if with_image:
             with tf.variable_scope("image_matching_highway"):
                 image_aware_representatins = multi_highway_layer(image_aware_representatins, image_aware_dim, highway_layer_num)
@@ -746,10 +754,11 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
     
     if with_mean_aggregation:
         print('with_mean_aggregation: ', with_mean_aggregation)
-        aggregation_representation.append(tf.reduce_max(question_aware_representatins, axis=1))
-        aggregation_dim += question_aware_dim
-        aggregation_representation.append(tf.reduce_max(passage_aware_representatins, axis=1))
-        aggregation_dim += passage_aware_dim
+        aggregation_representation.append(tf.reduce_max(hypthesis_matching_representations, axis=1))
+        aggregation_dim += premise_aware_dim
+        if not only_image and not image_with_hypothesis_only:
+            aggregation_representation.append(tf.reduce_max(premise_matching_representations, axis=1))
+            aggregation_dim += hypothesis_aware_dim
         if with_image: 
             aggregation_representation.append(tf.reduce_max(image_aware_representatins, axis=1))
             aggregation_dim += image_aware_dim
@@ -757,8 +766,8 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
         aggregation_representation = tf.concat(aggregation_representation, 1)#[batch_size, 2 * aggregation_dim]
         return (aggregation_representation, aggregation_dim)
 
-    qa_aggregation_input = question_aware_representatins
-    pa_aggregation_input = passage_aware_representatins
+    hypo_aggregation_input = hypthesis_matching_representations
+    prem_aggregation_input = premise_matching_representations
     img_aggregation_input = image_aware_representatins
     with tf.variable_scope('aggregation_layer'):
         for i in xrange(aggregation_layer_num): # support multiple aggregation layer
@@ -772,35 +781,36 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
                 aggregation_lstm_cell_bw = tf.contrib.rnn.MultiRNNCell([aggregation_lstm_cell_bw])
 
                 cur_aggregation_representation, _ = my_rnn.bidirectional_dynamic_rnn(
-                        aggregation_lstm_cell_fw, aggregation_lstm_cell_bw, qa_aggregation_input, 
-                        dtype=tf.float32, sequence_length=passage_lengths)
+                        aggregation_lstm_cell_fw, aggregation_lstm_cell_bw, hypo_aggregation_input, 
+                        dtype=tf.float32, sequence_length=hypothesis_lengths)
 
                 fw_rep = cur_aggregation_representation[0][:,-1,:]
                 bw_rep = cur_aggregation_representation[1][:,0,:]
                 aggregation_representation.append(fw_rep)
                 aggregation_representation.append(bw_rep)
                 aggregation_dim += 2* aggregation_lstm_dim
-                qa_aggregation_input = tf.concat(cur_aggregation_representation, 2)# [batch_size, passage_len, 2*aggregation_lstm_dim]
+                hypo_aggregation_input = tf.concat(cur_aggregation_representation, 2)# [batch_size, hypothesis_len, 2*aggregation_lstm_dim]
 
-            with tf.variable_scope('right_layer-{}'.format(i)):
-                aggregation_lstm_cell_fw = tf.contrib.rnn.BasicLSTMCell(aggregation_lstm_dim)
-                aggregation_lstm_cell_bw = tf.contrib.rnn.BasicLSTMCell(aggregation_lstm_dim)
-                if is_training:
-                    aggregation_lstm_cell_fw = tf.contrib.rnn.DropoutWrapper(aggregation_lstm_cell_fw, output_keep_prob=(1 - dropout_rate))
-                    aggregation_lstm_cell_bw = tf.contrib.rnn.DropoutWrapper(aggregation_lstm_cell_bw, output_keep_prob=(1 - dropout_rate))
-                aggregation_lstm_cell_fw = tf.contrib.rnn.MultiRNNCell([aggregation_lstm_cell_fw])
-                aggregation_lstm_cell_bw = tf.contrib.rnn.MultiRNNCell([aggregation_lstm_cell_bw])
+            if not only_image and not image_with_hypothesis_only:
+                with tf.variable_scope('right_layer-{}'.format(i)):
+                    aggregation_lstm_cell_fw = tf.contrib.rnn.BasicLSTMCell(aggregation_lstm_dim)
+                    aggregation_lstm_cell_bw = tf.contrib.rnn.BasicLSTMCell(aggregation_lstm_dim)
+                    if is_training:
+                        aggregation_lstm_cell_fw = tf.contrib.rnn.DropoutWrapper(aggregation_lstm_cell_fw, output_keep_prob=(1 - dropout_rate))
+                        aggregation_lstm_cell_bw = tf.contrib.rnn.DropoutWrapper(aggregation_lstm_cell_bw, output_keep_prob=(1 - dropout_rate))
+                    aggregation_lstm_cell_fw = tf.contrib.rnn.MultiRNNCell([aggregation_lstm_cell_fw])
+                    aggregation_lstm_cell_bw = tf.contrib.rnn.MultiRNNCell([aggregation_lstm_cell_bw])
 
-                cur_aggregation_representation, _ = my_rnn.bidirectional_dynamic_rnn(
-                        aggregation_lstm_cell_fw, aggregation_lstm_cell_bw, pa_aggregation_input, 
-                        dtype=tf.float32, sequence_length=question_lengths)
+                    cur_aggregation_representation, _ = my_rnn.bidirectional_dynamic_rnn(
+                        aggregation_lstm_cell_fw, aggregation_lstm_cell_bw, prem_aggregation_input, 
+                        dtype=tf.float32, sequence_length=premise_lengths)
 
-                fw_rep = cur_aggregation_representation[0][:,-1,:]
-                bw_rep = cur_aggregation_representation[1][:,0,:]
-                aggregation_representation.append(fw_rep)
-                aggregation_representation.append(bw_rep)
-                aggregation_dim += 2* aggregation_lstm_dim
-                pa_aggregation_input = tf.concat(cur_aggregation_representation, 2)# [batch_size, passage_len, 2*aggregation_lstm_dim]
+                    fw_rep = cur_aggregation_representation[0][:,-1,:]
+                    bw_rep = cur_aggregation_representation[1][:,0,:]
+                    aggregation_representation.append(fw_rep)
+                    aggregation_representation.append(bw_rep)
+                    aggregation_dim += 2* aggregation_lstm_dim
+                    prem_aggregation_input = tf.concat(cur_aggregation_representation, 2)# [batch_size, hypothesis_len, 2*aggregation_lstm_dim]
             if with_image:
                 with tf.variable_scope('image_layer-{}'.format(i)):
                     aggregation_lstm_cell_fw = tf.contrib.rnn.BasicLSTMCell(aggregation_lstm_dim)
@@ -820,7 +830,7 @@ def bilateral_match_func(image_features, in_question_repres, in_passage_repres, 
                     aggregation_representation.append(fw_rep)
                     aggregation_representation.append(bw_rep)
                     aggregation_dim += 2* aggregation_lstm_dim
-                    img_aggregation_input = tf.concat(cur_aggregation_representation, 2)# [batch_size, passage_len, 2*aggregation_lstm_dim]
+                    img_aggregation_input = tf.concat(cur_aggregation_representation, 2)# [batch_size, hypothesis_len, 2*aggregation_lstm_dim]
 
     #
     aggregation_representation = tf.concat(aggregation_representation, 1) # [batch_size, aggregation_dim]

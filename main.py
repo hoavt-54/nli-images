@@ -51,7 +51,7 @@ def collect_vocabs(train_path, with_POS=False, with_NER=False):
             all_chars.add(char)
     return (all_words, all_chars, all_labels, all_POSs, all_NERs)
 
-def evaluate(dataStream, valid_graph, sess, outpath=None, label_vocab=None, mode='prediction',char_vocab=None, POS_vocab=None, NER_vocab=None, with_image=False):
+def evaluate(dataStream, valid_graph, sess, outpath=None, label_vocab=None, mode='prediction',char_vocab=None, POS_vocab=None, NER_vocab=None, word_vocab=None, with_image=False):
     if outpath is not None: 
         outfile = open(outpath, 'wt')
         outline = "correct_label\tprediction\tsent1\tsent2\n"
@@ -64,16 +64,18 @@ def evaluate(dataStream, valid_graph, sess, outpath=None, label_vocab=None, mode
     for batch_index in xrange(dataStream.get_num_batch()):
         cur_dev_batch = dataStream.get_batch(batch_index)
         (label_batch, sent1_batch, sent2_batch, label_id_batch, word_idx_1_batch, word_idx_2_batch, 
-                                 char_matrix_idx_1_batch, char_matrix_idx_2_batch, sent1_length_batch, sent2_length_batch, 
-                                 sent1_char_length_batch, sent2_char_length_batch,
+                                 char_matrix_idx_1_batch, char_matrix_idx_2_batch, sent1_length_batch, 
+                                 sent2_length_batch, sent1_char_length_batch, sent2_char_length_batch, 
                                  POS_idx_1_batch, POS_idx_2_batch, NER_idx_1_batch, NER_idx_2_batch, 
-                                 dependency1_batch, dependency2_batch, dep_con1_batch, dep_con2_batch, img_feats_batch, img_id_batch) = cur_dev_batch
+                                 dependency1_batch, dependency2_batch, dep_con1_batch, dep_con2_batch, 
+                                 img_feats_batch, img_id_batch) = cur_dev_batch
         feed_dict = {
                     valid_graph.get_truth(): label_id_batch, 
                     valid_graph.get_question_lengths(): sent1_length_batch, 
                     valid_graph.get_passage_lengths(): sent2_length_batch, 
                     valid_graph.get_in_question_words(): word_idx_1_batch, 
                     valid_graph.get_in_passage_words(): word_idx_2_batch,
+                    #valid_graph.get_emb_init() :word_vocab.word_vecs,
                     #valid_graph.get_in_question_dependency(): dependency1_batch,
                     #valid_graph.get_in_passage_dependency(): dependency2_batch,
 #                     valid_graph.get_question_char_lengths(): sent1_char_length_batch, 
@@ -286,7 +288,7 @@ def main(_):
             saver = tf.train.Saver(vars_)
          
             sess = tf.Session()
-            sess.run(initializer)
+            sess.run(initializer) #, feed_dict={valid_graph.emb_init: word_vocab.word_vecs, train_graph.emb_init: word_vocab.word_vecs})
             if has_pre_trained_model:
                 print("Restoring model from " + best_path)
                 saver.restore(sess, best_path)
@@ -313,7 +315,7 @@ def main(_):
                          train_graph.get_passage_lengths(): sent2_length_batch, 
                          train_graph.get_in_question_words(): word_idx_1_batch, 
                          train_graph.get_in_passage_words(): word_idx_2_batch,
-
+                         #train_graph.get_emb_init(): word_vocab.word_vecs,
                          #train_graph.get_in_question_dependency(): dependency1_batch,
                          #train_graph.get_in_passage_dependency(): dependency2_batch,
 #                          train_graph.get_question_char_lengths(): sent1_char_length_batch, 
@@ -362,7 +364,7 @@ def main(_):
 
                     # Evaluate against the validation set.
                     print('Validation Data Eval:')
-                    accuracy = evaluate(devDataStream, valid_graph, sess,char_vocab=char_vocab, POS_vocab=POS_vocab, NER_vocab=NER_vocab)
+                    accuracy = evaluate(devDataStream, valid_graph, sess,char_vocab=char_vocab, POS_vocab=POS_vocab, NER_vocab=NER_vocab, word_vocab=word_vocab)
                     print("Current accuracy on dev is %.2f" % accuracy)
                 
                     #accuracy_train = evaluate(trainDataStream, valid_graph, sess,char_vocab=char_vocab, POS_vocab=POS_vocab, NER_vocab=NER_vocab)
@@ -403,13 +405,13 @@ def main(_):
         saver = tf.train.Saver(vars_)
                 
         sess = tf.Session()
-        sess.run(tf.global_variables_initializer())
+        sess.run(tf.global_variables_initializer())#, feed_dict={valid_graph.emb_init: word_vocab.word_vecs})
         step = 0
         saver.restore(sess, best_path)
 
-        accuracy = evaluate(testDataStream, valid_graph, sess, outpath=FLAGS.suffix+".result",char_vocab=char_vocab,POS_vocab=POS_vocab, NER_vocab=NER_vocab,label_vocab = label_vocab)
+        accuracy = evaluate(testDataStream, valid_graph, sess, outpath=FLAGS.suffix+".result",char_vocab=char_vocab,label_vocab=label_vocab, word_vocab=word_vocab)
         print("Accuracy for test set is %.2f" % accuracy)
-        accuracy_train = evaluate(trainDataStream, valid_graph, sess,char_vocab=char_vocab,POS_vocab=POS_vocab, NER_vocab=NER_vocab)
+        accuracy_train = evaluate(trainDataStream, valid_graph, sess,char_vocab=char_vocab,word_vocab=word_vocab)
         print("Accuracy for train set is %.2f" % accuracy_train)
 def set_args(config_file, FLAGS):
     import json
