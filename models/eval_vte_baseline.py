@@ -25,7 +25,6 @@ if __name__ == "__main__":
     parser.add_argument("--img_names_filename", type=str, required=True)
     parser.add_argument("--img_features_filename", type=str, required=True)
     parser.add_argument("--result_filename", type=str, required=True)
-    parser.add_argument("--img_features_size", type=int, default=4096)
     args = parser.parse_args()
     start_logger(args.result_filename)
     atexit.register(stop_logger)
@@ -54,7 +53,7 @@ if __name__ == "__main__":
     print("-- Restoring model")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
-    img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size), name="img_features_input")
+    img_features_input = tf.placeholder(tf.float32, (None, params["img_features_size"]), name="img_features_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
     logits = build_vte_baseline_model(
@@ -68,7 +67,8 @@ if __name__ == "__main__":
         params["embeddings_size"],
         params["img_features_size"],
         params["train_embeddings"],
-        params["rnn_hidden_size"]
+        params["rnn_hidden_size"],
+        params["img_features_hidden_size"]
     )
     saver = tf.train.Saver()
     with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
