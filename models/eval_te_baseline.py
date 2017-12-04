@@ -73,21 +73,21 @@ if __name__ == "__main__":
         y_true = []
         y_pred = []
 
-        for indexes in batch(test_batches_indexes, params["batch_size"]):
-            test_batch_premises = test_premises[indexes]
-            test_batch_hypotheses = test_hypotheses[indexes]
-            test_batch_labels = test_labels[indexes]
-            predictions = session.run(
-                tf.argmax(logits, axis=1),
-                feed_dict={
-                    premise_input: test_batch_premises,
-                    hypothesis_input: test_batch_hypotheses,
-                    dropout_input: 1.0
-                }
-            )
-            test_num_correct += (predictions == test_batch_labels).sum()
-            with open(args.result_filename + ".predictions", mode="w") as out_file:
-                writer = csv.writer(out_file, delimiter="\t")
+        with open(args.result_filename + ".predictions", mode="w") as out_file:
+            writer = csv.writer(out_file, delimiter="\t")
+            for indexes in batch(test_batches_indexes, params["batch_size"]):
+                test_batch_premises = test_premises[indexes]
+                test_batch_hypotheses = test_hypotheses[indexes]
+                test_batch_labels = test_labels[indexes]
+                predictions = session.run(
+                    tf.argmax(logits, axis=1),
+                    feed_dict={
+                        premise_input: test_batch_premises,
+                        hypothesis_input: test_batch_hypotheses,
+                        dropout_input: 1.0
+                    }
+                )
+                test_num_correct += (predictions == test_batch_labels).sum()
                 for i in range(len(indexes)):
                     writer.writerow(
                         [
