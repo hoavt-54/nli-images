@@ -8,33 +8,48 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 
 ### Without transfer learning:
 
-| train dataset | test dataset | Bowman et al. | BiMPM |
-|---------------|--------------|---------------|-------|
-| SNLI train    | SNLI test    | 78.81         | 86.41 |
-| SNLI train    | SICK test    | 48.51         | 39.93 |
-| SNLI train    | SICK2        | 51.76         | 56.49 |
-| SICK train    | SICK test    | 56.87         | 83.33 |
+| training dataset | test dataset | Bowman et al. | BiMPM |
+|------------------|--------------|---------------|-------|
+| SNLI train       | SNLI test    | 78.81         | 86.41 |
+| SNLI train       | SICK test    | 48.51         | 39.93 |
+| SNLI train       | SICK2        | 51.76         | 56.49 |
+| SICK train       | SICK test    | 56.87         | 83.33 |
 
 ### With transfer learning:
 
-| pre-train dataset | train dataset | test dataset | Bowman et al. | BiMPM |
-|-------------------|---------------|--------------|---------------|-------|
-| SNLI train        | SICK train    | SICK test    | 76.23         |       |
-| SNLI train        | SICK2 train   | SICK2 test   | 73.73         |       |
+| pre-training dataset | training dataset | test dataset | Bowman et al. | BiMPM |
+|----------------------|------------------|--------------|---------------|-------|
+| SNLI train           | SICK train       | SICK test    | 76.23         |       |
+| SNLI train           | SICK2 train      | SICK2 test   | 73.73         |       |
 
 ## Results of the Recognizing Visual Textual Inference task
 
 ### Without transfer learning:
 
-| train dataset | test dataset | Bowman et al. + images | V-BiMPM |
-|---------------|--------------|------------------------|---------|
-| VSNLI train   | VSNLI test   | 76.45                  | 86.99   |
-| VSNLI train   | VSICK2       | 54.06                  | 60.57   |
+| training dataset | test dataset | Bowman et al. + images | V-BiMPM |
+|------------------|--------------|------------------------|---------|
+| VSNLI train      | VSNLI test   | 76.45                  | 86.99   |
+| VSNLI train      | VSICK2       | 54.06                  | 60.57   |
 
 ### With transfer learning:
 
-| pre-train dataset | train dataset | test dataset | Bowman et al. | V-BiMPM |
-|-------------------|---------------|--------------|---------------|---------|
-| VSNLI train       | VSICK2 train  | VSICK2 test  | 72.03         |         |
+| pre-training dataset | training dataset | test dataset | Bowman et al. + images | V-BiMPM |
+|----------------------|------------------|--------------|------------------------|---------|
+| VSNLI train          | VSICK2 train     | VSICK2 test  | 72.03                  |         |
+
+## Comparison of the comparable configurations:
+
+### Without transfer learning:
+
+| training set  | test set     | Bowman | Bowman + images | BiMPM | V-BiMPM |
+|---------------|--------------|--------|-----------------|-------|---------|
+| (V)SNLI train | (V)SNLI test | 78.81  | 76.45           | 86.41 | 86.99   |
+| (V)SNLI train | (V)SICK2     | 51.76  | 54.06           | 56.49 | 60.57   |
+
+### With transfer learning:
+
+| pre-training set | training set   | test set      | Bowman | Bowman + images | BiMPM | V-BiMPM |
+|------------------|----------------|---------------|--------|-----------------|-------|---------|
+| (V)SNLI train    | (V)SICK2 train | (V)SICK2 test | 73.73  | 72.03           |       |         |
 
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference.".
