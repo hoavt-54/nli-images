@@ -4,9 +4,9 @@
 
 # Bowman et al. SNLI train -> SNLI test
 
-~/python3 train_bowman_te_baseline.py --train_filename=../datasets/SNLI_1.0/SNLI_1.0_train_filtered.tsv --dev_filename=../datasets/SNLI_1.0/SNLI_1.0_dev_filtered.tsv --vectors_filename=../../pre-wordvec/glove.840B.300d.txt --model_save_filename=checkpoints/bowman_TE/SNLI_train
+~/python3 train_bowman_te_baseline.py --train_filename=../datasets/snli_1.0/snli_1.0_train_filtered.tsv --dev_filename=../datasets/snli_1.0/snli_1.0_dev_filtered.tsv --vectors_filename=../../pre-wordvec/glove.840B.300d.txt --model_save_filename=checkpoints/bowman_TE/SNLI_train
 
-~/python3 eval_bowman_te_baseline.py --model_filename=checkpoints/bowman_TE/SNLI_train --test_filename=../datasets/SNLI_1.0/SNLI_1.0_test_filtered.tsv --result_filename=results/bowman_TE/SNLI_train_to_SNLI_test
+~/python3 eval_bowman_te_baseline.py --model_filename=checkpoints/bowman_TE/SNLI_train --test_filename=../datasets/snli_1.0/snli_1.0_test_filtered.tsv --result_filename=results/bowman_TE/SNLI_train_to_SNLI_test
 
 # Bowman et al. SNLI train -> SICK test
 
