@@ -12,7 +12,7 @@ import tensorflow as tf
 
 from dataset import ImageReader, load_vte_dataset
 from logger import start_logger, stop_logger
-from train_vte_baseline import build_vte_baseline_model
+from train_bowman_vte_baseline import build_vte_baseline_model
 from utils import batch
 
 if __name__ == "__main__":

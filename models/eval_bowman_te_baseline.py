@@ -12,7 +12,7 @@ import tensorflow as tf
 
 from dataset import load_te_dataset
 from logger import start_logger, stop_logger
-from train_te_baseline import build_te_baseline_model
+from train_bowman_te_baseline import build_te_baseline_model
 from utils import batch
 
 if __name__ == "__main__":
