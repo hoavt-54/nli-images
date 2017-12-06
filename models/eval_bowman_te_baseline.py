@@ -12,7 +12,7 @@ import tensorflow as tf
 
 from dataset import load_te_dataset
 from logger import start_logger, stop_logger
-from train_bowman_te_baseline import build_te_baseline_model
+from train_bowman_te_baseline import build_bowman_te_baseline_model
 from utils import batch
 
 if __name__ == "__main__":
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_te_baseline_model(
+    logits = build_bowman_te_baseline_model(
         premise_input,
         hypothesis_input,
         dropout_input,

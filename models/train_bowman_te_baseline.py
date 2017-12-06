@@ -16,15 +16,15 @@ from progress import Progbar
 from utils import AttrDict, batch
 
 
-def build_te_baseline_model(premise_input,
-                            hypothesis_input,
-                            dropout_input,
-                            num_tokens,
-                            num_labels,
-                            embeddings,
-                            embeddings_size,
-                            train_embeddings,
-                            rnn_hidden_size):
+def build_bowman_te_baseline_model(premise_input,
+                                   hypothesis_input,
+                                   dropout_input,
+                                   num_tokens,
+                                   num_labels,
+                                   embeddings,
+                                   embeddings_size,
+                                   train_embeddings,
+                                   rnn_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -182,7 +182,7 @@ if __name__ == "__main__":
         hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
         label_input = tf.placeholder(tf.int32, (None,), name="label_input")
         dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-        logits = build_te_baseline_model(
+        logits = build_bowman_te_baseline_model(
             premise_input,
             hypothesis_input,
             dropout_input,
