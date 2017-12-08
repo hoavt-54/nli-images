@@ -122,3 +122,4 @@ if __name__ == "__main__":
         y_pred = pd.Series(y_pred, name="Predicted")
         confusion_matrix = pd.crosstab(y_true, y_pred, margins=True)
         confusion_matrix.to_csv(args.result_filename + ".confusion_matrix")
+4
