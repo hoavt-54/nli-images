@@ -1,0 +1,6 @@
+-- Loading params
+-- Loading index
+-- Loading test set
+-- Restoring model
+-- Evaluating model
+Mean test accuracy: 0.5698924731182796
