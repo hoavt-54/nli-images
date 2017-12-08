@@ -22,9 +22,9 @@
 
 # Recognizing Visual Textual Entailment without Transfer Learning
 
-~/python3 eval_bowman_vte_baseline.py --model_filename=checkpoints/bowman_VTE/VSNLI_train --test_filename=../datasets/SICK/SICK2/difficult_SICK2.tsv --img_names_filename=../../flickr30k-cnn/flickr30k/filenames_4096.json --img_features_filename=../../flickr30k-cnn/flickr30k/vgg_feats_4096.npy --result_filename=results/bowman_VTE/VSNLI_train_to_difficult_SICK2
+~/python3 eval_bowman_vte_baseline.py --model_filename=checkpoints/bowman_VTE/VSNLI_train --test_filename=../datasets/SICK/SICK2/difficult_SICK2.tsv --img_names_filename=../../flickr8k-cnn/flickr8k/filenames_4096.json --img_features_filename=../../flickr8k-cnn/flickr8k/vgg_feats_4096.npy --result_filename=results/bowman_VTE/VSNLI_train_to_difficult_SICK2
 
-~/python3 eval_lstm_vte_baseline.py --model_filename=checkpoints/lstm_VTE/VSNLI_train --test_filename=../datasets/SICK/SICK2/difficult_SICK2.tsv --img_names_filename=../../flickr30k-cnn/flickr30k/filenames_4096.json --img_features_filename=../../flickr30k-cnn/flickr30k/vgg_feats_4096.npy --result_filename=results/lstm_VTE/VSNLI_train_to_difficult_SICK2
+~/python3 eval_lstm_vte_baseline.py --model_filename=checkpoints/lstm_VTE/VSNLI_train --test_filename=../datasets/SICK/SICK2/difficult_SICK2.tsv --img_names_filename=../../flickr8k-cnn/flickr8k/filenames_4096.json --img_features_filename=../../flickr8k-cnn/flickr8k/vgg_feats_4096.npy --result_filename=results/lstm_VTE/VSNLI_train_to_difficult_SICK2
 
 # Recognizing Visual Textual Entailment with Transfer Learning
 
