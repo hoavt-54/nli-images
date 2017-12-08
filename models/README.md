@@ -10,34 +10,34 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 
 ### Without transfer learning:
 
-| training dataset | test dataset | Bowman et al. | LSTM  | BiMPM |
-|------------------|--------------|---------------|-------|-------|
-| SNLI train       | SNLI test    | 78.81         | 79.81 | 86.41 |
-| SNLI train       | SICK test    | 48.51         | 48.53 | 39.93 |
-| SNLI train       | SICK2        | 51.76         | 54.55 | 56.49 |
-| SICK train       | SICK test    | 56.87         | 62.45 | 83.33 |
+| training dataset | test dataset | Bowman | LSTM  | BiMPM |
+|------------------|--------------|--------|-------|-------|
+| SNLI train       | SNLI test    | 78.81  | 79.81 | 86.41 |
+| SNLI train       | SICK test    | 48.51  | 48.53 | 39.93 |
+| SNLI train       | SICK2        | 51.76  | 54.55 | 56.49 |
+| SICK train       | SICK test    | 56.87  | 62.45 | 83.33 |
 
 ### With transfer learning:
 
-| pre-training dataset | training dataset | test dataset | Bowman et al. | LSTM  | BiMPM |
-|----------------------|------------------|--------------|---------------|-------|-------|
-| SNLI train           | SICK train       | SICK test    | 76.23         | 79.96 |       |
-| SNLI train           | SICK2 train      | SICK2 test   | 73.73         | 77.59 |       |
+| pre-training dataset | training dataset | test dataset | Bowman | LSTM  | BiMPM |
+|----------------------|------------------|--------------|--------|-------|-------|
+| SNLI train           | SICK train       | SICK test    | 76.23  | 79.96 |       |
+| SNLI train           | SICK2 train      | SICK2 test   | 73.73  | 77.59 |       |
 
 ## Results of the Recognizing Visual Textual Entailment task
 
 ### Without transfer learning:
 
-| training dataset | test dataset | Bowman et al. + images | LSTM + images | V-BiMPM |
-|------------------|--------------|------------------------|---------------|---------|
-| VSNLI train      | VSNLI test   | 76.45                  | 79.15         | 86.99   |
-| VSNLI train      | VSICK2       | 54.06                  | 57.26         | 60.57   |
+| training dataset | test dataset | Bowman + images | LSTM + images | V-BiMPM |
+|------------------|--------------|-----------------|---------------|---------|
+| VSNLI train      | VSNLI test   | 76.45           | 79.15         | 86.99   |
+| VSNLI train      | VSICK2       | 54.06           | 57.26         | 60.57   |
 
 ### With transfer learning:
 
-| pre-training dataset | training dataset | test dataset | Bowman et al. + images | LSTM + images | V-BiMPM |
-|----------------------|------------------|--------------|------------------------|---------------|---------|
-| VSNLI train          | VSICK2 train     | VSICK2 test  | 72.03                  |               |         |
+| pre-training dataset | training dataset | test dataset | Bowman + images | LSTM + images | V-BiMPM |
+|----------------------|------------------|--------------|-----------------|---------------|---------|
+| VSNLI train          | VSICK2 train     | VSICK2 test  | 72.03           |               |         |
 
 ## Comparison of the comparable configurations:
 
