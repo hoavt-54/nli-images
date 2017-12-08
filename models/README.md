@@ -32,16 +32,18 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 
 ### Without transfer learning:
 
-| training dataset | test dataset | Bowman + images | LSTM + images | V-BiMPM |
-|------------------|--------------|-----------------|---------------|---------|
-| VSNLI train      | VSNLI test   | 76.45           | 79.15         | 86.99   |
-| VSNLI train      | VSICK2       | 54.06           | 57.26         | 60.57   |
+| training dataset | test dataset    | Bowman + images | LSTM + images | V-BiMPM |
+|------------------|-----------------|-----------------|---------------|---------|
+| VSNLI train      | VSNLI test      | 76.45           | 79.15         | 86.99   |
+| VSNLI train      | VSICK2          | 54.06           | 57.26         | 60.57   |
+| VSNLI train      | SICK2 difficult | 48.57           | 48.21         |         |
 
 ### With transfer learning:
 
-| pre-training dataset | training dataset | test dataset | Bowman + images | LSTM + images | V-BiMPM |
-|----------------------|------------------|--------------|-----------------|---------------|---------|
-| VSNLI train          | VSICK2 train     | VSICK2 test  | 72.03           | 78.67         |         |
+| pre-training dataset | training dataset | test dataset    | Bowman + images | LSTM + images | V-BiMPM |
+|----------------------|------------------|-----------------|-----------------|---------------|---------|
+| VSNLI train          | VSICK2 train     | VSICK2 test     | 72.03           | 78.67         |         |
+| VSNLI train          | VSICK2 train     | SICK2 difficult | 57.86           | 54.64         |         |
 
 ## Comparison of the comparable configurations:
 
