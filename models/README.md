@@ -26,7 +26,7 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 | SNLI train           | SICK train       | SICK test       | 76.23  | 79.96 |       |
 | SNLI train           | SICK train       | SICK2 difficult | 56.99  | 58.42 |       |
 | SNLI train           | SICK2 train      | SICK2 test      | 73.73  | 77.59 |       |
-| SNLI train           | SICK3 train      | SICK2 difficult | 54.12  | 56.27 |       |
+| SNLI train           | SICK2 train      | SICK2 difficult | 54.12  | 56.27 |       |
 
 ## Results of the Recognizing Visual Textual Entailment task
 
