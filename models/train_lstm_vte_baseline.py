@@ -16,18 +16,18 @@ from progress import Progbar
 from utils import AttrDict, batch
 
 
-def build_vte_baseline_model(premise_input,
-                             hypothesis_input,
-                             img_features_input,
-                             dropout_input,
-                             num_tokens,
-                             num_labels,
-                             embeddings,
-                             embeddings_size,
-                             img_features_size,
-                             train_embeddings,
-                             rnn_hidden_size,
-                             img_features_hidden_size):
+def build_lstm_vte_baseline_model(premise_input,
+                                    hypothesis_input,
+                                    img_features_input,
+                                    dropout_input,
+                                    num_tokens,
+                                    num_labels,
+                                    embeddings,
+                                    embeddings_size,
+                                    img_features_size,
+                                    train_embeddings,
+                                    rnn_hidden_size,
+                                    img_features_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -81,7 +81,7 @@ def build_vte_baseline_model(premise_input,
     img_features_hidden = tf.contrib.layers.fully_connected(
         img_features_input,
         img_features_hidden_size,
-        activation_fn=tf.nn.tanh
+        activation_fn=tf.nn.relu
     )
     premise_hypothesis_img = tf.concat([premise_final_states.h, hypothesis_final_states.h, img_features_hidden], axis=1)
     return tf.contrib.layers.fully_connected(
@@ -90,13 +90,13 @@ def build_vte_baseline_model(premise_input,
                 tf.contrib.layers.fully_connected(
                     premise_hypothesis_img,
                     rnn_hidden_size * 2 + img_features_size,
-                    activation_fn=tf.nn.tanh
+                    activation_fn=tf.nn.relu
                 ),
                 rnn_hidden_size * 2 + img_features_size,
-                activation_fn=tf.nn.tanh
+                activation_fn=tf.nn.relu
             ),
             rnn_hidden_size * 2 + img_features_size,
-            activation_fn=tf.nn.tanh
+            activation_fn=tf.nn.relu
         ),
         num_labels,
         activation_fn=None
@@ -202,7 +202,7 @@ if __name__ == "__main__":
         img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size), name="img_features_input")
         label_input = tf.placeholder(tf.int32, (None,), name="label_input")
         dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-        logits = build_vte_baseline_model(
+        logits = build_lstm_vte_baseline_model(
             premise_input,
             hypothesis_input,
             img_features_input,

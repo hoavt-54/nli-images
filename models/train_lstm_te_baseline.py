@@ -16,15 +16,15 @@ from progress import Progbar
 from utils import AttrDict, batch
 
 
-def build_te_baseline_model(premise_input,
-                            hypothesis_input,
-                            dropout_input,
-                            num_tokens,
-                            num_labels,
-                            embeddings,
-                            embeddings_size,
-                            train_embeddings,
-                            rnn_hidden_size):
+def build_lstm_te_baseline_model(premise_input,
+                                 hypothesis_input,
+                                 dropout_input,
+                                 num_tokens,
+                                 num_labels,
+                                 embeddings,
+                                 embeddings_size,
+                                 train_embeddings,
+                                 rnn_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -82,13 +82,13 @@ def build_te_baseline_model(premise_input,
                 tf.contrib.layers.fully_connected(
                     premise_hypothesis,
                     rnn_hidden_size * 2,
-                    activation_fn=tf.nn.tanh
+                    activation_fn=tf.nn.relu
                 ),
                 rnn_hidden_size * 2,
-                activation_fn=tf.nn.tanh
+                activation_fn=tf.nn.relu
             ),
             rnn_hidden_size * 2,
-            activation_fn=tf.nn.tanh
+            activation_fn=tf.nn.relu
         ),
         num_labels,
         activation_fn=None
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
-    parser.add_argument("--learning_rate", type=float, default=1.0)
+    parser.add_argument("--learning_rate", type=float, default=0.001)
     parser.add_argument("--l2_reg", type=float, default=0.000005)
     parser.add_argument("--patience", type=int, default=3)
     args = parser.parse_args()
@@ -182,7 +182,7 @@ if __name__ == "__main__":
         hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
         label_input = tf.placeholder(tf.int32, (None,), name="label_input")
         dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-        logits = build_te_baseline_model(
+        logits = build_lstm_te_baseline_model(
             premise_input,
             hypothesis_input,
             dropout_input,
@@ -195,7 +195,7 @@ if __name__ == "__main__":
         )
         L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
         loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
-        train_step = tf.train.AdadeltaOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
+        train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
         saver = tf.train.Saver()
         tf.add_to_collection("premise_input", premise_input)
         tf.add_to_collection("hypothesis_input", hypothesis_input)
