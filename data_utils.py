@@ -35,7 +35,9 @@ def pad_3d_tensor(in_val, max_length1=None, max_length2=None, dtype=np.int32):
 
 class DataStream(object):
     def __init__(self, inpath, word_vocab=None, char_vocab=None, POS_vocab=None, NER_vocab=None, label_vocab=None, batch_size=60, 
-                 isShuffle=False, isLoop=False, isSort=True, max_char_per_word=10, with_dep = False, max_sent_length=200, with_image=False, image_feats=None):
+                 isShuffle=False, isLoop=False, isSort=True, max_char_per_word=10, with_dep = False, max_sent_length=200, with_image=False, image_feats=None, sick_data=False):
+        print ("inpath: ", inpath)
+        print ("label_vocab: ", label_vocab.word2id)
         instances = []
         count_ins = 0
         infile = open(inpath, 'rt')
@@ -64,15 +66,18 @@ class DataStream(object):
                     print('skip', line)
                     continue
                 try:
-                    img_id = img_id.strip()
+                    img_id = img_id.strip().split('#')[0]
                     img_feats=image_feats.get_feat(img_id)
                     img_feats = np.reshape(img_feats, (-1, 512))
                     if img_feats is None: raise Exception('feature not found for ' + items[3])
                 except:
+                    print(img_id)
                     continue
             
-            if label_vocab is not None: 
+            if label_vocab is not None:
+                if sick_data: label = label + ' '
                 label_id = label_vocab.getIndex(label)
+                if count_ins < 10: print ("label: ", label, "\tlabel_id: ", label_id)
                 if label_id >= label_vocab.vocab_size: label_id = 0
             else: 
                 label_id = int(label)

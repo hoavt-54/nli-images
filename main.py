@@ -142,11 +142,15 @@ def main(_):
     test_path = FLAGS.test_path
     word_vec_path = FLAGS.word_vec_path
     log_dir = FLAGS.model_dir
+    if FLAGS.train == "sick":
+        train_path = FLAGS.SICK_train_path
+        dev_path = FLAGS.SICK_dev_path
+    if FLAGS.test == "sick":
+        test_path = FLAGS.SICK_test_path
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
     
     path_prefix = log_dir + "/SentenceMatch.{}".format(FLAGS.suffix)
-
     namespace_utils.save_namespace(FLAGS, path_prefix + ".config.json")
 
     # build vocabs
@@ -202,33 +206,35 @@ def main(_):
 
     print('Build DataStream ... ')
     print('Reading trainDataStream')
-    trainDataStream = DataStream(train_path, word_vocab=word_vocab, char_vocab=char_vocab, 
+    if not FLAGS.decoding_only:
+        trainDataStream = DataStream(train_path, word_vocab=word_vocab, char_vocab=char_vocab, 
                                               POS_vocab=POS_vocab, NER_vocab=NER_vocab, label_vocab=label_vocab, 
                                               batch_size=FLAGS.batch_size, isShuffle=True, isLoop=True, isSort=True, 
                                               max_char_per_word=FLAGS.max_char_per_word, max_sent_length=FLAGS.max_sent_length, 
-                                              with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_feats=image_feats)
-                        
-    print('Reading devDataStream')
-    devDataStream = DataStream(dev_path, word_vocab=word_vocab, char_vocab=char_vocab,
+                                              with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_feats=image_feats, sick_data=(FLAGS.test == "sick"))
+    
+        print('Reading devDataStream')
+        devDataStream = DataStream(dev_path, word_vocab=word_vocab, char_vocab=char_vocab,
                                               POS_vocab=POS_vocab, NER_vocab=NER_vocab, label_vocab=label_vocab, 
                                               batch_size=FLAGS.batch_size, isShuffle=False, isLoop=True, isSort=True, 
                                               max_char_per_word=FLAGS.max_char_per_word, max_sent_length=FLAGS.max_sent_length, 
-                                              with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_feats=image_feats)
+                                              with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_feats=image_feats, sick_data=(FLAGS.test == "sick"))
 
     print('Reading testDataStream')
     testDataStream = DataStream(test_path, word_vocab=word_vocab, char_vocab=char_vocab, 
                                               POS_vocab=POS_vocab, NER_vocab=NER_vocab, label_vocab=label_vocab, 
                                               batch_size=FLAGS.batch_size, isShuffle=False, isLoop=True, isSort=True, 
                                                   max_char_per_word=FLAGS.max_char_per_word, max_sent_length=FLAGS.max_sent_length, 
-                                                  with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_feats=image_feats)
+                                                  with_dep=FLAGS.with_dep, with_image=FLAGS.with_image, image_feats=image_feats, sick_data=(FLAGS.test == "sick"))
     print('save cache file')
     #word_vocab.parser.save_cache()
     #image_feats.save_feat()
-    print('Number of instances in trainDataStream: {}'.format(trainDataStream.get_num_instance()))
-    print('Number of instances in devDataStream: {}'.format(devDataStream.get_num_instance()))
+    if not FLAGS.decoding_only:
+        print('Number of instances in trainDataStream: {}'.format(trainDataStream.get_num_instance()))
+        print('Number of instances in devDataStream: {}'.format(devDataStream.get_num_instance()))
+        print('Number of batches in trainDataStream: {}'.format(trainDataStream.get_num_batch()))
+        print('Number of batches in devDataStream: {}'.format(devDataStream.get_num_batch()))
     print('Number of instances in testDataStream: {}'.format(testDataStream.get_num_instance()))
-    print('Number of batches in trainDataStream: {}'.format(trainDataStream.get_num_batch()))
-    print('Number of batches in devDataStream: {}'.format(devDataStream.get_num_batch()))
     print('Number of batches in testDataStream: {}'.format(testDataStream.get_num_batch()))
     
     sys.stdout.flush()
@@ -294,7 +300,7 @@ def main(_):
                 saver.restore(sess, best_path)
                 print("DONE!")
                 #if best_path.startswith('bimpm_baseline'):
-                best_path = best_path + '_sick' 
+                #best_path = best_path + '_sick' 
 
             print('Start the training loop.')
             train_size = trainDataStream.get_num_batch()

@@ -543,7 +543,7 @@ def bilateral_match_func(image_features, in_premise_repres, in_hypothesis_repres
                         image_with_hypothesis_only=False, with_img_full_match=False, with_img_maxpool_match=False, 
                         with_img_attentive_match=True, with_img_max_attentive_match=True, image_context_layer=True, img_dim=100):
 
-    only_image = True
+    only_image = False
     if not only_image:
         cosine_matrix = cal_relevancy_matrix(in_premise_repres, in_hypothesis_repres) # [batch_size, hypothesis_len, premise_len]
         cosine_matrix = mask_relevancy_matrix(cosine_matrix, premise_mask, hypothesis_mask)
