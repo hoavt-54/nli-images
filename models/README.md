@@ -13,20 +13,20 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 | training dataset | test dataset    | Bowman | LSTM  | BiMPM |
 |------------------|-----------------|--------|-------|-------|
 | SNLI train       | SNLI test       | 78.81  | 79.81 | 86.41 |
-| SNLI train       | SICK test       | 48.51  | 48.53 | 39.93 |
+| SNLI train       | SICK test       | 48.51  | 48.53 | 51.08 |
 | SNLI train       | SICK2           | 51.76  | 54.55 | 56.49 |
-| SNLI train       | SICK2 difficult | 45.88  | 48.39 |       |
-| SICK train       | SICK test       | 56.87  | 62.45 | 83.33 |
-| SICK train       | SICK2 difficult | 44.44  | 50.18 |       |
+| SNLI train       | SICK2 difficult | 45.88  | 48.39 | 51.61 |
+| SICK train       | SICK test       | 56.87  | 62.45 | 84.53 |
+| SICK train       | SICK2 difficult | 44.44  | 50.18 | 55.02 |
 
 ### With transfer learning:
 
 | pre-training dataset | training dataset | test dataset    | Bowman | LSTM  | BiMPM |
 |----------------------|------------------|-----------------|--------|-------|-------|
-| SNLI train           | SICK train       | SICK test       | 76.23  | 79.96 |       |
-| SNLI train           | SICK train       | SICK2 difficult | 56.99  | 58.42 |       |
-| SNLI train           | SICK2 train      | SICK2 test      | 73.73  | 77.59 |       |
-| SNLI train           | SICK2 train      | SICK2 difficult | 54.12  | 56.27 |       |
+| SNLI train           | SICK train       | SICK test       | 76.23  | 79.96 | 87.9  |
+| SNLI train           | SICK train       | SICK2 difficult | 56.99  | 58.42 | 64.63 |
+| SNLI train           | SICK2 train      | SICK2 test      | 73.73  | 77.59 | 86.25 |
+| SNLI train           | SICK2 train      | SICK2 difficult | 54.12  | 56.27 | 64.51 |
 
 ## Results of the Recognizing Visual Textual Entailment task
 
@@ -36,14 +36,14 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 |------------------|------------------|-----------------|---------------|---------|
 | VSNLI train      | VSNLI test       | 76.45           | 79.15         | 86.99   |
 | VSNLI train      | VSICK2           | 54.06           | 57.26         | 60.57   |
-| VSNLI train      | VSICK2 difficult | 48.57           | 48.21         |         |
+| VSNLI train      | VSICK2 difficult | 48.57           | 48.21         | 52.86   |
 
 ### With transfer learning:
 
 | pre-training dataset | training dataset | test dataset     | Bowman + images | LSTM + images | V-BiMPM |
 |----------------------|------------------|------------------|-----------------|---------------|---------|
-| VSNLI train          | VSICK2 train     | VSICK2 test      | 72.03           | 78.67         |         |
-| VSNLI train          | VSICK2 train     | VSICK2 difficult | 57.86           | 54.64         |         |
+| VSNLI train          | VSICK2 train     | VSICK2 test      | 72.03           | 78.67         | 85.3    |
+| VSNLI train          | VSICK2 train     | VSICK2 difficult | 57.86           | 54.64         | 62.97   |
 
 ## Comparison of the comparable configurations:
 
@@ -53,13 +53,13 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 |---------------|--------------------|--------|-----------------|-------|---------------|-------|---------|
 | (V)SNLI train | (V)SNLI test       | 78.81  | 76.45           | 79.81 | 79.15         | 86.41 | 86.99   |
 | (V)SNLI train | (V)SICK2           | 51.76  | 54.06           | 54.55 | 57.26         | 56.49 | 60.57   |
-| (V)SNLI train | (V)SICK2 difficult | 45.88  | 48.57           | 48.39 | 48.21         |       |         |
+| (V)SNLI train | (V)SICK2 difficult | 45.88  | 48.57           | 48.39 | 48.21         | 51.61 | 52.86   |
 
 ### With transfer learning:
 
 | pre-training set | training set   | test set           | Bowman | Bowman + images | LSTM  | LSTM + images | BiMPM | V-BiMPM |
 |------------------|----------------|--------------------|--------|-----------------|-------|---------------|-------|---------|
-| (V)SNLI train    | (V)SICK2 train | (V)SICK2 test      | 73.73  | 72.03           | 77.59 | 78.67         |       |         |
-| (V)SNLI train    | (V)SICK2 train | (V)SICK2 difficult | 54.12  | 57.86           | 56.27 | 48.21         |       |         |
+| (V)SNLI train    | (V)SICK2 train | (V)SICK2 test      | 73.73  | 72.03           | 77.59 | 78.67         | 86.2  |  85.3   |
+| (V)SNLI train    | (V)SICK2 train | (V)SICK2 difficult | 54.12  | 57.86           | 56.27 | 48.21         | 64.4  |  62.97  |
 
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference.".
