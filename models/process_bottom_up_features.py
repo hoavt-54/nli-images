@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
         for label, features in bottom_up_features.items():
             img_labels.append(label)
-            img_features.append(features)
+            img_features.append(features["features"])
 
     img_features = np.array(img_features)
 
