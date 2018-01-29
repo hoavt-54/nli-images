@@ -116,16 +116,25 @@ def build_top_down_baseline_model(premise_input,
 
     h_premise_img = tf.multiply(gated_premise, gated_img_features_premise)
     h_hypothesis_img = tf.multiply(gated_hypothesis, gated_img_features_hypothesis)
-    h = tf.multiply(h_premise_img, h_hypothesis_img)
+    h = tf.concat([h_premise_img, h_hypothesis_img], 1)
 
-    gated_W_clf = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_W_prime_clf = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    s_head = tf.contrib.layers.fully_connected(
-        _gated_tanh(h, gated_W_clf, gated_W_prime_clf),
-        num_labels
+    return tf.contrib.layers.fully_connected(
+        tf.contrib.layers.fully_connected(
+            tf.contrib.layers.fully_connected(
+                tf.contrib.layers.fully_connected(
+                    h,
+                    rnn_hidden_size * 2,
+                    activation_fn=tf.nn.tanh
+                ),
+                rnn_hidden_size * 2,
+                activation_fn=tf.nn.tanh
+            ),
+            rnn_hidden_size * 2,
+            activation_fn=tf.nn.tanh
+        ),
+        num_labels,
+        activation_fn=None
     )
-
-    return s_head
 
 
 if __name__ == "__main__":
