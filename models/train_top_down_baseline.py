@@ -4,11 +4,13 @@ import pickle
 import random
 from argparse import ArgumentParser
 
+import atexit
 import numpy as np
 import tensorflow as tf
 
 from dataset import ImageReader, load_vte_dataset
 from embedding import glove_embeddings_initializer, load_glove
+from logger import start_logger, stop_logger
 from progress import Progbar
 from utils import batch
 
@@ -165,7 +167,11 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
     parser.add_argument("--learning_rate", type=float, default=0.001)
+    parser.add_argument("--l2_reg", type=float, default=0.000005)
+    parser.add_argument("--patience", type=int, default=3)
     args = parser.parse_args()
+    start_logger(args.model_save_filename + ".train_log")
+    atexit.register(stop_logger)
 
     print("-- Building vocabulary")
     embeddings, token2id, id2token = load_glove(args.vectors_filename, args.max_vocab, args.embeddings_size)
@@ -219,11 +225,17 @@ if __name__ == "__main__":
         args.rnn_hidden_size,
         args.batch_size
     )
-    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)
+    L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
+    saver = tf.train.Saver()
 
     num_examples = train_labels.shape[0]
     num_batches = num_examples // args.batch_size
+    dev_best_accuracy = -1
+    stopping_step = 0
+    best_epoch = None
+    should_stop = False
 
     with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
         session.run(tf.global_variables_initializer())
@@ -284,3 +296,21 @@ if __name__ == "__main__":
                 dev_num_correct += (predictions == dev_batch_labels).sum()
             dev_accuracy = dev_num_correct / dev_num_examples
             print("Current mean validation accuracy: {}".format(dev_accuracy))
+
+            if dev_accuracy > dev_best_accuracy:
+                stopping_step = 0
+                best_epoch = epoch + 1
+                dev_best_accuracy = dev_accuracy
+                saver.save(session, args.model_save_filename + ".ckpt")
+                print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
+                print("Best model saved to: {}".format(args.model_save_filename))
+            else:
+                stopping_step += 1
+                print("Current stopping step: {}".format(stopping_step))
+            if stopping_step >= args.patience:
+                print("Early stopping at epoch {}!".format(epoch + 1))
+                print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
+                should_stop = True
+            if epoch + 1 >= args.num_epochs:
+                print("Stopping at epoch {}!".format(epoch + 1))
+                print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
