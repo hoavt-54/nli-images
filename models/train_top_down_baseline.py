@@ -244,9 +244,9 @@ if __name__ == "__main__":
                 batch_img_features = image_reader.get_features(batch_img_names)
 
                 loss, _ = session.run([loss_function, train_step], feed_dict={
-                    premise_input: np.random.randint(1, num_tokens, (batch_size, max_premise_length)),
-                    hypothesis_input: np.random.randint(1, num_tokens, (batch_size, max_hypothesis_length)),
-                    img_features_input: np.random.randn(batch_size, args.num_img_features, args.img_features_size),
+                    premise_input: batch_premises,
+                    hypothesis_input: batch_hypotheses,
+                    img_features_input: batch_img_features,
                     label_input: batch_labels
                 })
                 progress.update(batch_index, [("Loss", loss)])
