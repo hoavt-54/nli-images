@@ -22,7 +22,8 @@ def build_top_down_baseline_model(premise_input,
                                   embeddings_size,
                                   num_img_features,
                                   train_embeddings,
-                                  rnn_hidden_size):
+                                  rnn_hidden_size,
+                                  batch_size):
     def _gated_tanh(x, W, W_prime):
         y_tilde = tf.nn.tanh(W(x))
         g = tf.nn.sigmoid(W_prime(x))
@@ -75,7 +76,7 @@ def build_top_down_baseline_model(premise_input,
 
     normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=2)
 
-    reshaped_premise = tf.reshape(tf.tile(premise_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
+    reshaped_premise = tf.reshape(tf.tile(premise_final_states.h, [1, num_img_features]), [batch_size, num_img_features, rnn_hidden_size])
     img_premise_concatenation = tf.concat([normalized_img_features, reshaped_premise], -1)
     gated_W_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
@@ -89,7 +90,7 @@ def build_top_down_baseline_model(premise_input,
     a_premise = tf.nn.softmax(tf.squeeze(a_premise))
     v_head_premise = tf.squeeze(tf.matmul(tf.expand_dims(a_premise, 1), normalized_img_features))
 
-    reshaped_hypothesis = tf.reshape(tf.tile(hypothesis_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
+    reshaped_hypothesis = tf.reshape(tf.tile(hypothesis_final_states.h, [1, num_img_features]), [batch_size, num_img_features, rnn_hidden_size])
     img_hypothesis_concatenation = tf.concat([normalized_img_features, reshaped_hypothesis], -1)
     gated_W_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
@@ -212,6 +213,7 @@ if __name__ == "__main__":
         args.num_img_features,
         args.train_embeddings,
         args.rnn_hidden_size,
+        args.batch_size
     )
     loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)
     train_step = tf.train.AdadeltaOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
@@ -241,4 +243,4 @@ if __name__ == "__main__":
                     premise_input: batch_premises,
                     hypothesis_input: batch_hypotheses,
                     img_features_input: batch_img_features
-                }).shape)
+                }))
