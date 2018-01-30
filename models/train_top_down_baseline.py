@@ -163,12 +163,6 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
     parser.add_argument("--learning_rate", type=float, default=1.0)
-    num_tokens = 10
-    num_labels = 3
-    embeddings = None
-    batch_size = 8
-    max_premise_length = 12
-    max_hypothesis_length = 10
     args = parser.parse_args()
 
     print("-- Building vocabulary")
