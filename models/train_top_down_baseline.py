@@ -159,6 +159,8 @@ if __name__ == "__main__":
     parser.add_argument("--num_img_features", type=int, default=36)
     parser.add_argument("--img_features_size", type=int, default=2048)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
+    parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--num_epochs", type=int, default=100)
     num_tokens = 10
     num_labels = 3
     embeddings = None
