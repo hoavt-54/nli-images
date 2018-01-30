@@ -219,8 +219,8 @@ if __name__ == "__main__":
         args.train_embeddings,
         args.rnn_hidden_size,
     )
-    # loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)
-    # train_step = tf.train.AdadeltaOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)
+    train_step = tf.train.AdadeltaOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
 
     num_examples = train_labels.shape[0]
     num_batches = num_examples // args.batch_size
