@@ -130,13 +130,13 @@ def build_top_down_baseline_model(premise_input,
                 tf.contrib.layers.fully_connected(
                     h,
                     rnn_hidden_size * 2,
-                    activation_fn=tf.nn.tanh
+                    activation_fn=tf.nn.relu
                 ),
                 rnn_hidden_size * 2,
-                activation_fn=tf.nn.tanh
+                activation_fn=tf.nn.relu
             ),
             rnn_hidden_size * 2,
-            activation_fn=tf.nn.tanh
+            activation_fn=tf.nn.relu
         ),
         num_labels,
         activation_fn=None
@@ -194,6 +194,9 @@ if __name__ == "__main__":
     print("-- Loading training set")
     train_labels, train_premises, train_hypotheses, train_img_names = load_vte_dataset(args.train_filename, token2id, label2id)
 
+    print("-- Loading development set")
+    dev_labels, dev_premises, dev_hypotheses, dev_img_names = load_vte_dataset(args.dev_filename, token2id, label2id)
+
     print("-- Loading images")
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
 
@@ -249,3 +252,26 @@ if __name__ == "__main__":
                 epoch_loss += loss
                 batch_index += 1
             print("Current mean training loss: {}\n".format(epoch_loss / num_batches))
+
+            print("-- Validating model")
+            dev_num_examples = dev_labels.shape[0]
+            dev_batches_indexes = np.arange(dev_num_examples)
+            dev_num_correct = 0
+
+            for indexes in batch(dev_batches_indexes, args.batch_size):
+                dev_batch_premises = dev_premises[indexes]
+                dev_batch_hypotheses = dev_hypotheses[indexes]
+                dev_batch_labels = dev_labels[indexes]
+                dev_batch_img_names = [dev_img_names[i] for i in indexes]
+                dev_batch_img_features = image_reader.get_features(dev_batch_img_names)
+                predictions = session.run(
+                    tf.argmax(logits, axis=1),
+                    feed_dict={
+                        premise_input: dev_batch_premises,
+                        hypothesis_input: dev_batch_hypotheses,
+                        img_features_input: dev_batch_img_features
+                    }
+                )
+                dev_num_correct += (predictions == dev_batch_labels).sum()
+            dev_accuracy = dev_num_correct / dev_num_examples
+            print("Current mean validation accuracy: {}".format(dev_accuracy))
