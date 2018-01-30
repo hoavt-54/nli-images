@@ -239,8 +239,13 @@ if __name__ == "__main__":
                 batch_img_names = [train_img_names[i] for i in indexes]
                 batch_img_features = image_reader.get_features(batch_img_names)
 
-                print(session.run(logits, feed_dict={
+                loss, _ = session.run([loss_function, train_step], feed_dict={
                     premise_input: batch_premises,
                     hypothesis_input: batch_hypotheses,
-                    img_features_input: batch_img_features
-                }))
+                    img_features_input: batch_img_features,
+                    label_input: batch_labels
+                })
+                progress.update(batch_index, [("Loss", loss)])
+                epoch_loss += loss
+                batch_index += 1
+            print("Current mean training loss: {}\n".format(epoch_loss / num_batches))
