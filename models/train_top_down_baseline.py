@@ -110,7 +110,7 @@ def build_top_down_baseline_model(premise_input,
 
     gated_W_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_hypothesis = _gated_tanh(premise_final_states.h, gated_W_hypothesis, gated_W_prime_hypothesis)
+    gated_hypothesis = _gated_tanh(hypothesis_final_states.h, gated_W_hypothesis, gated_W_prime_hypothesis)
 
     gated_W_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
@@ -237,6 +237,10 @@ if __name__ == "__main__":
             epoch_loss = 0
 
             for indexes in batch(batches_indexes, args.batch_size):
+                # TODO: fix this problem.
+                if indexes.shape[0] != args.batch_size:
+                    continue
+
                 batch_premises = train_premises[indexes]
                 batch_hypotheses = train_hypotheses[indexes]
                 batch_labels = train_labels[indexes]
@@ -260,6 +264,10 @@ if __name__ == "__main__":
             dev_num_correct = 0
 
             for indexes in batch(dev_batches_indexes, args.batch_size):
+                # TODO: fix this problem.
+                if indexes.shape[0] != args.batch_size:
+                    continue
+
                 dev_batch_premises = dev_premises[indexes]
                 dev_batch_hypotheses = dev_hypotheses[indexes]
                 dev_batch_labels = dev_labels[indexes]
