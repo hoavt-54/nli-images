@@ -9,6 +9,7 @@ import tensorflow as tf
 
 from dataset import ImageReader, load_vte_dataset
 from embedding import glove_embeddings_initializer, load_glove
+from progress import Progbar
 from utils import batch
 
 
@@ -204,6 +205,7 @@ if __name__ == "__main__":
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
     img_features_input = tf.placeholder(tf.float32, (None, args.num_img_features, args.img_features_size), name="img_features_input")
+    label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     logits = build_top_down_baseline_model(
         premise_input,
         hypothesis_input,
@@ -216,6 +218,8 @@ if __name__ == "__main__":
         args.train_embeddings,
         args.rnn_hidden_size,
     )
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
+    train_step = tf.train.AdadeltaOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
 
     num_examples = train_labels.shape[0]
     num_batches = num_examples // args.batch_size
@@ -225,8 +229,11 @@ if __name__ == "__main__":
 
         for epoch in range(args.num_epochs):
             print("\n==> Online epoch # {0}".format(epoch + 1))
+            progress = Progbar(num_batches)
             batches_indexes = np.arange(num_examples)
             np.random.shuffle(batches_indexes)
+            batch_index = 1
+            epoch_loss = 0
 
             for indexes in batch(batches_indexes, args.batch_size):
                 batch_premises = train_premises[indexes]
@@ -235,9 +242,13 @@ if __name__ == "__main__":
                 batch_img_names = [train_img_names[i] for i in indexes]
                 batch_img_features = image_reader.get_features(batch_img_names)
 
-                results = session.run(logits, feed_dict={
+                loss, _ = session.run([loss_function, train_step], feed_dict={
                     premise_input: np.random.randint(1, num_tokens, (batch_size, max_premise_length)),
                     hypothesis_input: np.random.randint(1, num_tokens, (batch_size, max_hypothesis_length)),
                     img_features_input: np.random.randn(batch_size, args.num_img_features, args.img_features_size),
+                    label_input: batch_labels
                 })
-                print(results)
+                progress.update(batch_index, [("Loss", loss)])
+                epoch_loss += loss
+                batch_index += 1
+            print("Current mean training loss: {}\n".format(epoch_loss / num_batches))
