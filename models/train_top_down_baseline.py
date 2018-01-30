@@ -7,6 +7,7 @@ from argparse import ArgumentParser
 import atexit
 import numpy as np
 import tensorflow as tf
+from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
 from dataset import ImageReader, load_vte_dataset
 from embedding import glove_embeddings_initializer, load_glove
@@ -18,6 +19,7 @@ from utils import batch
 def build_top_down_baseline_model(premise_input,
                                   hypothesis_input,
                                   img_features_input,
+                                  dropout_input,
                                   num_tokens,
                                   num_labels,
                                   embeddings,
@@ -62,7 +64,11 @@ def build_top_down_baseline_model(premise_input,
         )
     premise_embeddings = tf.nn.embedding_lookup(embedding_matrix, premise_input)
     hypothesis_embeddings = tf.nn.embedding_lookup(embedding_matrix, hypothesis_input)
-    lst_cell = tf.nn.rnn_cell.LSTMCell(rnn_hidden_size)
+    lst_cell = DropoutWrapper(
+        tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
+        input_keep_prob=dropout_input,
+        output_keep_prob=dropout_input
+    )
     premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
         inputs=premise_embeddings,
@@ -164,6 +170,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_img_features", type=int, default=36)
     parser.add_argument("--img_features_size", type=int, default=2048)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
+    parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
     parser.add_argument("--learning_rate", type=float, default=0.001)
@@ -212,10 +219,12 @@ if __name__ == "__main__":
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
     img_features_input = tf.placeholder(tf.float32, (None, args.num_img_features, args.img_features_size), name="img_features_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
+    dropout_input = tf.placeholder(tf.float32, name="dropout_input")
     logits = build_top_down_baseline_model(
         premise_input,
         hypothesis_input,
         img_features_input,
+        dropout_input,
         num_tokens,
         num_labels,
         embeddings,
@@ -229,6 +238,14 @@ if __name__ == "__main__":
     loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
+    tf.add_to_collection("premise_input", premise_input)
+    tf.add_to_collection("hypothesis_input", hypothesis_input)
+    tf.add_to_collection("img_features_input", img_features_input)
+    tf.add_to_collection("label_input", label_input)
+    tf.add_to_collection("logits", logits)
+    tf.add_to_collection("dropout_input", dropout_input)
+    tf.add_to_collection("loss_function", loss_function)
+    tf.add_to_collection("train_step", train_step)
 
     num_examples = train_labels.shape[0]
     num_batches = num_examples // args.batch_size
@@ -263,7 +280,8 @@ if __name__ == "__main__":
                     premise_input: batch_premises,
                     hypothesis_input: batch_hypotheses,
                     img_features_input: batch_img_features,
-                    label_input: batch_labels
+                    label_input: batch_labels,
+                    dropout_input: args.rnn_dropout_ratio
                 })
                 progress.update(batch_index, [("Loss", loss)])
                 epoch_loss += loss
@@ -290,7 +308,8 @@ if __name__ == "__main__":
                     feed_dict={
                         premise_input: dev_batch_premises,
                         hypothesis_input: dev_batch_hypotheses,
-                        img_features_input: dev_batch_img_features
+                        img_features_input: dev_batch_img_features,
+                        dropout_input: 1.0
                     }
                 )
                 dev_num_correct += (predictions == dev_batch_labels).sum()
