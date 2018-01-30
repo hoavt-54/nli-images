@@ -151,6 +151,7 @@ if __name__ == "__main__":
     tf.set_random_seed(random_seed)
     parser = ArgumentParser()
     parser.add_argument("--train_filename", type=str, required=True)
+    parser.add_argument("--dev_filename", type=str, required=True)
     parser.add_argument("--vectors_filename", type=str, required=True)
     parser.add_argument("--img_names_filename", type=str, required=True)
     parser.add_argument("--img_features_filename", type=str, required=True)
