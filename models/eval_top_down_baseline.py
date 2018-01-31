@@ -70,11 +70,11 @@ if __name__ == "__main__":
         num_tokens,
         num_labels,
         None,
-        args.embeddings_size,
-        args.num_img_features,
-        args.train_embeddings,
-        args.rnn_hidden_size,
-        args.batch_size
+        params["embeddings_size"],
+        params["num_img_features"],
+        params["train_embeddings"],
+        params["rnn_hidden_size"],
+        params["batch_size"]
     )
     saver = tf.train.Saver()
     with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
