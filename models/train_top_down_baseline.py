@@ -253,6 +253,9 @@ if __name__ == "__main__":
         session.run(tf.global_variables_initializer())
 
         for epoch in range(args.num_epochs):
+            if should_stop:
+                break
+
             print("\n==> Online epoch # {0}".format(epoch + 1))
             progress = Progbar(num_batches)
             batches_indexes = np.arange(num_examples)
