@@ -91,7 +91,7 @@ if __name__ == "__main__":
             writer = csv.writer(out_file, delimiter="\t")
             for indexes in batch(test_batches_indexes, params["batch_size"]):
                 # TODO: fix this problem.
-                if indexes.shape[0] != args.batch_size:
+                if indexes.shape[0] != params["batch_size"]:
                     continue
 
                 test_batch_premises = test_premises[indexes]
