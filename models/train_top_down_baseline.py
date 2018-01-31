@@ -64,11 +64,7 @@ def build_top_down_baseline_model(premise_input,
         )
     premise_embeddings = tf.nn.embedding_lookup(embedding_matrix, premise_input)
     hypothesis_embeddings = tf.nn.embedding_lookup(embedding_matrix, hypothesis_input)
-    lst_cell = DropoutWrapper(
-        tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
-        input_keep_prob=dropout_input,
-        output_keep_prob=dropout_input
-    )
+    lst_cell = tf.nn.rnn_cell.LSTMCell(rnn_hidden_size)
     premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
         inputs=premise_embeddings,
@@ -234,8 +230,7 @@ if __name__ == "__main__":
         args.rnn_hidden_size,
         args.batch_size
     )
-    L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
-    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
     tf.add_to_collection("premise_input", premise_input)
