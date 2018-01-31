@@ -1,13 +1,12 @@
+import atexit
 import json
 import os
 import pickle
 import random
 from argparse import ArgumentParser
 
-import atexit
 import numpy as np
 import tensorflow as tf
-from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
 from dataset import ImageReader, load_vte_dataset
 from embedding import glove_embeddings_initializer, load_glove
