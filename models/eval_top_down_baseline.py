@@ -59,7 +59,7 @@ if __name__ == "__main__":
     print("-- Restoring model")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
-    img_features_input = tf.placeholder(tf.float32, (None, args.num_img_features, args.img_features_size), name="img_features_input")
+    img_features_input = tf.placeholder(tf.float32, (None, params["num_img_features"], params["img_features_size"]), name="img_features_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
     logits = build_top_down_baseline_model(
