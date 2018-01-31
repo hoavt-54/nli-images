@@ -72,6 +72,7 @@ if __name__ == "__main__":
         None,
         params["embeddings_size"],
         params["num_img_features"],
+        params["img_features_size"],
         params["train_embeddings"],
         params["rnn_hidden_size"],
         params["batch_size"]
@@ -90,10 +91,6 @@ if __name__ == "__main__":
         with open(args.result_filename + ".predictions", mode="w") as out_file:
             writer = csv.writer(out_file, delimiter="\t")
             for indexes in batch(test_batches_indexes, params["batch_size"]):
-                # TODO: fix this problem.
-                if indexes.shape[0] != params["batch_size"]:
-                    continue
-
                 test_batch_premises = test_premises[indexes]
                 test_batch_hypotheses = test_hypotheses[indexes]
                 test_batch_labels = test_labels[indexes]

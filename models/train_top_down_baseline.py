@@ -24,6 +24,7 @@ def build_top_down_baseline_model(premise_input,
                                   embeddings,
                                   embeddings_size,
                                   num_img_features,
+                                  img_features_size,
                                   train_embeddings,
                                   rnn_hidden_size,
                                   batch_size):
@@ -79,7 +80,7 @@ def build_top_down_baseline_model(premise_input,
 
     normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=2)
 
-    reshaped_premise = tf.reshape(tf.tile(premise_final_states.h, [1, num_img_features]), [batch_size, num_img_features, rnn_hidden_size])
+    reshaped_premise = tf.reshape(tf.tile(premise_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
     img_premise_concatenation = tf.concat([normalized_img_features, reshaped_premise], -1)
     gated_W_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
@@ -93,7 +94,7 @@ def build_top_down_baseline_model(premise_input,
     a_premise = tf.nn.softmax(tf.squeeze(a_premise))
     v_head_premise = tf.squeeze(tf.matmul(tf.expand_dims(a_premise, 1), normalized_img_features))
 
-    reshaped_hypothesis = tf.reshape(tf.tile(hypothesis_final_states.h, [1, num_img_features]), [batch_size, num_img_features, rnn_hidden_size])
+    reshaped_hypothesis = tf.reshape(tf.tile(hypothesis_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
     img_hypothesis_concatenation = tf.concat([normalized_img_features, reshaped_hypothesis], -1)
     gated_W_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
@@ -117,10 +118,12 @@ def build_top_down_baseline_model(premise_input,
 
     gated_W_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
+    v_head_premise.set_shape((premise_embeddings.get_shape()[0], img_features_size))
     gated_img_features_premise = _gated_tanh(v_head_premise, gated_W_img_premise, gated_W_prime_img_premise)
 
     gated_W_img_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_img_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
+    v_head_hypothesis.set_shape((hypothesis_embeddings.get_shape()[0], img_features_size))
     gated_img_features_hypothesis = _gated_tanh(v_head_hypothesis, gated_W_img_hypothesis, gated_W_prime_img_hypothesis)
 
     h_premise_img = tf.multiply(gated_premise, gated_img_features_premise)
@@ -225,6 +228,7 @@ if __name__ == "__main__":
         embeddings,
         args.embeddings_size,
         args.num_img_features,
+        args.img_features_size,
         args.train_embeddings,
         args.rnn_hidden_size,
         args.batch_size
@@ -263,10 +267,6 @@ if __name__ == "__main__":
             epoch_loss = 0
 
             for indexes in batch(batches_indexes, args.batch_size):
-                # TODO: fix this problem.
-                if indexes.shape[0] != args.batch_size:
-                    continue
-
                 batch_premises = train_premises[indexes]
                 batch_hypotheses = train_hypotheses[indexes]
                 batch_labels = train_labels[indexes]
@@ -291,10 +291,6 @@ if __name__ == "__main__":
             dev_num_correct = 0
 
             for indexes in batch(dev_batches_indexes, args.batch_size):
-                # TODO: fix this problem.
-                if indexes.shape[0] != args.batch_size:
-                    continue
-
                 dev_batch_premises = dev_premises[indexes]
                 dev_batch_hypotheses = dev_hypotheses[indexes]
                 dev_batch_labels = dev_labels[indexes]
