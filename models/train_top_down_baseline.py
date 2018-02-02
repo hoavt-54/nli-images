@@ -7,11 +7,11 @@ from argparse import ArgumentParser
 
 import numpy as np
 import tensorflow as tf
+from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
 from dataset import ImageReader, load_vte_dataset
 from embedding import glove_embeddings_initializer, load_glove
 from logger import start_logger, stop_logger
-from my_cell import DropoutWrapper
 from progress import Progbar
 from utils import batch
 
