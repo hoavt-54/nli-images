@@ -11,6 +11,7 @@ import tensorflow as tf
 from dataset import ImageReader, load_vte_dataset
 from embedding import glove_embeddings_initializer, load_glove
 from logger import start_logger, stop_logger
+from my_cell import DropoutWrapper
 from progress import Progbar
 from utils import batch
 
@@ -26,8 +27,7 @@ def build_top_down_baseline_model(premise_input,
                                   num_img_features,
                                   img_features_size,
                                   train_embeddings,
-                                  rnn_hidden_size,
-                                  batch_size):
+                                  rnn_hidden_size):
     def _gated_tanh(x, W, W_prime):
         y_tilde = tf.nn.tanh(W(x))
         g = tf.nn.sigmoid(W_prime(x))
@@ -64,7 +64,11 @@ def build_top_down_baseline_model(premise_input,
         )
     premise_embeddings = tf.nn.embedding_lookup(embedding_matrix, premise_input)
     hypothesis_embeddings = tf.nn.embedding_lookup(embedding_matrix, hypothesis_input)
-    lst_cell = tf.nn.rnn_cell.LSTMCell(rnn_hidden_size)
+    lst_cell = DropoutWrapper(
+        tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
+        input_keep_prob=dropout_input,
+        output_keep_prob=dropout_input
+    )
     premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
         inputs=premise_embeddings,
@@ -230,10 +234,10 @@ if __name__ == "__main__":
         args.num_img_features,
         args.img_features_size,
         args.train_embeddings,
-        args.rnn_hidden_size,
-        args.batch_size
+        args.rnn_hidden_size
     )
-    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)
+    L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
     tf.add_to_collection("premise_input", premise_input)
