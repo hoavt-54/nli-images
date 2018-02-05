@@ -16,7 +16,7 @@ from progress import Progbar
 from utils import AttrDict, batch
 
 
-def build_lstm_vte_baseline_model(premise_input,
+def build_lstm_vte_baseline_model_alt(premise_input,
                                     hypothesis_input,
                                     img_features_input,
                                     dropout_input,
@@ -78,9 +78,8 @@ def build_lstm_vte_baseline_model(premise_input,
         dtype=tf.float32
     )
     # hypothesis_last = extract_axis_1(hypothesis_outputs, hypothesis_length - 1)
-    normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=2)
     img_features_hidden = tf.contrib.layers.fully_connected(
-        normalized_img_features,
+        tf.nn.l2_normalize(img_features_input, dim=1),
         img_features_hidden_size,
         activation_fn=tf.nn.relu
     )
@@ -90,13 +89,13 @@ def build_lstm_vte_baseline_model(premise_input,
             tf.contrib.layers.fully_connected(
                 tf.contrib.layers.fully_connected(
                     premise_hypothesis_img,
-                    rnn_hidden_size * 2 + img_features_size,
+                    rnn_hidden_size * 2,
                     activation_fn=tf.nn.relu
                 ),
-                rnn_hidden_size * 2 + img_features_size,
+                rnn_hidden_size * 2,
                 activation_fn=tf.nn.relu
             ),
-            rnn_hidden_size * 2 + img_features_size,
+            rnn_hidden_size * 2,
             activation_fn=tf.nn.relu
         ),
         num_labels,
@@ -202,7 +201,7 @@ if __name__ == "__main__":
         img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size), name="img_features_input")
         label_input = tf.placeholder(tf.int32, (None,), name="label_input")
         dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-        logits = build_lstm_vte_baseline_model(
+        logits = build_lstm_vte_baseline_model_alt(
             premise_input,
             hypothesis_input,
             img_features_input,
