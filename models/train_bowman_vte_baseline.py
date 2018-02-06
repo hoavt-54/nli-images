@@ -59,6 +59,16 @@ def build_bowman_vte_baseline_model(premise_input,
         )
     premise_embeddings = tf.nn.embedding_lookup(embedding_matrix, premise_input)
     hypothesis_embeddings = tf.nn.embedding_lookup(embedding_matrix, hypothesis_input)
+    premise_translated_embeddings = tf.contrib.layers.fully_connected(
+        premise_embeddings,
+        rnn_hidden_size,
+        activation_fn=tf.nn.tanh
+    )
+    hypothesis_translated_embeddings = tf.contrib.layers.fully_connected(
+        hypothesis_embeddings,
+        rnn_hidden_size,
+        activation_fn=tf.nn.tanh
+    )
     lst_cell = DropoutWrapper(
         tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
         input_keep_prob=dropout_input,
@@ -66,20 +76,21 @@ def build_bowman_vte_baseline_model(premise_input,
     )
     premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
-        inputs=premise_embeddings,
+        inputs=premise_translated_embeddings,
         sequence_length=premise_length,
         dtype=tf.float32
     )
     # premise_last = extract_axis_1(premise_outputs, premise_length - 1)
     hypothesis_outputs, hypothesis_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
-        inputs=hypothesis_embeddings,
+        inputs=hypothesis_translated_embeddings,
         sequence_length=hypothesis_length,
         dtype=tf.float32
     )
     # hypothesis_last = extract_axis_1(hypothesis_outputs, hypothesis_length - 1)
+    normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=1)
     img_features_hidden = tf.contrib.layers.fully_connected(
-        img_features_input,
+        normalized_img_features,
         img_features_hidden_size,
         activation_fn=tf.nn.tanh
     )
@@ -89,13 +100,13 @@ def build_bowman_vte_baseline_model(premise_input,
             tf.contrib.layers.fully_connected(
                 tf.contrib.layers.fully_connected(
                     premise_hypothesis_img,
-                    rnn_hidden_size * 2 + img_features_size,
+                    rnn_hidden_size * 2,
                     activation_fn=tf.nn.tanh
                 ),
-                rnn_hidden_size * 2 + img_features_size,
+                rnn_hidden_size * 2,
                 activation_fn=tf.nn.tanh
             ),
-            rnn_hidden_size * 2 + img_features_size,
+            rnn_hidden_size * 2,
             activation_fn=tf.nn.tanh
         ),
         num_labels,

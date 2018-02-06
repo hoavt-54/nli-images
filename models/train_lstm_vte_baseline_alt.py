@@ -78,8 +78,9 @@ def build_lstm_vte_baseline_model_alt(premise_input,
         dtype=tf.float32
     )
     # hypothesis_last = extract_axis_1(hypothesis_outputs, hypothesis_length - 1)
+    normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=1)
     img_features_hidden = tf.contrib.layers.fully_connected(
-        tf.nn.l2_normalize(img_features_input, dim=1),
+        normalized_img_features,
         img_features_hidden_size,
         activation_fn=tf.nn.relu
     )
