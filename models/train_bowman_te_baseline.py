@@ -61,8 +61,8 @@ def build_bowman_te_baseline_model(premise_input,
         rnn_hidden_size,
         activation_fn=tf.nn.tanh
     )
-    _embeddings = tf.contrib.layers.fully_connected(
-        premise_embeddings,
+    hypothesis_translated_embeddings = tf.contrib.layers.fully_connected(
+        hypothesis_embeddings,
         rnn_hidden_size,
         activation_fn=tf.nn.tanh
     )
@@ -73,14 +73,14 @@ def build_bowman_te_baseline_model(premise_input,
     )
     premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
-        inputs=premise_embeddings,
+        inputs=premise_translated_embeddings,
         sequence_length=premise_length,
         dtype=tf.float32
     )
     # premise_last = extract_axis_1(premise_outputs, premise_length - 1)
     hypothesis_outputs, hypothesis_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
-        inputs=hypothesis_embeddings,
+        inputs=hypothesis_translated_embeddings,
         sequence_length=hypothesis_length,
         dtype=tf.float32
     )
