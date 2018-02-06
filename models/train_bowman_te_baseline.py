@@ -61,8 +61,8 @@ def build_bowman_te_baseline_model(premise_input,
         rnn_hidden_size,
         activation_fn=tf.nn.tanh
     )
-    hypothesis_translated_embeddings = tf.contrib.layers.fully_connected(
-        hypothesis_embeddings,
+    _embeddings = tf.contrib.layers.fully_connected(
+        premise_embeddings,
         rnn_hidden_size,
         activation_fn=tf.nn.tanh
     )
@@ -73,14 +73,14 @@ def build_bowman_te_baseline_model(premise_input,
     )
     premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
-        inputs=premise_translated_embeddings,
+        inputs=premise_embeddings,
         sequence_length=premise_length,
         dtype=tf.float32
     )
     # premise_last = extract_axis_1(premise_outputs, premise_length - 1)
     hypothesis_outputs, hypothesis_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
-        inputs=hypothesis_translated_embeddings,
+        inputs=hypothesis_embeddings,
         sequence_length=hypothesis_length,
         dtype=tf.float32
     )
@@ -181,16 +181,10 @@ if __name__ == "__main__":
         print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses, num_train_unk_tokens =\
-        load_te_dataset(args.train_filename, token2id, label2id)
-
-    print("Number of unknown tokens in training set: ".format(num_train_unk_tokens))
+    train_labels, train_premises, train_hypotheses = load_te_dataset(args.train_filename, token2id, label2id)
 
     print("-- Loading development set")
-    dev_labels, dev_premises, dev_hypotheses, num_dev_unk_tokens =\
-        load_te_dataset(args.dev_filename, token2id, label2id)
-
-    print("Number of unknown tokens in development set: ".format(num_dev_unk_tokens))
+    dev_labels, dev_premises, dev_hypotheses = load_te_dataset(args.dev_filename, token2id, label2id)
 
     if not args.model_load_filename:
         print("-- Building model")
