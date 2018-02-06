@@ -181,10 +181,16 @@ if __name__ == "__main__":
         print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses = load_te_dataset(args.train_filename, token2id, label2id)
+    train_labels, train_premises, train_hypotheses, num_train_unk_tokens =\
+        load_te_dataset(args.train_filename, token2id, label2id)
+
+    print("Number of unknown tokens in training set: ".format(num_train_unk_tokens))
 
     print("-- Loading development set")
-    dev_labels, dev_premises, dev_hypotheses = load_te_dataset(args.dev_filename, token2id, label2id)
+    dev_labels, dev_premises, dev_hypotheses, num_dev_unk_tokens =\
+        load_te_dataset(args.dev_filename, token2id, label2id)
+
+    print("Number of unknown tokens in development set: ".format(num_dev_unk_tokens))
 
     if not args.model_load_filename:
         print("-- Building model")

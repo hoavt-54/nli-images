@@ -197,11 +197,16 @@ if __name__ == "__main__":
             print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses, train_img_names = load_vte_dataset(args.train_filename, token2id,
-                                                                                       label2id)
+    train_labels, train_premises, train_hypotheses, train_img_names, num_train_unk_tokens =\
+        load_vte_dataset(args.train_filename, token2id, label2id)
+
+    print("Number of unknown tokens in training set: ".format(num_train_unk_tokens))
 
     print("-- Loading development set")
-    dev_labels, dev_premises, dev_hypotheses, dev_img_names = load_vte_dataset(args.dev_filename, token2id, label2id)
+    dev_labels, dev_premises, dev_hypotheses, dev_img_names, num_dev_unk_tokens =\
+        load_vte_dataset(args.dev_filename, token2id, label2id)
+
+    print("Number of unknown tokens in development set: ".format(num_dev_unk_tokens))
 
     print("-- Loading images")
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
