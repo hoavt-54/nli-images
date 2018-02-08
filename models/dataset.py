@@ -19,6 +19,13 @@ def load_te_dataset(filename, token2id, label2id):
             labels.append(label2id[row[0].strip()])
             premise_tokens = row[1].strip().lower().split()
             hypothesis_tokens = row[2].strip().lower().split()
+            num_unk_tokens = 0
+            for token in premise_tokens:
+                if token in token2id:
+                    premises.append(token2id[token])
+                else:
+                    premises.append(token2id["#unk#"])
+                    num_unk_tokens
             premises.append([token2id.get(token, token2id["#unk#"]) for token in premise_tokens])
             hypotheses.append([token2id.get(token, token2id["#unk#"]) for token in hypothesis_tokens])
 

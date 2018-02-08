@@ -16,7 +16,7 @@ from progress import Progbar
 from utils import AttrDict, batch
 
 
-def build_bowman_vte_baseline_model(premise_input,
+def build_lstm_vte_baseline_model_alt(premise_input,
                                     hypothesis_input,
                                     img_features_input,
                                     dropout_input,
@@ -24,10 +24,10 @@ def build_bowman_vte_baseline_model(premise_input,
                                     num_labels,
                                     embeddings,
                                     embeddings_size,
+                                    img_features_size,
                                     train_embeddings,
                                     rnn_hidden_size,
-                                    img_features_hidden_size,
-                                    final_hidden_size):
+                                    img_features_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -59,16 +59,6 @@ def build_bowman_vte_baseline_model(premise_input,
         )
     premise_embeddings = tf.nn.embedding_lookup(embedding_matrix, premise_input)
     hypothesis_embeddings = tf.nn.embedding_lookup(embedding_matrix, hypothesis_input)
-    premise_translated_embeddings = tf.contrib.layers.fully_connected(
-        premise_embeddings,
-        rnn_hidden_size,
-        activation_fn=tf.nn.tanh
-    )
-    hypothesis_translated_embeddings = tf.contrib.layers.fully_connected(
-        hypothesis_embeddings,
-        rnn_hidden_size,
-        activation_fn=tf.nn.tanh
-    )
     lst_cell = DropoutWrapper(
         tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
         input_keep_prob=dropout_input,
@@ -76,14 +66,14 @@ def build_bowman_vte_baseline_model(premise_input,
     )
     premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
-        inputs=premise_translated_embeddings,
+        inputs=premise_embeddings,
         sequence_length=premise_length,
         dtype=tf.float32
     )
     # premise_last = extract_axis_1(premise_outputs, premise_length - 1)
     hypothesis_outputs, hypothesis_final_states = tf.nn.dynamic_rnn(
         cell=lst_cell,
-        inputs=hypothesis_translated_embeddings,
+        inputs=hypothesis_embeddings,
         sequence_length=hypothesis_length,
         dtype=tf.float32
     )
@@ -92,7 +82,7 @@ def build_bowman_vte_baseline_model(premise_input,
     img_features_hidden = tf.contrib.layers.fully_connected(
         normalized_img_features,
         img_features_hidden_size,
-        activation_fn=tf.nn.tanh
+        activation_fn=tf.nn.relu
     )
     premise_hypothesis_img = tf.concat([premise_final_states.h, hypothesis_final_states.h, img_features_hidden], axis=1)
     return tf.contrib.layers.fully_connected(
@@ -100,14 +90,14 @@ def build_bowman_vte_baseline_model(premise_input,
             tf.contrib.layers.fully_connected(
                 tf.contrib.layers.fully_connected(
                     premise_hypothesis_img,
-                    final_hidden_size,
-                    activation_fn=tf.nn.tanh
+                    rnn_hidden_size * 2,
+                    activation_fn=tf.nn.relu
                 ),
-                final_hidden_size,
-                activation_fn=tf.nn.tanh
+                rnn_hidden_size * 2,
+                activation_fn=tf.nn.relu
             ),
-            final_hidden_size,
-            activation_fn=tf.nn.tanh
+            rnn_hidden_size * 2,
+            activation_fn=tf.nn.relu
         ),
         num_labels,
         activation_fn=None
@@ -132,13 +122,12 @@ if __name__ == "__main__":
     parser.add_argument("--embeddings_size", type=int, default=300)
     parser.add_argument("--train_embeddings", type=bool, default=True)
     parser.add_argument("--img_features_size", type=int, default=4096)
-    parser.add_argument("--img_features_hidden_size", type=int, default=200)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
+    parser.add_argument("--img_features_hidden_size", type=int, default=200)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
-    parser.add_argument("--final_hidden_size", type=int, default=200)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
-    parser.add_argument("--learning_rate", type=float, default=1.0)
+    parser.add_argument("--learning_rate", type=float, default=0.001)
     parser.add_argument("--l2_reg", type=float, default=0.000005)
     parser.add_argument("--patience", type=int, default=3)
     args = parser.parse_args()
@@ -198,8 +187,7 @@ if __name__ == "__main__":
             print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses, train_img_names = load_vte_dataset(args.train_filename, token2id,
-                                                                                       label2id)
+    train_labels, train_premises, train_hypotheses, train_img_names = load_vte_dataset(args.train_filename, token2id, label2id)
 
     print("-- Loading development set")
     dev_labels, dev_premises, dev_hypotheses, dev_img_names = load_vte_dataset(args.dev_filename, token2id, label2id)
@@ -214,7 +202,7 @@ if __name__ == "__main__":
         img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size), name="img_features_input")
         label_input = tf.placeholder(tf.int32, (None,), name="label_input")
         dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-        logits = build_bowman_vte_baseline_model(
+        logits = build_lstm_vte_baseline_model_alt(
             premise_input,
             hypothesis_input,
             img_features_input,
@@ -223,14 +211,14 @@ if __name__ == "__main__":
             num_labels,
             embeddings,
             args.embeddings_size,
+            args.img_features_size,
             args.train_embeddings,
             args.rnn_hidden_size,
-            args.img_features_hidden_size,
-            args.final_hidden_size
+            args.img_features_hidden_size
         )
         L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
         loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
-        train_step = tf.train.AdadeltaOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
+        train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
         saver = tf.train.Saver()
         tf.add_to_collection("premise_input", premise_input)
         tf.add_to_collection("hypothesis_input", hypothesis_input)
