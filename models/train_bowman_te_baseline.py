@@ -24,7 +24,8 @@ def build_bowman_te_baseline_model(premise_input,
                                    embeddings,
                                    embeddings_size,
                                    train_embeddings,
-                                   rnn_hidden_size):
+                                   rnn_hidden_size,
+                                   final_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -81,13 +82,13 @@ def build_bowman_te_baseline_model(premise_input,
             tf.contrib.layers.fully_connected(
                 tf.contrib.layers.fully_connected(
                     premise_hypothesis,
-                    rnn_hidden_size * 2,
+                    final_hidden_size,
                     activation_fn=tf.nn.tanh
                 ),
-                rnn_hidden_size * 2,
+                final_hidden_size,
                 activation_fn=tf.nn.tanh
             ),
-            rnn_hidden_size * 2,
+            final_hidden_size,
             activation_fn=tf.nn.tanh
         ),
         num_labels,
@@ -112,6 +113,7 @@ if __name__ == "__main__":
     parser.add_argument("--train_embeddings", type=bool, default=True)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
+    parser.add_argument("--final_hidden_size", type=int, default=200)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
     parser.add_argument("--learning_rate", type=float, default=1.0)
@@ -191,7 +193,8 @@ if __name__ == "__main__":
             embeddings,
             args.embeddings_size,
             args.train_embeddings,
-            args.rnn_hidden_size
+            args.rnn_hidden_size,
+            args.final_hidden_size
         )
         L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
         loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss

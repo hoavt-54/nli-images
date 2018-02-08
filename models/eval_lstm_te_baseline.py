@@ -60,7 +60,8 @@ if __name__ == "__main__":
         None,
         params["embeddings_size"],
         params["train_embeddings"],
-        params["rnn_hidden_size"]
+        params["rnn_hidden_size"],
+        params["final_hidden_size"]
     )
     saver = tf.train.Saver()
     with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:

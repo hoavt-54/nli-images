@@ -12,7 +12,6 @@ import tensorflow as tf
 
 from dataset import ImageReader, load_vte_dataset
 from logger import start_logger, stop_logger
-from train_lstm_vte_baseline import build_lstm_vte_baseline_model
 from train_top_down_baseline import build_top_down_baseline_model
 from utils import batch
 
