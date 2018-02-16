@@ -51,7 +51,7 @@ if __name__ == "__main__":
     with open(args.ic_dataset_filename, mode="w") as out_file:
         writer = csv.writer(out_file, delimiter="\t")
 
-        for image_id in list(foil_captions)[:10]:
+        for image_id in list(foil_captions):
             print("Processing image {}".format(image_id))
 
             if coco_captions_train.getAnnIds(imgIds=image_id):
