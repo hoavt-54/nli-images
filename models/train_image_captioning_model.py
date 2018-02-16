@@ -82,6 +82,8 @@ if __name__ == "__main__":
     parser.add_argument("--train_filename", type=str, required=True)
     parser.add_argument("--dev_filename", type=str, required=True)
     parser.add_argument("--vectors_filename", type=str, required=True)
+    parser.add_argument("--img_names_filename", type=str, required=True)
+    parser.add_argument("--img_features_filename", type=str, required=True)
     parser.add_argument("--model_save_filename", type=str, required=True)
     parser.add_argument("--max_vocab", type=int, default=300000)
     parser.add_argument("--embeddings_size", type=int, default=300)
@@ -130,6 +132,9 @@ if __name__ == "__main__":
 
         print("-- Loading development set")
         dev_labels, dev_sentences, dev_img_names = load_ic_dataset(args.dev_filename, token2id, label2id)
+
+        print("-- Loading images")
+        image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
 
         print("-- Building model")
         sentence_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
@@ -182,10 +187,13 @@ if __name__ == "__main__":
                 for indexes in batch(batches_indexes, args.batch_size):
                     batch_sentences = train_sentences[indexes]
                     batch_labels = train_labels[indexes]
+                    batch_img_names = [train_img_names[i] for i in indexes]
+                    batch_img_features = image_reader.get_features(batch_img_names)
 
                     loss, _ = session.run([loss_function, train_step], feed_dict={
                         sentence_input: batch_sentences,
                         label_input: batch_labels,
+                        img_features_input: batch_img_features,
                         dropout_input: args.rnn_dropout_ratio
                     })
                     progress.update(batch_index, [("Loss", loss)])
@@ -201,10 +209,13 @@ if __name__ == "__main__":
                 for indexes in batch(dev_batches_indexes, args.batch_size):
                     dev_batch_sentences = dev_sentences[indexes]
                     dev_batch_labels = dev_labels[indexes]
+                    dev_batch_img_names = [dev_img_names[i] for i in indexes]
+                    dev_batch_img_features = image_reader.get_features(dev_batch_img_names)
                     predictions = session.run(
                         tf.argmax(logits, axis=1),
                         feed_dict={
                             sentence_input: dev_batch_sentences,
+                            img_features_input: dev_batch_img_features,
                             dropout_input: 1.0
                         }
                     )
