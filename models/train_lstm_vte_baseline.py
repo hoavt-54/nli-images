@@ -59,20 +59,20 @@ def build_lstm_vte_baseline_model(premise_input,
         )
     premise_embeddings = tf.nn.embedding_lookup(embedding_matrix, premise_input)
     hypothesis_embeddings = tf.nn.embedding_lookup(embedding_matrix, hypothesis_input)
-    lst_cell = DropoutWrapper(
+    lstm_cell = DropoutWrapper(
         tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
         input_keep_prob=dropout_input,
         output_keep_prob=dropout_input
     )
     premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
-        cell=lst_cell,
+        cell=lstm_cell,
         inputs=premise_embeddings,
         sequence_length=premise_length,
         dtype=tf.float32
     )
     # premise_last = extract_axis_1(premise_outputs, premise_length - 1)
     hypothesis_outputs, hypothesis_final_states = tf.nn.dynamic_rnn(
-        cell=lst_cell,
+        cell=lstm_cell,
         inputs=hypothesis_embeddings,
         sequence_length=hypothesis_length,
         dtype=tf.float32

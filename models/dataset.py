@@ -62,6 +62,28 @@ def load_vte_dataset(nli_dataset_filename, token2id, label2id):
     return labels, premises, hypotheses, img_names
 
 
+def load_ic_dataset(ic_dataset_filename, token2id, label2id):
+    labels = []
+    sentences = []
+    img_names = []
+
+    with open(ic_dataset_filename) as in_file:
+        reader = csv.reader(in_file, delimiter="\t")
+
+        for row in reader:
+            label = row[0].strip()
+            img = row[2].strip()
+            labels.append(label2id[label])
+            sentence_tokens = row[1].strip().lower().split()
+            sentences.append([token2id.get(token, token2id["#unk#"]) for token in sentence_tokens])
+            img_names.append(img)
+
+        sentences = pad_sequences(sentences, padding="post", value=token2id["#pad#"], dtype=np.long)
+        labels = np.array(labels)
+
+    return labels, sentences, img_names
+
+
 class ImageReader:
     def __init__(self, img_names_filename, img_features_filename):
         self._img_names_filename = img_names_filename
@@ -71,11 +93,9 @@ class ImageReader:
             img_names = json.load(in_file)
 
         with open(img_features_filename, mode="rb") as in_file:
-            # img_features = np.load(in_file).reshape(-1, 7 * 7, 512)
             img_features = np.load(in_file)
 
         self._img_names_features = {filename: features for filename, features in zip(img_names, img_features)}
 
     def get_features(self, images_names):
-        # return np.array([np.mean(self._img_names_features[image_name], 0) for image_name in images_names])
         return np.array([self._img_names_features[image_name] for image_name in images_names])

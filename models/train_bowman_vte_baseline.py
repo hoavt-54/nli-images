@@ -59,31 +59,21 @@ def build_bowman_vte_baseline_model(premise_input,
         )
     premise_embeddings = tf.nn.embedding_lookup(embedding_matrix, premise_input)
     hypothesis_embeddings = tf.nn.embedding_lookup(embedding_matrix, hypothesis_input)
-    premise_translated_embeddings = tf.contrib.layers.fully_connected(
-        premise_embeddings,
-        rnn_hidden_size,
-        activation_fn=tf.nn.tanh
-    )
-    hypothesis_translated_embeddings = tf.contrib.layers.fully_connected(
-        hypothesis_embeddings,
-        rnn_hidden_size,
-        activation_fn=tf.nn.tanh
-    )
-    lst_cell = DropoutWrapper(
+    lstm_cell = DropoutWrapper(
         tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
         input_keep_prob=dropout_input,
         output_keep_prob=dropout_input
     )
     premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
-        cell=lst_cell,
-        inputs=premise_translated_embeddings,
+        cell=lstm_cell,
+        inputs=premise_embeddings,
         sequence_length=premise_length,
         dtype=tf.float32
     )
     # premise_last = extract_axis_1(premise_outputs, premise_length - 1)
     hypothesis_outputs, hypothesis_final_states = tf.nn.dynamic_rnn(
-        cell=lst_cell,
-        inputs=hypothesis_translated_embeddings,
+        cell=lstm_cell,
+        inputs=hypothesis_embeddings,
         sequence_length=hypothesis_length,
         dtype=tf.float32
     )
