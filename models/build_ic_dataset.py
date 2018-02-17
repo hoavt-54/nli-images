@@ -86,7 +86,7 @@ if __name__ == "__main__":
             sampled_foil_neg_images = [image_filename] * half_num_negatives
             sampled_mscoco_neg_captions = []
             sampled_mscoco_neg_images = []
-            neg_image_ids = list(foil_captions.keys())
+            neg_image_ids = original_coco_captions_reader.getImgIds() + original_coco_captions_reader.getImgIds()
             neg_image_ids.remove(image_id)
 
             for i in range(half_num_negatives):
