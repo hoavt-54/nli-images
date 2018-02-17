@@ -29,6 +29,7 @@ if __name__ == "__main__":
     parser.add_argument("--overlapping_threshold", type=int, default=2)
     args = parser.parse_args()
 
+    np.random.seed(12345)
     foil_captions = collections.defaultdict(lambda: collections.defaultdict(list))
 
     with open(args.foil_filename) as in_file:
