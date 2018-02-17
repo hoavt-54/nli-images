@@ -11,7 +11,7 @@ if __name__ == "__main__":
     parser.add_argument("--validation_set_filename", type=str, required=True)
     args = parser.parse_args()
 
-    dataset = pd.read_csv(args.dataset_filename)
+    dataset = pd.read_csv(args.dataset_filename, sep="\t")
     training_set, test_set = train_test_split(dataset, test_size=0.2, random_state=12345)
     training_set, validation_set = train_test_split(training_set, test_size=0.2, random_state=12345)
 
