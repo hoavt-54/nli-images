@@ -19,7 +19,8 @@ def get_num_overlapping_cats(image_a_id, image_b_id, coco_instances):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--foil_filename", type=str, required=True)
+    parser.add_argument("--foil_train_filename", type=str, required=True)
+    parser.add_argument("--foil_test_filename", type=str, required=True)
     parser.add_argument("--mscoco_captions_train_filename", type=str, required=True)
     parser.add_argument("--mscoco_captions_dev_filename", type=str, required=True)
     parser.add_argument("--mscoco_instances_train_filename", type=str, required=True)
@@ -32,7 +33,16 @@ if __name__ == "__main__":
     np.random.seed(12345)
     foil_captions = collections.defaultdict(lambda: collections.defaultdict(list))
 
-    with open(args.foil_filename) as in_file:
+    with open(args.foil_train_filename) as in_file:
+        foil = json.load(in_file)
+
+        for annotation in foil["annotations"]:
+            if annotation["target_word"] == "ORIG":
+                foil_captions[annotation["image_id"]]["pos"].append(annotation["caption"])
+            else:
+                foil_captions[annotation["image_id"]]["neg"].append(annotation["caption"])
+
+    with open(args.foil_test_filename) as in_file:
         foil = json.load(in_file)
 
         for annotation in foil["annotations"]:
@@ -52,8 +62,8 @@ if __name__ == "__main__":
     with open(args.ic_dataset_filename, mode="w") as out_file:
         writer = csv.writer(out_file, delimiter="\t")
 
-        for image_id in list(foil_captions):
-            print("Processing image {}".format(image_id))
+        for image_number, image_id in enumerate(foil_captions, 1):
+            print("[{}/{}] Processing image {}".format(image_number, len(foil_captions), image_id))
 
             if coco_captions_train.getAnnIds(imgIds=image_id):
                 coco_captions = coco_captions_train
