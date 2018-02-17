@@ -12,7 +12,7 @@ import tensorflow as tf
 
 from dataset import ImageReader, load_ic_dataset
 from logger import start_logger, stop_logger
-from train_image_captioning_model import build_image_captioning_model
+from train_ic_model import build_image_captioning_model
 from utils import batch
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
-from dataset import load_ic_dataset
+from dataset import load_ic_dataset, ImageReader
 from embedding import load_glove
 from logger import start_logger, stop_logger
 from progress import Progbar
@@ -27,7 +27,6 @@ def build_image_captioning_model(
         final_hidden_size):
     embedding_matrix = tf.get_variable("embedding_matrix", (num_tokens, embeddings_size))
     sentence_embeddings = tf.nn.embedding_lookup(embedding_matrix, sentence_input)
-    lstm_cell = tf.nn.rnn_cell.LSTMCell(rnn_hidden_size)
     sentence_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(sentence_input, tf.zeros_like(sentence_input, dtype=tf.int32)), tf.int64),
@@ -241,5 +240,4 @@ if __name__ == "__main__":
                     should_stop = True
                 if epoch + 1 >= args.num_epochs:
                     print("Stopping at epoch {}!".format(epoch + 1))
-                    print(
-                        "Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
+                    print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
