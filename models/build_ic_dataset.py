@@ -3,7 +3,11 @@ import csv
 import json
 from argparse import ArgumentParser
 
+import matplotlib
 import numpy as np
+
+matplotlib.use("Agg")
+
 from pycocotools.coco import COCO
 
 
@@ -89,7 +93,7 @@ if __name__ == "__main__":
                 sampled_neg_image_id = np.random.choice(neg_image_ids)
                 print("Sampled image {}".format(sampled_neg_image_id))
 
-                while get_num_overlapping_cats(image_id, sampled_neg_image_id, coco_instances)\
+                while get_num_overlapping_cats(image_id, sampled_neg_image_id, coco_instances) \
                         > args.overlapping_threshold:
                     sampled_neg_image_id = np.random.choice(neg_image_ids)
                     print("Sampled image {}".format(sampled_neg_image_id))
