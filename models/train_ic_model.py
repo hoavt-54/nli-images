@@ -10,7 +10,7 @@ import tensorflow as tf
 from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
 from dataset import load_ic_dataset, ImageReader
-from embedding import load_glove
+from embedding import load_glove, glove_embeddings_initializer
 from logger import start_logger, stop_logger
 from progress import Progbar
 from utils import batch
@@ -21,12 +21,12 @@ def build_image_captioning_model(
         img_features_input,
         dropout_input,
         num_tokens,
+        embeddings,
         embeddings_size,
+        train_embeddings,
         rnn_hidden_size,
         img_features_hidden_size,
         final_hidden_size):
-    embedding_matrix = tf.get_variable("embedding_matrix", (num_tokens, embeddings_size))
-    sentence_embeddings = tf.nn.embedding_lookup(embedding_matrix, sentence_input)
     sentence_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(sentence_input, tf.zeros_like(sentence_input, dtype=tf.int32)), tf.int64),
@@ -34,6 +34,22 @@ def build_image_captioning_model(
         ),
         tf.int32
     )
+    if embeddings is not None:
+        embedding_matrix = tf.get_variable(
+            "embedding_matrix",
+            shape=(num_tokens, embeddings_size),
+            initializer=glove_embeddings_initializer(embeddings),
+            trainable=train_embeddings
+        )
+        print("Loaded GloVe embeddings!")
+    else:
+        embedding_matrix = tf.get_variable(
+            "embedding_matrix",
+            shape=(num_tokens, embeddings_size),
+            initializer=tf.random_normal_initializer(stddev=0.05),
+            trainable=train_embeddings
+        )
+    sentence_embeddings = tf.nn.embedding_lookup(embedding_matrix, sentence_input)
     lstm_cell = DropoutWrapper(
         tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
         input_keep_prob=dropout_input,
@@ -88,8 +104,8 @@ if __name__ == "__main__":
     parser.add_argument("--embeddings_size", type=int, default=300)
     parser.add_argument("--train_embeddings", type=bool, default=True)
     parser.add_argument("--img_features_size", type=int, default=4096)
-    parser.add_argument("--img_features_hidden_size", type=int, default=200)
-    parser.add_argument("--rnn_hidden_size", type=int, default=100)
+    parser.add_argument("--img_features_hidden_size", type=int, default=256)
+    parser.add_argument("--rnn_hidden_size", type=int, default=256)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
     parser.add_argument("--final_hidden_size", type=int, default=200)
     parser.add_argument("--batch_size", type=int, default=128)
@@ -145,7 +161,9 @@ if __name__ == "__main__":
             img_features_input,
             dropout_input,
             num_tokens,
+            embeddings,
             args.embeddings_size,
+            args.train_embeddings,
             args.rnn_hidden_size,
             args.img_features_hidden_size,
             args.final_hidden_size
@@ -169,7 +187,8 @@ if __name__ == "__main__":
         best_epoch = None
         should_stop = False
 
-        with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
+        # with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
+        with tf.Session() as session:
             session.run(tf.global_variables_initializer())
 
             for epoch in range(args.num_epochs):

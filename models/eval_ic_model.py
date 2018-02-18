@@ -65,10 +65,12 @@ if __name__ == "__main__":
         img_features_input,
         dropout_input,
         num_tokens,
-        args.embeddings_size,
-        args.rnn_hidden_size,
-        args.img_features_hidden_size,
-        args.final_hidden_size
+        None,
+        params["embeddings_size"],
+        params["train_embeddings"],
+        params["rnn_hidden_size"],
+        params["img_features_hidden_size"],
+        params["final_hidden_size"]
     )
     saver = tf.train.Saver()
     with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
