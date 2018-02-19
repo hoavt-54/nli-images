@@ -19,7 +19,7 @@ The statistics of the dataset are reported as follows:
 | Training set    | 264284             | 132141                      | 132143                      |
 | Test set        | 82589              | 41294                       | 41295                       |
 | Development set | 66071              | 33036                       | 33035                       |
-| Full            | 412947             | 206473                      | 206474                      |
+| Full dataset    | 412947             | 206473                      | 206474                      |
 
 [1] Shekhar, Ravi, et al. "FOIL it! Find One mismatch between Image and Language caption." Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). Vol. 1. 2017.
 
