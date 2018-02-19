@@ -12,5 +12,13 @@ The script implementing the dataset generation procedure has been published [her
 
 The dataset generated using the described procedure is contained in the folder [IC](https://github.com/hoavt-54/nli-images/tree/master/datasets/IC). The dataset has been split into training, test, and development sets, while maintaining each split balanced.
 
+The statistics of the dataset are reported as follows:
+| Split           | Number of examples | Number of positive examples | Number of negative examples |
+|-----------------|--------------------|-----------------------------|-----------------------------|
+| Training set    | 264284             | 132141                      | 132143                      |
+| Test set        | 82589              | 41294                       | 41295                       |
+| Development set | 66071              | 33036                       | 33035                       |
+| Full            | 412947             | 206473                      | 206474                      |
+
 [1] Shekhar, Ravi, et al. "FOIL it! Find One mismatch between Image and Language caption." arXiv preprint arXiv:1705.01359 (2017).
 [2] Lin, Tsung-Yi, et al. "Microsoft coco: Common objects in context." European conference on computer vision. Springer, Cham, 2014.
