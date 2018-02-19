@@ -22,4 +22,5 @@ The statistics of the dataset are reported as follows:
 | Full            | 412947             | 206473                      | 206474                      |
 
 [1] Shekhar, Ravi, et al. "FOIL it! Find One mismatch between Image and Language caption." arXiv preprint arXiv:1705.01359 (2017).
+
 [2] Lin, Tsung-Yi, et al. "Microsoft coco: Common objects in context." European conference on computer vision. Springer, Cham, 2014.
