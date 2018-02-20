@@ -25,4 +25,4 @@ if __name__ == "__main__":
                 hypothesis = row[2].strip()
                 premise_tokens = [token.lower_ for token in nlp(premise)]
                 hypothesis_tokens = [token.lower_ for token in nlp(hypothesis)]
-                writer.writerow([label, premise, hypothesis, " ".join(premise_tokens), " ".join(hypothesis_tokens)])
+                writer.writerow([label, " ".join(premise_tokens), " ".join(hypothesis_tokens), premise, hypothesis])
