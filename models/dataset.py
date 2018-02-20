@@ -25,10 +25,10 @@ def load_te_dataset(filename, token2id, label2id, spacy_nlp):
             print(i)
             i += 1
             labels.append(label2id[row[0].strip()])
-            premise = row[1].strip()
-            premise_tokens = [token.text.lower() for token in spacy_nlp(premise)]
-            hypothesis = row[2].strip()
-            hypothesis_tokens = [token.text.lower() for token in spacy_nlp(hypothesis)]
+            premise_tokens = row[1].strip().split()
+            hypothesis_tokens = row[2].strip().split()
+            premise = row[3].strip()
+            hypothesis = row[4].strip()
             padded_premises.append([token2id.get(token, token2id["#unk#"]) for token in premise_tokens])
             padded_hypotheses.append([token2id.get(token, token2id["#unk#"]) for token in hypothesis_tokens])
             missing_tokens_set.update([token for token in premise_tokens if token not in token2id])
