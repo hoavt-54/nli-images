@@ -20,10 +20,7 @@ def load_te_dataset(filename, token2id, label2id):
     with open(filename) as in_file:
         reader = csv.reader(in_file, delimiter="\t")
 
-        i = 0
         for row in reader:
-            print(i)
-            i += 1
             labels.append(label2id[row[0].strip()])
             premise_tokens = row[1].strip().split()
             hypothesis_tokens = row[2].strip().split()
