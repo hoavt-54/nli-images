@@ -3,6 +3,8 @@ from argparse import ArgumentParser
 
 import en_core_web_sm
 
+from progress import Progbar
+
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--dataset_filename", type=str, required=True)
@@ -18,8 +20,9 @@ if __name__ == "__main__":
         with open(args.preprocessed_dataset_filename, mode="w") as out_file:
             writer = csv.writer(out_file, delimiter="\t")
 
+            progress = Progbar(num_lines)
             for row_number, row in enumerate(reader, 1):
-                print("Preprocessing row {}/{}".format(row_number, num_lines))
+                progress.update(row_number)
                 label = row[0].strip()
                 premise = row[1].strip()
                 hypothesis = row[2].strip()
