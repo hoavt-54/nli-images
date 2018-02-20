@@ -81,6 +81,10 @@ if __name__ == "__main__":
                 test_batch_premises = test_padded_premises[indexes]
                 test_batch_hypotheses = test_padded_hypotheses[indexes]
                 test_batch_labels = test_labels[indexes]
+                test_original_premises = np.array(test_original_premises)
+                test_original_hypotheses = np.array(test_original_hypotheses)
+                print(test_original_premises)
+                print(type(test_original_premises))
                 test_batch_original_premises = test_original_premises[indexes]
                 test_batch_original_hypotheses = test_original_hypotheses[indexes]
                 predictions = session.run(
@@ -99,8 +103,8 @@ if __name__ == "__main__":
                             id2label[predictions[i]],
                             " ".join([id2token[id] for id in test_batch_premises[i] if id != token2id["#pad#"]]),
                             " ".join([id2token[id] for id in test_batch_hypotheses[i] if id != token2id["#pad#"]]),
-                            test_batch_original_premises,
-                            test_batch_original_hypotheses
+                            test_batch_original_premises[i],
+                            test_batch_original_hypotheses[i]
                         ]
                     )
                     y_true.append(id2label[test_batch_labels[i]])

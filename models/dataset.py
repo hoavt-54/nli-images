@@ -3,11 +3,10 @@ import json
 
 import numpy as np
 
-from embedding import load_glove
 from preprocessing import pad_sequences
 
 
-def load_te_dataset(filename, token2id, label2id):
+def load_te_dataset(filename, token2id, label2id, spacy_nlp):
     labels = []
     padded_premises = []
     padded_hypotheses = []
@@ -24,9 +23,9 @@ def load_te_dataset(filename, token2id, label2id):
         for row in reader:
             labels.append(label2id[row[0].strip()])
             premise = row[1].strip()
-            premise_tokens = premise.lower().split()
+            premise_tokens = [token.text.lower() for token in spacy_nlp(premise)]
             hypothesis = row[2].strip()
-            hypothesis_tokens = hypothesis.lower().split()
+            hypothesis_tokens = [token.text.lower() for token in spacy_nlp(hypothesis)]
             padded_premises.append([token2id.get(token, token2id["#unk#"]) for token in premise_tokens])
             padded_hypotheses.append([token2id.get(token, token2id["#unk#"]) for token in hypothesis_tokens])
             missing_tokens_set.update([token for token in premise_tokens if token not in token2id])
