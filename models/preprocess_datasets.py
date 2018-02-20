@@ -1,9 +1,9 @@
 from argparse import ArgumentParser
 
+import en_core_web_sm
+
 from dataset import load_te_dataset
 from embedding import load_glove
-import spacy
-import en_core_web_sm
 
 if __name__ == "__main__":
     parser = ArgumentParser()

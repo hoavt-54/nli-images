@@ -20,7 +20,10 @@ def load_te_dataset(filename, token2id, label2id, spacy_nlp):
     with open(filename) as in_file:
         reader = csv.reader(in_file, delimiter="\t")
 
+        i = 0
         for row in reader:
+            print(i)
+            i += 1
             labels.append(label2id[row[0].strip()])
             premise = row[1].strip()
             premise_tokens = [token.text.lower() for token in spacy_nlp(premise)]
