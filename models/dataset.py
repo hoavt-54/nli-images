@@ -6,7 +6,7 @@ import numpy as np
 from preprocessing import pad_sequences
 
 
-def load_te_dataset(filename, token2id, label2id, spacy_nlp):
+def load_te_dataset(filename, token2id, label2id):
     labels = []
     padded_premises = []
     padded_hypotheses = []
