@@ -15,6 +15,8 @@ def load_te_dataset(filename, token2id, label2id):
     original_hypotheses = []
     missing_tokens_set = set()
     missing_tokens_list = []
+    tokens_set = set()
+    tokens_list = []
 
     with open(filename) as in_file:
         reader = csv.reader(in_file, delimiter="\t")
@@ -31,6 +33,10 @@ def load_te_dataset(filename, token2id, label2id):
             missing_tokens_set.update([token for token in hypothesis_tokens if token not in token2id])
             missing_tokens_list.extend([token for token in premise_tokens if token not in token2id])
             missing_tokens_list.extend([token for token in hypothesis_tokens if token not in token2id])
+            tokens_set.update(premise_tokens)
+            tokens_set.update(hypothesis_tokens)
+            tokens_list.extend(premise_tokens)
+            tokens_set.extend(hypothesis_tokens)
             original_premises.append(premise)
             original_hypotheses.append(hypothesis)
 
@@ -40,6 +46,8 @@ def load_te_dataset(filename, token2id, label2id):
 
         print("Unique number of missing tokens: {}".format(len(missing_tokens_set)))
         print("Number of missing tokens: {}".format(len(missing_tokens_list)))
+        print("Unique number of tokens: {}".format(len(tokens_set)))
+        print("Number of tokens: {}".format(len(tokens_list)))
         return labels, padded_premises, padded_hypotheses, original_premises, original_hypotheses
 
 
