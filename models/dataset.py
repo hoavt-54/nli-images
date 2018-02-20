@@ -36,7 +36,7 @@ def load_te_dataset(filename, token2id, label2id):
             tokens_set.update(premise_tokens)
             tokens_set.update(hypothesis_tokens)
             tokens_list.extend(premise_tokens)
-            tokens_set.extend(hypothesis_tokens)
+            tokens_list.extend(hypothesis_tokens)
             original_premises.append(premise)
             original_hypotheses.append(hypothesis)
 
