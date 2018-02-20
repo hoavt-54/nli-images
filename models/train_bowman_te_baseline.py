@@ -173,10 +173,10 @@ if __name__ == "__main__":
         print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses = load_te_dataset(args.train_filename, token2id, label2id)
+    train_labels, train_premises, train_hypotheses, _, _ = load_te_dataset(args.train_filename, token2id, label2id)
 
     print("-- Loading development set")
-    dev_labels, dev_premises, dev_hypotheses = load_te_dataset(args.dev_filename, token2id, label2id)
+    dev_labels, dev_premises, dev_hypotheses, _, _ = load_te_dataset(args.dev_filename, token2id, label2id)
 
     if not args.model_load_filename:
         print("-- Building model")
