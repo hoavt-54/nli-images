@@ -9,31 +9,35 @@ from preprocessing import pad_sequences
 
 def load_te_dataset(filename, token2id, label2id):
     labels = []
-    premises = []
-    hypotheses = []
+    padded_premises = []
+    padded_hypotheses = []
+    original_premises = []
+    original_hypotheses = []
 
     with open(filename) as in_file:
         reader = csv.reader(in_file, delimiter="\t")
 
         for row in reader:
             labels.append(label2id[row[0].strip()])
-            premise_tokens = row[1].strip().lower().split()
-            hypothesis_tokens = row[2].strip().lower().split()
-            num_unk_tokens = 0
+            premise = row[1].strip()
+            premise_tokens = premise.lower().split()
+            hypothesis = row[2].strip()
+            hypothesis_tokens = hypothesis.lower().split()
             for token in premise_tokens:
                 if token in token2id:
-                    premises.append(token2id[token])
+                    padded_premises.append(token2id[token])
                 else:
-                    premises.append(token2id["#unk#"])
-                    num_unk_tokens
-            premises.append([token2id.get(token, token2id["#unk#"]) for token in premise_tokens])
-            hypotheses.append([token2id.get(token, token2id["#unk#"]) for token in hypothesis_tokens])
+                    padded_premises.append(token2id["#unk#"])
+            padded_premises.append([token2id.get(token, token2id["#unk#"]) for token in premise_tokens])
+            padded_hypotheses.append([token2id.get(token, token2id["#unk#"]) for token in hypothesis_tokens])
+            original_premises.append(premise)
+            original_hypotheses.append(hypothesis)
 
-        premises = pad_sequences(premises, padding="post", value=token2id["#pad#"], dtype=np.long)
-        hypotheses = pad_sequences(hypotheses, padding="post", value=token2id["#pad#"], dtype=np.long)
+        padded_premises = pad_sequences(padded_premises, padding="post", value=token2id["#pad#"], dtype=np.long)
+        padded_hypotheses = pad_sequences(padded_hypotheses, padding="post", value=token2id["#pad#"], dtype=np.long)
         labels = np.array(labels)
 
-        return labels, premises, hypotheses
+        return labels, padded_premises, padded_hypotheses, original_premises, original_hypotheses
 
 
 def load_vte_dataset(nli_dataset_filename, token2id, label2id):
