@@ -10,6 +10,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     nlp = en_core_web_sm.load()
+    num_lines = sum([1 for line in open(args.dataset_filename)])
 
     with open(args.dataset_filename) as in_file:
         reader = csv.reader(in_file, delimiter="\t")
@@ -17,7 +18,8 @@ if __name__ == "__main__":
         with open(args.preprocessed_dataset_filename, mode="w") as out_file:
             writer = csv.writer(out_file, delimiter="\t")
 
-            for row in reader:
+            for row_number, row in enumerate(reader, 1):
+                print("Preprocessing row {}/{}".format(row_number, num_lines))
                 label = row[0].strip()
                 premise = row[1].strip()
                 hypothesis = row[2].strip()
