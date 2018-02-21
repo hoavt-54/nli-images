@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 
 import en_core_web_sm
 
-from progress import Progbar
+from utils import Progbar
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -12,7 +12,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     nlp = en_core_web_sm.load()
-    num_lines = sum([1 for line in open(args.dataset_filename)])
+    num_lines = len([1 for line in open(args.dataset_filename)])
 
     with open(args.dataset_filename) as in_file:
         reader = csv.reader(in_file, delimiter="\t")
@@ -24,8 +24,8 @@ if __name__ == "__main__":
             for row_number, row in enumerate(reader, 1):
                 progress.update(row_number)
                 label = row[0].strip()
-                premise = row[1].strip()
-                hypothesis = row[2].strip()
-                premise_tokens = [token.lower_ for token in nlp(premise)]
-                hypothesis_tokens = [token.lower_ for token in nlp(hypothesis)]
-                writer.writerow([label, " ".join(premise_tokens), " ".join(hypothesis_tokens), premise, hypothesis])
+                caption = row[1].strip()
+                image_filename = row[2].strip()
+                source = row[3].strip()
+                caption_tokens = [token.lower_ for token in nlp(caption)]
+                writer.writerow([label, " ".join(caption_tokens), image_filename, source])

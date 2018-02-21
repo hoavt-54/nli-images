@@ -9,10 +9,10 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
-from dataset import load_ic_dataset, ImageReader
-from embedding import load_glove, glove_embeddings_initializer
-from logger import start_logger, stop_logger
-from progress import Progbar
+from datasets import load_ic_dataset, ImageReader
+from embeddings import load_glove, glove_embeddings_initializer
+from utils import start_logger, stop_logger
+from utils import Progbar
 from utils import batch
 
 
@@ -187,8 +187,7 @@ if __name__ == "__main__":
         best_epoch = None
         should_stop = False
 
-        # with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
-        with tf.Session() as session:
+        with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
             session.run(tf.global_variables_initializer())
 
             for epoch in range(args.num_epochs):

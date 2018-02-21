@@ -2,7 +2,7 @@ import os
 import pickle
 from argparse import ArgumentParser
 import matplotlib
-matplotlib.use("Agg")
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import cv2
 import pylab
@@ -40,6 +40,6 @@ if __name__ == "__main__":
         print("[{}/{}] Saving to: {}".format(
             img_index + 1,
             len(bottom_up_features),
-            os.path.join(args.annotated_img_path, img_name).replace(".jpg", ".png")
-        ))
+            os.path.join(args.annotated_img_path, img_name).replace(".jpg", ".png"))
+        )
         pylab.savefig(os.path.join(args.annotated_img_path, img_name).replace(".jpg", ".png"))

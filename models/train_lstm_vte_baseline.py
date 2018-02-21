@@ -9,10 +9,10 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
-from dataset import load_vte_dataset, ImageReader
-from embedding import load_glove, glove_embeddings_initializer
-from logger import start_logger, stop_logger
-from progress import Progbar
+from datasets import load_vte_dataset, ImageReader
+from embeddings import load_glove, glove_embeddings_initializer
+from utils import start_logger, stop_logger
+from utils import Progbar
 from utils import AttrDict, batch
 
 
@@ -26,8 +26,8 @@ def build_lstm_vte_baseline_model(premise_input,
                                   embeddings_size,
                                   train_embeddings,
                                   rnn_hidden_size,
-                                  img_features_hidden_size,
-                                  final_hidden_size):
+                                  multimodal_fusion_hidden_size,
+                                  classification_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -78,24 +78,37 @@ def build_lstm_vte_baseline_model(premise_input,
         dtype=tf.float32
     )
     # hypothesis_last = extract_axis_1(hypothesis_outputs, hypothesis_length - 1)
-    img_features_hidden = tf.contrib.layers.fully_connected(
-        img_features_input,
-        img_features_hidden_size,
+    normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=1)
+    premise_hidden_features = tf.contrib.layers.fully_connected(
+        premise_final_states.h,
+        multimodal_fusion_hidden_size,
         activation_fn=tf.nn.relu
     )
-    premise_hypothesis_img = tf.concat([premise_final_states.h, hypothesis_final_states.h, img_features_hidden], axis=1)
+    hypothesis_hidden_features = tf.contrib.layers.fully_connected(
+        hypothesis_final_states.h,
+        multimodal_fusion_hidden_size,
+        activation_fn=tf.nn.relu
+    )
+    img_hidden_features = tf.contrib.layers.fully_connected(
+        normalized_img_features,
+        multimodal_fusion_hidden_size,
+        activation_fn=tf.nn.relu
+    )
+    premise_img_multimodal_fusion = tf.multiply(premise_hidden_features, img_hidden_features)
+    hypothesis_img_multimodal_fusion = tf.multiply(hypothesis_hidden_features, img_hidden_features)
+    final_concatenation = tf.concat([premise_img_multimodal_fusion, hypothesis_img_multimodal_fusion], axis=1)
     return tf.contrib.layers.fully_connected(
         tf.contrib.layers.fully_connected(
             tf.contrib.layers.fully_connected(
                 tf.contrib.layers.fully_connected(
-                    premise_hypothesis_img,
-                    final_hidden_size,
+                    final_concatenation,
+                    classification_hidden_size,
                     activation_fn=tf.nn.relu
                 ),
-                final_hidden_size,
+                classification_hidden_size,
                 activation_fn=tf.nn.relu
             ),
-            final_hidden_size,
+            classification_hidden_size,
             activation_fn=tf.nn.relu
         ),
         num_labels,
@@ -122,9 +135,9 @@ if __name__ == "__main__":
     parser.add_argument("--train_embeddings", type=bool, default=True)
     parser.add_argument("--img_features_size", type=int, default=4096)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
-    parser.add_argument("--img_features_hidden_size", type=int, default=200)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
-    parser.add_argument("--final_hidden_size", type=int, default=200)
+    parser.add_argument("--multimodal_fusion_hidden_size", type=int, default=100)
+    parser.add_argument("--classification_hidden_size", type=int, default=200)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
     parser.add_argument("--learning_rate", type=float, default=0.001)
@@ -187,11 +200,18 @@ if __name__ == "__main__":
             print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses, train_img_names = load_vte_dataset(args.train_filename, token2id,
-                                                                                       label2id)
+    train_labels, train_premises, train_hypotheses, train_img_names, _, _ = load_vte_dataset(
+        args.train_filename,
+        token2id,
+        label2id
+    )
 
     print("-- Loading development set")
-    dev_labels, dev_premises, dev_hypotheses, dev_img_names = load_vte_dataset(args.dev_filename, token2id, label2id)
+    dev_labels, dev_premises, dev_hypotheses, dev_img_names, _, _ = load_vte_dataset(
+        args.dev_filename,
+        token2id,
+        label2id
+    )
 
     print("-- Loading images")
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
@@ -214,8 +234,8 @@ if __name__ == "__main__":
             args.embeddings_size,
             args.train_embeddings,
             args.rnn_hidden_size,
-            args.img_features_hidden_size,
-            args.final_hidden_size
+            args.multimodal_fusion_hidden_size,
+            args.classification_hidden_size
         )
         L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
         loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss

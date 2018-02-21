@@ -22,6 +22,7 @@ def get_num_overlapping_cats(image_a_id, image_b_id, a_coco_instances_reader, b_
 
 
 if __name__ == "__main__":
+    np.random.seed(12345)
     parser = ArgumentParser()
     parser.add_argument("--foil_train_filename", type=str, required=True)
     parser.add_argument("--foil_test_filename", type=str, required=True)
@@ -34,7 +35,6 @@ if __name__ == "__main__":
     parser.add_argument("--overlapping_threshold", type=int, default=2)
     args = parser.parse_args()
 
-    np.random.seed(12345)
     foil_captions = collections.defaultdict(lambda: collections.defaultdict(list))
 
     with open(args.foil_train_filename) as in_file:

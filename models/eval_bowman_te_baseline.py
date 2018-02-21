@@ -10,8 +10,8 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
-from dataset import load_te_dataset
-from logger import start_logger, stop_logger
+from datasets import load_te_dataset
+from utils import start_logger, stop_logger
 from train_bowman_te_baseline import build_bowman_te_baseline_model
 from utils import batch
 
@@ -62,7 +62,7 @@ if __name__ == "__main__":
         params["embeddings_size"],
         params["train_embeddings"],
         params["rnn_hidden_size"],
-        params["final_hidden_size"]
+        params["classification_hidden_size"]
     )
     saver = tf.train.Saver()
     with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
@@ -83,8 +83,6 @@ if __name__ == "__main__":
                 test_batch_labels = test_labels[indexes]
                 test_original_premises = np.array(test_original_premises)
                 test_original_hypotheses = np.array(test_original_hypotheses)
-                print(test_original_premises)
-                print(type(test_original_premises))
                 test_batch_original_premises = test_original_premises[indexes]
                 test_batch_original_hypotheses = test_original_hypotheses[indexes]
                 predictions = session.run(

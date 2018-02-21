@@ -9,10 +9,10 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
-from dataset import ImageReader, load_vte_dataset
-from embedding import glove_embeddings_initializer, load_glove
-from logger import start_logger, stop_logger
-from progress import Progbar
+from datasets import ImageReader, load_vte_dataset
+from embeddings import glove_embeddings_initializer, load_glove
+from utils import start_logger, stop_logger
+from utils import Progbar
 from utils import batch
 
 
@@ -27,7 +27,8 @@ def build_top_down_baseline_model(premise_input,
                                   num_img_features,
                                   img_features_size,
                                   train_embeddings,
-                                  rnn_hidden_size):
+                                  rnn_hidden_size,
+                                  classification_hidden_size):
     def _gated_tanh(x, W, W_prime):
         y_tilde = tf.nn.tanh(W(x))
         g = tf.nn.sigmoid(W_prime(x))
@@ -64,24 +65,23 @@ def build_top_down_baseline_model(premise_input,
         )
     premise_embeddings = tf.nn.embedding_lookup(embedding_matrix, premise_input)
     hypothesis_embeddings = tf.nn.embedding_lookup(embedding_matrix, hypothesis_input)
-    lst_cell = DropoutWrapper(
+    lstm_cell = DropoutWrapper(
         tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
         input_keep_prob=dropout_input,
         output_keep_prob=dropout_input
     )
     premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
-        cell=lst_cell,
+        cell=lstm_cell,
         inputs=premise_embeddings,
         sequence_length=premise_length,
         dtype=tf.float32
     )
     hypothesis_outputs, hypothesis_final_states = tf.nn.dynamic_rnn(
-        cell=lst_cell,
+        cell=lstm_cell,
         inputs=hypothesis_embeddings,
         sequence_length=hypothesis_length,
         dtype=tf.float32
     )
-
     normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=2)
 
     reshaped_premise = tf.reshape(tf.tile(premise_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
@@ -139,13 +139,13 @@ def build_top_down_baseline_model(premise_input,
             tf.contrib.layers.fully_connected(
                 tf.contrib.layers.fully_connected(
                     h,
-                    rnn_hidden_size * 2,
+                    classification_hidden_size,
                     activation_fn=tf.nn.relu
                 ),
-                rnn_hidden_size * 2,
+                classification_hidden_size,
                 activation_fn=tf.nn.relu
             ),
-            rnn_hidden_size * 2,
+            classification_hidden_size,
             activation_fn=tf.nn.relu
         ),
         num_labels,
@@ -173,6 +173,7 @@ if __name__ == "__main__":
     parser.add_argument("--img_features_size", type=int, default=2048)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
+    parser.add_argument("--classification_hidden_size", type=int, default=200)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
     parser.add_argument("--learning_rate", type=float, default=0.001)
@@ -208,10 +209,20 @@ if __name__ == "__main__":
             print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses, train_img_names = load_vte_dataset(args.train_filename, token2id, label2id)
+    train_labels, train_premises, train_hypotheses, train_img_names, _, _ =\
+        load_vte_dataset(
+            args.train_filename,
+            token2id,
+            label2id
+        )
 
     print("-- Loading development set")
-    dev_labels, dev_premises, dev_hypotheses, dev_img_names = load_vte_dataset(args.dev_filename, token2id, label2id)
+    dev_labels, dev_premises, dev_hypotheses, dev_img_names, _, _ =\
+        load_vte_dataset(
+            args.dev_filename,
+            token2id,
+            label2id
+        )
 
     print("-- Loading images")
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
@@ -234,7 +245,8 @@ if __name__ == "__main__":
         args.num_img_features,
         args.img_features_size,
         args.train_embeddings,
-        args.rnn_hidden_size
+        args.rnn_hidden_size,
+        args.classification_hidden_size
     )
     L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
     loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss

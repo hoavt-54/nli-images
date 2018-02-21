@@ -1,17 +1,16 @@
 #!/usr/bin/env python
-import json
+import os
+import pickle
 from argparse import ArgumentParser
 
-import _init_paths
-from fast_rcnn.config import cfg, cfg_from_file
-from fast_rcnn.test import im_detect, _get_blobs
-from fast_rcnn.nms_wrapper import nms
 import caffe
 import cv2
 import numpy as np
-import os
-import pickle
-import progress
+from fast_rcnn.config import cfg, cfg_from_file
+from fast_rcnn.nms_wrapper import nms
+from fast_rcnn.test import im_detect, _get_blobs
+
+from utils import Progbar
 
 
 def get_detections_from_im(net, im_file, conf_thresh=0.2, min_num_boxes=36, max_num_boxes=36):
@@ -103,20 +102,20 @@ if __name__ == "__main__":
                      if filename.endswith(args.img_extension)]
     num_img_filenames = len(img_filenames)
 
-    progress = progress.Progbar(num_img_filenames)
+    progress = Progbar(num_img_filenames)
     bottom_up_features = {}
 
     for filename_index, filename in enumerate(img_filenames):
-            full_filename = os.path.join(args.img_path, filename)
-            results = get_detections_from_im(
-                net,
-                full_filename,
-                conf_thresh=0.2,
-                min_num_boxes=args.num_boxes,
-                max_num_boxes=args.num_boxes
-            )
-            bottom_up_features[filename] = results
-            progress.update(filename_index)
+        full_filename = os.path.join(args.img_path, filename)
+        results = get_detections_from_im(
+            net,
+            full_filename,
+            conf_thresh=0.2,
+            min_num_boxes=args.num_boxes,
+            max_num_boxes=args.num_boxes
+        )
+        bottom_up_features[filename] = results
+        progress.update(filename_index)
 
     with open(args.features_filename, mode="wb") as out_file:
         pickle.dump(bottom_up_features, out_file)
