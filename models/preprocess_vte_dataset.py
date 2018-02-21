@@ -28,9 +28,9 @@ if __name__ == "__main__":
                 hypothesis = row[2].strip()
                 premise_tokens = [token.lower_ for token in nlp(premise)]
                 hypothesis_tokens = [token.lower_ for token in nlp(hypothesis)]
-                if len(row == 3):
+                if len(row) == 3:
                     writer.writerow([label, " ".join(premise_tokens), " ".join(hypothesis_tokens), premise, hypothesis])
-                elif len(row == 4):
+                elif len(row) == 4:
                     image_filename = row[3].strip()
                     writer.writerow([label, " ".join(premise_tokens), " ".join(hypothesis_tokens), image_filename, premise, hypothesis])
                 else:
