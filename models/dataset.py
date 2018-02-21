@@ -22,8 +22,8 @@ def load_te_dataset(filename, token2id, label2id):
 
         for row in reader:
             labels.append(label2id[row[0].strip()])
-            premise_tokens = row[1].strip().split()
-            hypothesis_tokens = row[2].strip().split()
+            premise_tokens = row[3].strip().split()
+            hypothesis_tokens = row[4].strip().split()
             premise = row[3].strip()
             hypothesis = row[4].strip()
             padded_premises.append([token2id.get(token, token2id["#unk#"]) for token in premise_tokens])
