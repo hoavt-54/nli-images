@@ -28,4 +28,4 @@ if __name__ == "__main__":
                 image_filename = row[2].strip()
                 source = row[3].strip()
                 caption_tokens = [token.lower_ for token in nlp(caption)]
-                writer.writerow([label, " ".join(caption_tokens), image_filename, source])
+                writer.writerow([label, " ".join(caption_tokens), image_filename, source, caption])
