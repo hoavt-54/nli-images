@@ -175,6 +175,8 @@ if __name__ == "__main__":
     print("-- Loading training set")
     train_labels, train_premises, train_hypotheses, _, _ = load_te_dataset(args.train_filename, token2id, label2id)
 
+    exit(0)
+
     print("-- Loading development set")
     dev_labels, dev_premises, dev_hypotheses, _, _ = load_te_dataset(args.dev_filename, token2id, label2id)
 

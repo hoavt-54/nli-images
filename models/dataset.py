@@ -47,7 +47,8 @@ def load_te_dataset(filename, token2id, label2id):
         print("Number of missing tokens: {}".format(len(missing_tokens_list)))
         print("Unique number of tokens: {}".format(len(tokens_set)))
         print("Number of tokens: {}".format(len(tokens_list)))
-        print("girls in missing_tokens_set: {}".format("girls" in missing_tokens_set))
+        print("Missing tokens:")
+        print(missing_tokens_set)
         return labels, padded_premises, padded_hypotheses, original_premises, original_hypotheses
 
 
