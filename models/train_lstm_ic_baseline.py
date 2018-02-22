@@ -16,20 +16,28 @@ from utils import Progbar
 from utils import batch
 
 
-def build_image_captioning_model(
-        sentence_input,
-        img_features_input,
-        dropout_input,
-        num_tokens,
-        embeddings,
-        embeddings_size,
-        train_embeddings,
-        rnn_hidden_size,
-        img_features_hidden_size,
-        final_hidden_size):
-    sentence_length = tf.cast(
+def build_lstm_ic_baseline_model(premise_input,
+                                  hypothesis_input,
+                                  img_features_input,
+                                  dropout_input,
+                                  num_tokens,
+                                  num_labels,
+                                  embeddings,
+                                  embeddings_size,
+                                  train_embeddings,
+                                  rnn_hidden_size,
+                                  multimodal_fusion_hidden_size,
+                                  classification_hidden_size):
+    premise_length = tf.cast(
         tf.reduce_sum(
-            tf.cast(tf.not_equal(sentence_input, tf.zeros_like(sentence_input, dtype=tf.int32)), tf.int64),
+            tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
+            1
+        ),
+        tf.int32
+    )
+    hypothesis_length = tf.cast(
+        tf.reduce_sum(
+            tf.cast(tf.not_equal(hypothesis_input, tf.zeros_like(hypothesis_input, dtype=tf.int32)), tf.int64),
             1
         ),
         tf.int32
@@ -49,40 +57,61 @@ def build_image_captioning_model(
             initializer=tf.random_normal_initializer(stddev=0.05),
             trainable=train_embeddings
         )
-    sentence_embeddings = tf.nn.embedding_lookup(embedding_matrix, sentence_input)
+    premise_embeddings = tf.nn.embedding_lookup(embedding_matrix, premise_input)
+    hypothesis_embeddings = tf.nn.embedding_lookup(embedding_matrix, hypothesis_input)
     lstm_cell = DropoutWrapper(
         tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
         input_keep_prob=dropout_input,
         output_keep_prob=dropout_input
     )
-    sentence_outputs, sentence_final_states = tf.nn.dynamic_rnn(
+    premise_outputs, premise_final_states = tf.nn.dynamic_rnn(
         cell=lstm_cell,
-        inputs=sentence_embeddings,
-        sequence_length=sentence_length,
+        inputs=premise_embeddings,
+        sequence_length=premise_length,
         dtype=tf.float32
     )
+    # premise_last = extract_axis_1(premise_outputs, premise_length - 1)
+    hypothesis_outputs, hypothesis_final_states = tf.nn.dynamic_rnn(
+        cell=lstm_cell,
+        inputs=hypothesis_embeddings,
+        sequence_length=hypothesis_length,
+        dtype=tf.float32
+    )
+    # hypothesis_last = extract_axis_1(hypothesis_outputs, hypothesis_length - 1)
     normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=1)
-    img_features_hidden = tf.contrib.layers.fully_connected(
-        normalized_img_features,
-        img_features_hidden_size,
+    premise_hidden_features = tf.contrib.layers.fully_connected(
+        premise_final_states.h,
+        multimodal_fusion_hidden_size,
         activation_fn=tf.nn.relu
     )
-    sentence_img = tf.concat([sentence_final_states.h, img_features_hidden], axis=1)
+    hypothesis_hidden_features = tf.contrib.layers.fully_connected(
+        hypothesis_final_states.h,
+        multimodal_fusion_hidden_size,
+        activation_fn=tf.nn.relu
+    )
+    img_hidden_features = tf.contrib.layers.fully_connected(
+        normalized_img_features,
+        multimodal_fusion_hidden_size,
+        activation_fn=tf.nn.relu
+    )
+    premise_img_multimodal_fusion = tf.multiply(premise_hidden_features, img_hidden_features)
+    hypothesis_img_multimodal_fusion = tf.multiply(hypothesis_hidden_features, img_hidden_features)
+    final_concatenation = tf.concat([premise_img_multimodal_fusion, hypothesis_img_multimodal_fusion], axis=1)
     return tf.contrib.layers.fully_connected(
         tf.contrib.layers.fully_connected(
             tf.contrib.layers.fully_connected(
                 tf.contrib.layers.fully_connected(
-                    sentence_img,
-                    final_hidden_size,
+                    final_concatenation,
+                    classification_hidden_size,
                     activation_fn=tf.nn.relu
                 ),
-                final_hidden_size,
+                classification_hidden_size,
                 activation_fn=tf.nn.relu
             ),
-            final_hidden_size,
+            classification_hidden_size,
             activation_fn=tf.nn.relu
         ),
-        2,
+        num_labels,
         activation_fn=None
     )
 
@@ -107,7 +136,8 @@ if __name__ == "__main__":
     parser.add_argument("--img_features_hidden_size", type=int, default=200)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
-    parser.add_argument("--final_hidden_size", type=int, default=200)
+    parser.add_argument("--multimodal_fusion_hidden_size", type=int, default=100)
+    parser.add_argument("--classification_hidden_size", type=int, default=200)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
     parser.add_argument("--learning_rate", type=float, default=0.001)
@@ -156,7 +186,7 @@ if __name__ == "__main__":
         img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size), name="img_features_input")
         label_input = tf.placeholder(tf.int32, (None,), name="label_input")
         dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-        logits = build_image_captioning_model(
+        logits = build_lstm_ic_baseline_model(
             sentence_input,
             img_features_input,
             dropout_input,
@@ -166,7 +196,9 @@ if __name__ == "__main__":
             args.train_embeddings,
             args.rnn_hidden_size,
             args.img_features_hidden_size,
-            args.final_hidden_size
+            args.final_hidden_size,
+            args.multimodal_fusion_hidden_size,
+            args.classification_hidden_size
         )
         L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
         loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
@@ -245,8 +277,7 @@ if __name__ == "__main__":
                     best_epoch = epoch + 1
                     dev_best_accuracy = dev_accuracy
                     saver.save(session, args.model_save_filename + ".ckpt")
-                    print(
-                        "Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
+                    print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
                     print("Best model saved to: {}".format(args.model_save_filename))
                 else:
                     stopping_step += 1
