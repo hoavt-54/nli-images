@@ -10,8 +10,8 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
-from dataset import load_te_dataset
-from logger import start_logger, stop_logger
+from datasets import load_te_dataset
+from utils import start_logger, stop_logger
 from train_bowman_te_baseline import build_bowman_te_baseline_model
 from utils import batch
 
@@ -44,7 +44,8 @@ if __name__ == "__main__":
         num_labels = len(label2id)
 
     print("-- Loading test set")
-    test_labels, test_premises, test_hypotheses = load_te_dataset(args.test_filename, token2id, label2id)
+    test_labels, test_padded_premises, test_padded_hypotheses, test_original_premises, test_original_hypotheses =\
+        load_te_dataset(args.test_filename, token2id, label2id)
 
     print("-- Restoring model")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
@@ -60,7 +61,8 @@ if __name__ == "__main__":
         None,
         params["embeddings_size"],
         params["train_embeddings"],
-        params["rnn_hidden_size"]
+        params["rnn_hidden_size"],
+        params["classification_hidden_size"]
     )
     saver = tf.train.Saver()
     with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
@@ -76,9 +78,13 @@ if __name__ == "__main__":
         with open(args.result_filename + ".predictions", mode="w") as out_file:
             writer = csv.writer(out_file, delimiter="\t")
             for indexes in batch(test_batches_indexes, params["batch_size"]):
-                test_batch_premises = test_premises[indexes]
-                test_batch_hypotheses = test_hypotheses[indexes]
+                test_batch_premises = test_padded_premises[indexes]
+                test_batch_hypotheses = test_padded_hypotheses[indexes]
                 test_batch_labels = test_labels[indexes]
+                test_original_premises = np.array(test_original_premises)
+                test_original_hypotheses = np.array(test_original_hypotheses)
+                test_batch_original_premises = test_original_premises[indexes]
+                test_batch_original_hypotheses = test_original_hypotheses[indexes]
                 predictions = session.run(
                     tf.argmax(logits, axis=1),
                     feed_dict={
@@ -94,7 +100,9 @@ if __name__ == "__main__":
                             id2label[test_batch_labels[i]],
                             id2label[predictions[i]],
                             " ".join([id2token[id] for id in test_batch_premises[i] if id != token2id["#pad#"]]),
-                            " ".join([id2token[id] for id in test_batch_hypotheses[i] if id != token2id["#pad#"]])
+                            " ".join([id2token[id] for id in test_batch_hypotheses[i] if id != token2id["#pad#"]]),
+                            test_batch_original_premises[i],
+                            test_batch_original_hypotheses[i]
                         ]
                     )
                     y_true.append(id2label[test_batch_labels[i]])
