@@ -13,9 +13,9 @@ from utils import Progbar
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--img_path", type=str, required=True)
+    parser.add_argument("--img_extension", typpe=str, default=".jpg")
     parser.add_argument("--img_names_filename", type=str, required=True)
     parser.add_argument("--img_features_filename", type=str, required=True)
-    parser.add_argument("--img_extension", typpe=str, default=".jpg")
     args = parser.parse_args()
 
     img_filenames = [filename for filename in os.listdir(args.img_path)
