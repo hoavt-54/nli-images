@@ -21,7 +21,8 @@ if __name__ == "__main__":
 
     net = caffe.Net(args.net_def_filename, args.net_weights_filename, caffe.TEST)
 
-    img_filenames = os.listdir(args.img_path)
+    img_filenames = [filename for filename in os.listdir(args.img_path)
+                     if os.path.splitext(filename)[-1].lower() == args.img_extension]
     num_img_filenames = len(img_filenames)
     img_features = []
     progress = Progbar(num_img_filenames)

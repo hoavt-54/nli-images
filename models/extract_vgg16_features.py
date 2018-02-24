@@ -15,9 +15,11 @@ if __name__ == "__main__":
     parser.add_argument("--img_path", type=str, required=True)
     parser.add_argument("--img_names_filename", type=str, required=True)
     parser.add_argument("--img_features_filename", type=str, required=True)
+    parser.add_argument("--img_extension", typpe=str, default=".jpg")
     args = parser.parse_args()
 
-    img_filenames = os.listdir(args.img_path)
+    img_filenames = [filename for filename in os.listdir(args.img_path)
+                     if os.path.splitext(filename)[-1].lower() == args.img_extension]
     num_img_filenames = len(img_filenames)
     img_features = []
     progress = Progbar(num_img_filenames)
@@ -26,14 +28,13 @@ if __name__ == "__main__":
     model = Model(input=base_model.input, output=base_model.get_layer("fc2").output)
 
     for num_filename, filename in enumerate(img_filenames, 1):
-        if os.path.splitext(filename)[-1].lower() == ".jpg":
-            img = image.load_img(os.path.join(args.img_path, filename), target_size=(224, 224))
-            x = image.img_to_array(img)
-            x = np.expand_dims(x, axis=0)
-            x = preprocess_input(x)
-            fc7_features = model.predict(x).squeeze()
-            img_features.append(fc7_features)
-            progress.update(num_filename)
+        img = image.load_img(os.path.join(args.img_path, filename), target_size=(224, 224))
+        x = image.img_to_array(img)
+        x = np.expand_dims(x, axis=0)
+        x = preprocess_input(x)
+        fc7_features = model.predict(x).squeeze()
+        img_features.append(fc7_features)
+        progress.update(num_filename)
 
     img_features = np.array(img_features)
 
