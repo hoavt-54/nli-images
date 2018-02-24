@@ -9,25 +9,23 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
-from datasets import load_vte_dataset, ImageReader
+from datasets import load_te_dataset
 from embeddings import load_glove, glove_embeddings_initializer
 from utils import start_logger, stop_logger
 from utils import Progbar
 from utils import AttrDict, batch
 
 
-def build_bowman_vte_baseline_model(premise_input,
-                                    hypothesis_input,
-                                    img_features_input,
-                                    dropout_input,
-                                    num_tokens,
-                                    num_labels,
-                                    embeddings,
-                                    embeddings_size,
-                                    train_embeddings,
-                                    rnn_hidden_size,
-                                    multimodal_fusion_hidden_size,
-                                    classification_hidden_size):
+def build_bowman_te_model(premise_input,
+                          hypothesis_input,
+                          dropout_input,
+                          num_tokens,
+                          num_labels,
+                          embeddings,
+                          embeddings_size,
+                          train_embeddings,
+                          rnn_hidden_size,
+                          classification_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -78,25 +76,7 @@ def build_bowman_vte_baseline_model(premise_input,
         dtype=tf.float32
     )
     # hypothesis_last = extract_axis_1(hypothesis_outputs, hypothesis_length - 1)
-    normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=1)
-    premise_hidden_features = tf.contrib.layers.fully_connected(
-        premise_final_states.h,
-        multimodal_fusion_hidden_size,
-        activation_fn=tf.nn.tanh
-    )
-    hypothesis_hidden_features = tf.contrib.layers.fully_connected(
-        hypothesis_final_states.h,
-        multimodal_fusion_hidden_size,
-        activation_fn=tf.nn.tanh
-    )
-    img_hidden_features = tf.contrib.layers.fully_connected(
-        normalized_img_features,
-        multimodal_fusion_hidden_size,
-        activation_fn=tf.nn.tanh
-    )
-    premise_img_multimodal_fusion = tf.multiply(premise_hidden_features, img_hidden_features)
-    hypothesis_img_multimodal_fusion = tf.multiply(hypothesis_hidden_features, img_hidden_features)
-    final_concatenation = tf.concat([premise_img_multimodal_fusion, hypothesis_img_multimodal_fusion], axis=1)
+    final_concatenation = tf.concat([premise_final_states.h, hypothesis_final_states.h], axis=1)
     return tf.contrib.layers.fully_connected(
         tf.contrib.layers.fully_connected(
             tf.contrib.layers.fully_connected(
@@ -126,17 +106,13 @@ if __name__ == "__main__":
     parser.add_argument("--train_filename", type=str, required=True)
     parser.add_argument("--dev_filename", type=str, required=True)
     parser.add_argument("--vectors_filename", type=str, required=True)
-    parser.add_argument("--img_names_filename", type=str, required=True)
-    parser.add_argument("--img_features_filename", type=str, required=True)
     parser.add_argument("--model_save_filename", type=str, required=True)
     parser.add_argument("--model_load_filename", type=str)
     parser.add_argument("--max_vocab", type=int, default=300000)
     parser.add_argument("--embeddings_size", type=int, default=300)
     parser.add_argument("--train_embeddings", type=bool, default=True)
-    parser.add_argument("--img_features_size", type=int, default=4096)
     parser.add_argument("--rnn_hidden_size", type=int, default=100)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
-    parser.add_argument("--multimodal_fusion_hidden_size", type=int, default=100)
     parser.add_argument("--classification_hidden_size", type=int, default=200)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
@@ -155,9 +131,6 @@ if __name__ == "__main__":
             params["train_filename"] = args.train_filename
             params["dev_filename"] = args.dev_filename
             params["model_save_filename"] = args.model_save_filename
-            params["model_load_filename"] = args.model_load_filename
-            params["img_names_filename"] = args.img_names_filename
-            params["img_features_filename"] = args.img_features_filename
             params["model_load_filename"] = args.model_load_filename
             args = AttrDict(params)
             with open(args.model_save_filename + ".params", mode="w") as out_file:
@@ -187,46 +160,33 @@ if __name__ == "__main__":
         json.dump(vars(args), out_file)
         print("Params saved to: {}".format(args.model_save_filename + ".params"))
 
-        with open(args.model_save_filename + ".index", mode="wb") as out_file:
-            pickle.dump(
-                {
-                    "token2id": token2id,
-                    "id2token": id2token,
-                    "label2id": label2id,
-                    "id2label": id2label
-                },
-                out_file
-            )
-            print("Index saved to: {}".format(args.model_save_filename + ".index"))
+    with open(args.model_save_filename + ".index", mode="wb") as out_file:
+        pickle.dump(
+            {
+                "token2id": token2id,
+                "id2token": id2token,
+                "label2id": label2id,
+                "id2label": id2label
+            },
+            out_file
+        )
+        print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_premises, train_hypotheses, train_img_names, _, _ = load_vte_dataset(
-        args.train_filename,
-        token2id,
-        label2id
-    )
+    train_labels, train_premises, train_hypotheses, _, _ = load_te_dataset(args.train_filename, token2id, label2id)
 
     print("-- Loading development set")
-    dev_labels, dev_premises, dev_hypotheses, dev_img_names, _, _ = load_vte_dataset(
-        args.dev_filename,
-        token2id,
-        label2id
-    )
-
-    print("-- Loading images")
-    image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
+    dev_labels, dev_premises, dev_hypotheses, _, _ = load_te_dataset(args.dev_filename, token2id, label2id)
 
     if not args.model_load_filename:
         print("-- Building model")
         premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
         hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
-        img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size), name="img_features_input")
         label_input = tf.placeholder(tf.int32, (None,), name="label_input")
         dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-        logits = build_bowman_vte_baseline_model(
+        logits = build_bowman_te_model(
             premise_input,
             hypothesis_input,
-            img_features_input,
             dropout_input,
             num_tokens,
             num_labels,
@@ -234,7 +194,6 @@ if __name__ == "__main__":
             args.embeddings_size,
             args.train_embeddings,
             args.rnn_hidden_size,
-            args.multimodal_fusion_hidden_size,
             args.classification_hidden_size
         )
         L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
@@ -243,10 +202,9 @@ if __name__ == "__main__":
         saver = tf.train.Saver()
         tf.add_to_collection("premise_input", premise_input)
         tf.add_to_collection("hypothesis_input", hypothesis_input)
-        tf.add_to_collection("img_features_input", img_features_input)
         tf.add_to_collection("label_input", label_input)
-        tf.add_to_collection("logits", logits)
         tf.add_to_collection("dropout_input", dropout_input)
+        tf.add_to_collection("logits", logits)
         tf.add_to_collection("loss_function", loss_function)
         tf.add_to_collection("train_step", train_step)
     else:
@@ -267,7 +225,6 @@ if __name__ == "__main__":
             saver.restore(session, args.model_load_filename + ".ckpt")
             premise_input = tf.get_collection("premise_input")[0]
             hypothesis_input = tf.get_collection("hypothesis_input")[0]
-            img_features_input = tf.get_collection("img_features_input")[0]
             label_input = tf.get_collection("label_input")[0]
             dropout_input = tf.get_collection("dropout_input")[0]
             logits = tf.get_collection("logits")[0]
@@ -291,13 +248,10 @@ if __name__ == "__main__":
                 batch_premises = train_premises[indexes]
                 batch_hypotheses = train_hypotheses[indexes]
                 batch_labels = train_labels[indexes]
-                batch_img_names = [train_img_names[i] for i in indexes]
-                batch_img_features = image_reader.get_features(batch_img_names)
 
                 loss, _ = session.run([loss_function, train_step], feed_dict={
                     premise_input: batch_premises,
                     hypothesis_input: batch_hypotheses,
-                    img_features_input: batch_img_features,
                     label_input: batch_labels,
                     dropout_input: args.rnn_dropout_ratio
                 })
@@ -315,14 +269,11 @@ if __name__ == "__main__":
                 dev_batch_premises = dev_premises[indexes]
                 dev_batch_hypotheses = dev_hypotheses[indexes]
                 dev_batch_labels = dev_labels[indexes]
-                dev_batch_img_names = [dev_img_names[i] for i in indexes]
-                dev_batch_img_features = image_reader.get_features(dev_batch_img_names)
                 predictions = session.run(
                     tf.argmax(logits, axis=1),
                     feed_dict={
                         premise_input: dev_batch_premises,
                         hypothesis_input: dev_batch_hypotheses,
-                        img_features_input: dev_batch_img_features,
                         dropout_input: 1.0
                     }
                 )

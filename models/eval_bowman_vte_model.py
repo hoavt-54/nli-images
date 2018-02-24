@@ -12,7 +12,7 @@ import tensorflow as tf
 
 from datasets import ImageReader, load_vte_dataset
 from utils import start_logger, stop_logger
-from train_top_down_baseline import build_top_down_baseline_model
+from train_bowman_vte_model import build_bowman_vte_model
 from utils import batch
 
 if __name__ == "__main__":
@@ -59,10 +59,10 @@ if __name__ == "__main__":
     print("-- Restoring model")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
-    img_features_input = tf.placeholder(tf.float32, (None, params["num_img_features"], params["img_features_size"]), name="img_features_input")
+    img_features_input = tf.placeholder(tf.float32, (None, params["img_features_size"]), name="img_features_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_top_down_baseline_model(
+    logits = build_bowman_vte_model(
         premise_input,
         hypothesis_input,
         img_features_input,
@@ -71,10 +71,9 @@ if __name__ == "__main__":
         num_labels,
         None,
         params["embeddings_size"],
-        params["num_img_features"],
-        params["img_features_size"],
         params["train_embeddings"],
         params["rnn_hidden_size"],
+        params["multimodal_fusion_hidden_size"],
         params["classification_hidden_size"]
     )
     saver = tf.train.Saver()

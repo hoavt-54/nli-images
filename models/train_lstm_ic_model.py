@@ -16,18 +16,18 @@ from utils import Progbar
 from utils import batch
 
 
-def build_lstm_ic_baseline_model(premise_input,
-                                  hypothesis_input,
-                                  img_features_input,
-                                  dropout_input,
-                                  num_tokens,
-                                  num_labels,
-                                  embeddings,
-                                  embeddings_size,
-                                  train_embeddings,
-                                  rnn_hidden_size,
-                                  multimodal_fusion_hidden_size,
-                                  classification_hidden_size):
+def build_lstm_ic_model(premise_input,
+                        hypothesis_input,
+                        img_features_input,
+                        dropout_input,
+                        num_tokens,
+                        num_labels,
+                        embeddings,
+                        embeddings_size,
+                        train_embeddings,
+                        rnn_hidden_size,
+                        multimodal_fusion_hidden_size,
+                        classification_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -186,7 +186,7 @@ if __name__ == "__main__":
         img_features_input = tf.placeholder(tf.float32, (None, args.img_features_size), name="img_features_input")
         label_input = tf.placeholder(tf.int32, (None,), name="label_input")
         dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-        logits = build_lstm_ic_baseline_model(
+        logits = build_lstm_ic_model(
             sentence_input,
             img_features_input,
             dropout_input,
