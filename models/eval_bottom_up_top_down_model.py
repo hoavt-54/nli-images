@@ -12,7 +12,7 @@ import tensorflow as tf
 
 from datasets import ImageReader, load_vte_dataset
 from utils import start_logger, stop_logger
-from train_top_down_model import build_top_down_model
+from train_bottom_up_top_down_model import build_top_down_model
 from utils import batch
 
 if __name__ == "__main__":
