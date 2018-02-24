@@ -15,7 +15,7 @@ if __name__ == "__main__":
     parser.add_argument("--net_weights_filename", type=str, default="../data/imagenet_models/ResNet-101-model.caffemodel")
     parser.add_argument("--net_def_filename", type=str, default="../data/imagenet_models/ResNet-101-deploy.prototxt")
     parser.add_argument("--img_path", type=str, required=True)
-    parser.add_argument("--img_extension", typpe=str, default=".jpg")
+    parser.add_argument("--img_extension", type=str, default=".jpg")
     parser.add_argument("--img_names_filename", type=str, required=True)
     parser.add_argument("--img_features_filename", type=str, required=True)
     args = parser.parse_args()
