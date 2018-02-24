@@ -34,7 +34,7 @@ if __name__ == "__main__":
         im = np.expand_dims(im, axis=0)
         im = np.transpose(im, (0, 3, 1, 2))
         net.forward(data=im)
-        pool5_features = net.blobs["pool5"].data.squeeze()
+        pool5_features = net.blobs["pool5"].data.squeeze().copy()
         img_features.append(pool5_features)
         progress.update(num_filename)
 
