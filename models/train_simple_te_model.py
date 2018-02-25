@@ -90,7 +90,7 @@ def build_simple_te_model(premise_input,
 
     return tf.contrib.layers.fully_connected(
         gated_third_layer,
-        classification_hidden_size,
+        num_labels,
         activation_fn=None
     )
 
