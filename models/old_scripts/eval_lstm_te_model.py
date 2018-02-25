@@ -11,9 +11,9 @@ import pandas as pd
 import tensorflow as tf
 
 from datasets import load_te_dataset
-from utils import start_logger, stop_logger
-from train_bowman_te_model import build_bowman_te_model
+from old_scripts.train_lstm_te_model import build_lstm_te_model
 from utils import batch
+from utils import start_logger, stop_logger
 
 if __name__ == "__main__":
     random_seed = 12345
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_bowman_te_model(
+    logits = build_lstm_te_model(
         premise_input,
         hypothesis_input,
         dropout_input,
