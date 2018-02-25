@@ -38,6 +38,9 @@ if __name__ == "__main__":
                 hypothesis_tokens = extract_tokens_from_binary_parse(data["sentence2_binary_parse"])
                 label = data["gold_label"]
                 image_filename = data["captionID"].split("#")[0]
-                if image_filename in available_images and label != "-":
-                    writer.writerow([label, " ".join(premise_tokens), " ".join(hypothesis_tokens), image_filename, premise, hypothesis])
+                if label != "-":
+                    if image_filename in available_images:
+                        writer.writerow([label, " ".join(premise_tokens), " ".join(hypothesis_tokens), image_filename, premise, hypothesis])
+                    else:
+                        print("Image filename \"{}\" not available!")
                 progress.update(row_number)
