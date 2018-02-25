@@ -41,6 +41,3 @@ if __name__ == "__main__":
                 if image_filename in available_images and label != "-":
                     writer.writerow([label, " ".join(premise_tokens), " ".join(hypothesis_tokens), image_filename, premise, hypothesis])
                 progress.update(row_number)
-            else:
-                print("Invalid dataset format!")
-                exit(-1)
