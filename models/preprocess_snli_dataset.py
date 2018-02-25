@@ -12,7 +12,7 @@ def extract_tokens_from_binary_parse(parse):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--dataset_filename", type=str, required=True)
-    parser.add_argument("--hoa_dataset_filename", type=str, required=True)
+    parser.add_argument("--filtered_dataset_filename", type=str, required=True)
     parser.add_argument("--preprocessed_dataset_filename", type=str, required=True)
     args = parser.parse_args()
 
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     progress = Progbar(num_lines)
 
     available_images = set()
-    with open(args.hoa_dataset_filename) as in_file:
+    with open(args.filtered_dataset_filename) as in_file:
         reader = csv.reader(in_file, delimiter="\t")
         for row in reader:
             available_images.add(row[3].strip())
