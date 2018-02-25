@@ -11,7 +11,7 @@ from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
 from datasets import ImageReader, load_vte_dataset
 from embeddings import glove_embeddings_initializer, load_glove
-from utils import start_logger, stop_logger
+from utils import start_logger, stop_logger, gated_tanh
 from utils import Progbar
 from utils import batch
 
@@ -29,11 +29,6 @@ def build_top_down_model(premise_input,
                          train_embeddings,
                          rnn_hidden_size,
                          classification_hidden_size):
-    def _gated_tanh(x, W, W_prime):
-        y_tilde = tf.nn.tanh(W(x))
-        g = tf.nn.sigmoid(W_prime(x))
-        return tf.multiply(y_tilde, g)
-
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -88,7 +83,7 @@ def build_top_down_model(premise_input,
     img_premise_concatenation = tf.concat([normalized_img_features, reshaped_premise], -1)
     gated_W_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_img_premise_concatenation = _gated_tanh(
+    gated_img_premise_concatenation = gated_tanh(
         img_premise_concatenation,
         gated_W_premise_img_att,
         gated_W_prime_premise_img_att
@@ -102,7 +97,7 @@ def build_top_down_model(premise_input,
     img_hypothesis_concatenation = tf.concat([normalized_img_features, reshaped_hypothesis], -1)
     gated_W_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_img_hypothesis_concatenation = _gated_tanh(
+    gated_img_hypothesis_concatenation = gated_tanh(
         img_hypothesis_concatenation,
         gated_W_hypothesis_img_att,
         gated_W_prime_hypothesis_img_att
@@ -114,21 +109,21 @@ def build_top_down_model(premise_input,
 
     gated_W_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_premise = _gated_tanh(premise_final_states.h, gated_W_premise, gated_W_prime_premise)
+    gated_premise = gated_tanh(premise_final_states.h, gated_W_premise, gated_W_prime_premise)
 
     gated_W_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_hypothesis = _gated_tanh(hypothesis_final_states.h, gated_W_hypothesis, gated_W_prime_hypothesis)
+    gated_hypothesis = gated_tanh(hypothesis_final_states.h, gated_W_hypothesis, gated_W_prime_hypothesis)
 
     gated_W_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     v_head_premise.set_shape((premise_embeddings.get_shape()[0], img_features_size))
-    gated_img_features_premise = _gated_tanh(v_head_premise, gated_W_img_premise, gated_W_prime_img_premise)
+    gated_img_features_premise = gated_tanh(v_head_premise, gated_W_img_premise, gated_W_prime_img_premise)
 
     gated_W_img_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_img_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     v_head_hypothesis.set_shape((hypothesis_embeddings.get_shape()[0], img_features_size))
-    gated_img_features_hypothesis = _gated_tanh(v_head_hypothesis, gated_W_img_hypothesis, gated_W_prime_img_hypothesis)
+    gated_img_features_hypothesis = gated_tanh(v_head_hypothesis, gated_W_img_hypothesis, gated_W_prime_img_hypothesis)
 
     h_premise_img = tf.multiply(gated_premise, gated_img_features_premise)
     h_hypothesis_img = tf.multiply(gated_hypothesis, gated_img_features_hypothesis)
