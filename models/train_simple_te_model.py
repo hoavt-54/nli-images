@@ -109,12 +109,12 @@ if __name__ == "__main__":
     parser.add_argument("--max_vocab", type=int, default=300000)
     parser.add_argument("--embeddings_size", type=int, default=300)
     parser.add_argument("--train_embeddings", type=bool, default=True)
-    parser.add_argument("--rnn_hidden_size", type=int, default=100)
+    parser.add_argument("--rnn_hidden_size", type=int, default=512)
     parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
-    parser.add_argument("--classification_hidden_size", type=int, default=200)
+    parser.add_argument("--classification_hidden_size", type=int, default=512)
     parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--num_epochs", type=int, default=100)
-    parser.add_argument("--learning_rate", type=float, default=1.0)
+    parser.add_argument("--learning_rate", type=float, default=0.001)
     parser.add_argument("--l2_reg", type=float, default=0.000005)
     parser.add_argument("--patience", type=int, default=3)
     args = parser.parse_args()
@@ -171,7 +171,7 @@ if __name__ == "__main__":
     )
     L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
     loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
-    train_step = tf.train.AdadeltaOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
+    train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
 
     num_examples = train_labels.shape[0]
