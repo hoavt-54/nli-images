@@ -10,10 +10,10 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
-from datasets import load_te_dataset
-from utils import start_logger, stop_logger
-from train_bowman_te_model import build_bowman_te_model
+from datasets import ImageReader, load_vte_dataset
+from old_scripts.train_lstm_vte_model import build_lstm_vte_model
 from utils import batch
+from utils import start_logger, stop_logger
 
 if __name__ == "__main__":
     random_seed = 12345
@@ -24,6 +24,8 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--test_filename", type=str, required=True)
     parser.add_argument("--model_filename", type=str, required=True)
+    parser.add_argument("--img_names_filename", type=str, required=True)
+    parser.add_argument("--img_features_filename", type=str, required=True)
     parser.add_argument("--result_filename", type=str, required=True)
     args = parser.parse_args()
     start_logger(args.result_filename + ".log")
@@ -44,17 +46,26 @@ if __name__ == "__main__":
         num_labels = len(label2id)
 
     print("-- Loading test set")
-    test_labels, test_padded_premises, test_padded_hypotheses, test_original_premises, test_original_hypotheses =\
-        load_te_dataset(args.test_filename, token2id, label2id)
+    test_labels, test_padded_premises, test_padded_hypotheses, test_img_names, test_original_premises, test_original_hypotheses = \
+        load_vte_dataset(
+            args.test_filename,
+            token2id,
+            label2id
+        )
+
+    print("-- Loading images")
+    image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
 
     print("-- Restoring model")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
+    img_features_input = tf.placeholder(tf.float32, (None, params["img_features_size"]), name="img_features_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_bowman_te_model(
+    logits = build_lstm_vte_model(
         premise_input,
         hypothesis_input,
+        img_features_input,
         dropout_input,
         num_tokens,
         num_labels,
@@ -62,6 +73,7 @@ if __name__ == "__main__":
         params["embeddings_size"],
         params["train_embeddings"],
         params["rnn_hidden_size"],
+        params["multimodal_fusion_hidden_size"],
         params["classification_hidden_size"]
     )
     saver = tf.train.Saver()
@@ -81,6 +93,8 @@ if __name__ == "__main__":
                 test_batch_premises = test_padded_premises[indexes]
                 test_batch_hypotheses = test_padded_hypotheses[indexes]
                 test_batch_labels = test_labels[indexes]
+                batch_img_names = [test_img_names[i] for i in indexes]
+                batch_img_features = image_reader.get_features(batch_img_names)
                 test_original_premises = np.array(test_original_premises)
                 test_original_hypotheses = np.array(test_original_hypotheses)
                 test_batch_original_premises = test_original_premises[indexes]
@@ -90,6 +104,7 @@ if __name__ == "__main__":
                     feed_dict={
                         premise_input: test_batch_premises,
                         hypothesis_input: test_batch_hypotheses,
+                        img_features_input: batch_img_features,
                         dropout_input: 1.0
                     }
                 )
@@ -101,6 +116,7 @@ if __name__ == "__main__":
                             id2label[predictions[i]],
                             " ".join([id2token[id] for id in test_batch_premises[i] if id != token2id["#pad#"]]),
                             " ".join([id2token[id] for id in test_batch_hypotheses[i] if id != token2id["#pad#"]]),
+                            batch_img_names[i],
                             test_batch_original_premises[i],
                             test_batch_original_hypotheses[i]
                         ]

@@ -11,9 +11,9 @@ import pandas as pd
 import tensorflow as tf
 
 from datasets import load_te_dataset
-from utils import start_logger, stop_logger
-from train_lstm_te_model import build_lstm_te_model
+from old_scripts.train_lstm_te_model import build_lstm_te_model
 from utils import batch
+from utils import start_logger, stop_logger
 
 if __name__ == "__main__":
     random_seed = 12345

@@ -11,29 +11,24 @@ from tensorflow.python.ops.rnn_cell_impl import DropoutWrapper
 
 from datasets import ImageReader, load_vte_dataset
 from embeddings import glove_embeddings_initializer, load_glove
-from utils import start_logger, stop_logger
+from utils import start_logger, stop_logger, gated_tanh
 from utils import Progbar
 from utils import batch
 
 
-def build_top_down_model(premise_input,
-                         hypothesis_input,
-                         img_features_input,
-                         dropout_input,
-                         num_tokens,
-                         num_labels,
-                         embeddings,
-                         embeddings_size,
-                         num_img_features,
-                         img_features_size,
-                         train_embeddings,
-                         rnn_hidden_size,
-                         classification_hidden_size):
-    def _gated_tanh(x, W, W_prime):
-        y_tilde = tf.nn.tanh(W(x))
-        g = tf.nn.sigmoid(W_prime(x))
-        return tf.multiply(y_tilde, g)
-
+def build_bottom_up_top_down_model(premise_input,
+                                   hypothesis_input,
+                                   img_features_input,
+                                   dropout_input,
+                                   num_tokens,
+                                   num_labels,
+                                   embeddings,
+                                   embeddings_size,
+                                   num_img_features,
+                                   img_features_size,
+                                   train_embeddings,
+                                   rnn_hidden_size,
+                                   classification_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -88,7 +83,7 @@ def build_top_down_model(premise_input,
     img_premise_concatenation = tf.concat([normalized_img_features, reshaped_premise], -1)
     gated_W_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_img_premise_concatenation = _gated_tanh(
+    gated_img_premise_concatenation = gated_tanh(
         img_premise_concatenation,
         gated_W_premise_img_att,
         gated_W_prime_premise_img_att
@@ -102,7 +97,7 @@ def build_top_down_model(premise_input,
     img_hypothesis_concatenation = tf.concat([normalized_img_features, reshaped_hypothesis], -1)
     gated_W_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_img_hypothesis_concatenation = _gated_tanh(
+    gated_img_hypothesis_concatenation = gated_tanh(
         img_hypothesis_concatenation,
         gated_W_hypothesis_img_att,
         gated_W_prime_hypothesis_img_att
@@ -114,40 +109,40 @@ def build_top_down_model(premise_input,
 
     gated_W_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_premise = _gated_tanh(premise_final_states.h, gated_W_premise, gated_W_prime_premise)
+    gated_premise = gated_tanh(premise_final_states.h, gated_W_premise, gated_W_prime_premise)
 
     gated_W_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_hypothesis = _gated_tanh(hypothesis_final_states.h, gated_W_hypothesis, gated_W_prime_hypothesis)
+    gated_hypothesis = gated_tanh(hypothesis_final_states.h, gated_W_hypothesis, gated_W_prime_hypothesis)
 
     gated_W_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     v_head_premise.set_shape((premise_embeddings.get_shape()[0], img_features_size))
-    gated_img_features_premise = _gated_tanh(v_head_premise, gated_W_img_premise, gated_W_prime_img_premise)
+    gated_img_features_premise = gated_tanh(v_head_premise, gated_W_img_premise, gated_W_prime_img_premise)
 
     gated_W_img_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     gated_W_prime_img_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
     v_head_hypothesis.set_shape((hypothesis_embeddings.get_shape()[0], img_features_size))
-    gated_img_features_hypothesis = _gated_tanh(v_head_hypothesis, gated_W_img_hypothesis, gated_W_prime_img_hypothesis)
+    gated_img_features_hypothesis = gated_tanh(v_head_hypothesis, gated_W_img_hypothesis, gated_W_prime_img_hypothesis)
 
     h_premise_img = tf.multiply(gated_premise, gated_img_features_premise)
     h_hypothesis_img = tf.multiply(gated_hypothesis, gated_img_features_hypothesis)
-    h = tf.concat([h_premise_img, h_hypothesis_img], 1)
+    final_concatenation = tf.concat([h_premise_img, h_hypothesis_img], 1)
+
+    gated_W_first_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
+    gated_W_prime_first_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
+    gated_first_layer = gated_tanh(final_concatenation, gated_W_first_layer, gated_W_prime_first_layer)
+
+    gated_W_second_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
+    gated_W_prime_second_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
+    gated_second_layer = gated_tanh(gated_first_layer, gated_W_second_layer, gated_W_prime_second_layer)
+
+    gated_W_third_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
+    gated_W_prime_third_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
+    gated_third_layer = gated_tanh(gated_second_layer, gated_W_third_layer, gated_W_prime_third_layer)
 
     return tf.contrib.layers.fully_connected(
-        tf.contrib.layers.fully_connected(
-            tf.contrib.layers.fully_connected(
-                tf.contrib.layers.fully_connected(
-                    h,
-                    classification_hidden_size,
-                    activation_fn=tf.nn.relu
-                ),
-                classification_hidden_size,
-                activation_fn=tf.nn.relu
-            ),
-            classification_hidden_size,
-            activation_fn=tf.nn.relu
-        ),
+        gated_third_layer,
         num_labels,
         activation_fn=None
     )
@@ -171,10 +166,10 @@ if __name__ == "__main__":
     parser.add_argument("--train_embeddings", type=bool, default=True)
     parser.add_argument("--num_img_features", type=int, default=36)
     parser.add_argument("--img_features_size", type=int, default=2048)
-    parser.add_argument("--rnn_hidden_size", type=int, default=100)
-    parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
-    parser.add_argument("--classification_hidden_size", type=int, default=200)
-    parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--rnn_hidden_size", type=int, default=512)
+    parser.add_argument("--rnn_dropout_ratio", type=float, default=0.5)
+    parser.add_argument("--classification_hidden_size", type=int, default=512)
+    parser.add_argument("--batch_size", type=int, default=256)
     parser.add_argument("--num_epochs", type=int, default=100)
     parser.add_argument("--learning_rate", type=float, default=0.001)
     parser.add_argument("--l2_reg", type=float, default=0.000005)
@@ -233,7 +228,7 @@ if __name__ == "__main__":
     img_features_input = tf.placeholder(tf.float32, (None, args.num_img_features, args.img_features_size), name="img_features_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_top_down_model(
+    logits = build_bottom_up_top_down_model(
         premise_input,
         hypothesis_input,
         img_features_input,
@@ -252,14 +247,6 @@ if __name__ == "__main__":
     loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
-    tf.add_to_collection("premise_input", premise_input)
-    tf.add_to_collection("hypothesis_input", hypothesis_input)
-    tf.add_to_collection("img_features_input", img_features_input)
-    tf.add_to_collection("label_input", label_input)
-    tf.add_to_collection("logits", logits)
-    tf.add_to_collection("dropout_input", dropout_input)
-    tf.add_to_collection("loss_function", loss_function)
-    tf.add_to_collection("train_step", train_step)
 
     num_examples = train_labels.shape[0]
     num_batches = num_examples // args.batch_size
