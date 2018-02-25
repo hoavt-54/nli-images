@@ -54,6 +54,12 @@ def batch(iterable, n=1):
         yield iterable[ndx:min(ndx + n, length)]
 
 
+def gated_tanh(x, W, W_prime):
+    y_tilde = tf.nn.tanh(W(x))
+    g = tf.nn.sigmoid(W_prime(x))
+    return tf.multiply(y_tilde, g)
+
+
 # Taken from the Keras library (https://github.com/fchollet/keras/blob/master/keras/utils/generic_utils.py)
 class Progbar(object):
     def __init__(self, target, width=30, verbose=1, interval=0.01):
