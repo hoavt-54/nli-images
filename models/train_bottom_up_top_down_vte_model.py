@@ -88,7 +88,7 @@ def build_bottom_up_top_down_model(premise_input,
         gated_W_premise_img_att,
         gated_W_prime_premise_img_att
     )
-    att_wa_premise = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None)
+    att_wa_premise = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None)
     a_premise = att_wa_premise(gated_img_premise_concatenation)
     a_premise = tf.nn.softmax(tf.squeeze(a_premise))
     v_head_premise = tf.squeeze(tf.matmul(tf.expand_dims(a_premise, 1), normalized_img_features))
@@ -102,7 +102,7 @@ def build_bottom_up_top_down_model(premise_input,
         gated_W_hypothesis_img_att,
         gated_W_prime_hypothesis_img_att
     )
-    att_wa_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None)
+    att_wa_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None)
     a_hypothesis = att_wa_hypothesis(gated_img_hypothesis_concatenation)
     a_hypothesis = tf.nn.softmax(tf.squeeze(a_hypothesis))
     v_head_hypothesis = tf.squeeze(tf.matmul(tf.expand_dims(a_hypothesis, 1), normalized_img_features))
