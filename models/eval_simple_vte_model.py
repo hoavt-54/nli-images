@@ -46,12 +46,12 @@ if __name__ == "__main__":
         num_labels = len(label2id)
 
     print("-- Loading test set")
-    test_labels, test_padded_premises, test_padded_hypotheses, test_img_names, test_original_premises, test_original_hypotheses = \
-        load_vte_dataset(
-            args.test_filename,
-            token2id,
-            label2id
-        )
+    test_labels, test_padded_premises, test_padded_hypotheses, test_img_names,\
+    test_original_premises, test_original_hypotheses = load_vte_dataset(
+        args.test_filename,
+        token2id,
+        label2id
+    )
 
     print("-- Loading images")
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)

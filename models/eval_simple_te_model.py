@@ -45,7 +45,11 @@ if __name__ == "__main__":
 
     print("-- Loading test set")
     test_labels, test_padded_premises, test_padded_hypotheses, test_original_premises, test_original_hypotheses =\
-        load_te_dataset(args.test_filename, token2id, label2id)
+        load_te_dataset(
+            args.test_filename,
+            token2id,
+            label2id
+        )
 
     print("-- Restoring model")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
