@@ -81,47 +81,47 @@ def build_bottom_up_top_down_model(premise_input,
 
     reshaped_premise = tf.reshape(tf.tile(premise_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
     img_premise_concatenation = tf.concat([normalized_img_features, reshaped_premise], -1)
-    gated_W_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_W_prime_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
+    gated_W_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
+    gated_W_prime_premise_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
     gated_img_premise_concatenation = gated_tanh(
         img_premise_concatenation,
         gated_W_premise_img_att,
         gated_W_prime_premise_img_att
     )
-    att_wa_premise = lambda x: tf.contrib.layers.fully_connected(x, 1)
+    att_wa_premise = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None)
     a_premise = att_wa_premise(gated_img_premise_concatenation)
     a_premise = tf.nn.softmax(tf.squeeze(a_premise))
     v_head_premise = tf.squeeze(tf.matmul(tf.expand_dims(a_premise, 1), normalized_img_features))
 
     reshaped_hypothesis = tf.reshape(tf.tile(hypothesis_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
     img_hypothesis_concatenation = tf.concat([normalized_img_features, reshaped_hypothesis], -1)
-    gated_W_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_W_prime_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
+    gated_W_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
+    gated_W_prime_hypothesis_img_att = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
     gated_img_hypothesis_concatenation = gated_tanh(
         img_hypothesis_concatenation,
         gated_W_hypothesis_img_att,
         gated_W_prime_hypothesis_img_att
     )
-    att_wa_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, 1)
+    att_wa_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None)
     a_hypothesis = att_wa_hypothesis(gated_img_hypothesis_concatenation)
     a_hypothesis = tf.nn.softmax(tf.squeeze(a_hypothesis))
     v_head_hypothesis = tf.squeeze(tf.matmul(tf.expand_dims(a_hypothesis, 1), normalized_img_features))
 
-    gated_W_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_W_prime_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
+    gated_W_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
+    gated_W_prime_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
     gated_premise = gated_tanh(premise_final_states.h, gated_W_premise, gated_W_prime_premise)
 
-    gated_W_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_W_prime_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
+    gated_W_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
+    gated_W_prime_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
     gated_hypothesis = gated_tanh(hypothesis_final_states.h, gated_W_hypothesis, gated_W_prime_hypothesis)
 
-    gated_W_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_W_prime_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
+    gated_W_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
+    gated_W_prime_img_premise = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
     v_head_premise.set_shape((premise_embeddings.get_shape()[0], img_features_size))
     gated_img_features_premise = gated_tanh(v_head_premise, gated_W_img_premise, gated_W_prime_img_premise)
 
-    gated_W_img_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
-    gated_W_prime_img_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size)
+    gated_W_img_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
+    gated_W_prime_img_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, rnn_hidden_size, activation_fn=None)
     v_head_hypothesis.set_shape((hypothesis_embeddings.get_shape()[0], img_features_size))
     gated_img_features_hypothesis = gated_tanh(v_head_hypothesis, gated_W_img_hypothesis, gated_W_prime_img_hypothesis)
 
@@ -129,16 +129,16 @@ def build_bottom_up_top_down_model(premise_input,
     h_hypothesis_img = tf.multiply(gated_hypothesis, gated_img_features_hypothesis)
     final_concatenation = tf.concat([h_premise_img, h_hypothesis_img], 1)
 
-    gated_W_first_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_W_prime_first_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
+    gated_W_first_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size, activation_fn=None)
+    gated_W_prime_first_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size, activation_fn=None)
     gated_first_layer = gated_tanh(final_concatenation, gated_W_first_layer, gated_W_prime_first_layer)
 
-    gated_W_second_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_W_prime_second_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
+    gated_W_second_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size, activation_fn=None)
+    gated_W_prime_second_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size, activation_fn=None)
     gated_second_layer = gated_tanh(gated_first_layer, gated_W_second_layer, gated_W_prime_second_layer)
 
-    gated_W_third_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_W_prime_third_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
+    gated_W_third_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size, activation_fn=None)
+    gated_W_prime_third_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size, activation_fn=None)
     gated_third_layer = gated_tanh(gated_second_layer, gated_W_third_layer, gated_W_prime_third_layer)
 
     return tf.contrib.layers.fully_connected(
@@ -243,8 +243,8 @@ if __name__ == "__main__":
         args.rnn_hidden_size,
         args.classification_hidden_size
     )
-    L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
-    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
+    # L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)  # + L2_loss
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
 
