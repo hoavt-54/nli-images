@@ -56,7 +56,7 @@ def batch(iterable, n=1):
 
 def gated_tanh(x, output_size):
     W_plus_b = lambda x: tf.contrib.layers.fully_connected(x, output_size, activation_fn=None)
-    W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(x, activation_fn=None)
+    W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(x, output_size, activation_fn=None)
     y_tilde = tf.nn.tanh(W_plus_b(x))
     g = tf.nn.sigmoid(W_plus_b_prime(x))
     return tf.multiply(y_tilde, g)
