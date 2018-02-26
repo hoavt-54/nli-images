@@ -138,7 +138,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_img_features", type=int, default=36)
     parser.add_argument("--img_features_size", type=int, default=2048)
     parser.add_argument("--rnn_hidden_size", type=int, default=512)
-    parser.add_argument("--rnn_dropout_ratio", type=float, default=0.2)
+    parser.add_argument("--rnn_dropout_ratio", type=float, default=0.5)
     parser.add_argument("--multimodal_fusion_hidden_size", type=int, default=512)
     parser.add_argument("--classification_hidden_size", type=int, default=512)
     parser.add_argument("--batch_size", type=int, default=256)
