@@ -8,21 +8,21 @@ import numpy as np
 
 
 def build_tl_mt_model(sentence_input,
-                                       premise_input,
-                                       hypothesis_input,
-                                       img_features_input,
-                                       dropout_input,
-                                       num_tokens,
-                                       num_ic_labels,
-                                       num_vte_labels,
-                                       embeddings,
-                                       embeddings_size,
-                                       num_img_features,
-                                       img_features_size,
-                                       train_embeddings,
-                                       rnn_hidden_size,
-                                       multimodal_fusion_hidden_size,
-                                       classification_hidden_size):
+                      premise_input,
+                      hypothesis_input,
+                      img_features_input,
+                      dropout_input,
+                      num_tokens,
+                      num_ic_labels,
+                      num_vte_labels,
+                      embeddings,
+                      embeddings_size,
+                      num_img_features,
+                      img_features_size,
+                      train_embeddings,
+                      rnn_hidden_size,
+                      multimodal_fusion_hidden_size,
+                      classification_hidden_size):
     sentence_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(sentence_input, tf.zeros_like(sentence_input, dtype=tf.int32)), tf.int64),
@@ -87,7 +87,8 @@ def build_tl_mt_model(sentence_input,
     )
     normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=2)
 
-    reshaped_sentence = tf.reshape(tf.tile(sentence_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
+    reshaped_sentence = tf.reshape(tf.tile(sentence_final_states.h, [1, num_img_features]),
+                                   [-1, num_img_features, rnn_hidden_size])
     img_sentence_concatenation = tf.concat([normalized_img_features, reshaped_sentence], -1)
     gated_img_sentence_concatenation = gated_tanh(img_sentence_concatenation, rnn_hidden_size)
     att_wa_sentence = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None)
@@ -111,7 +112,8 @@ def build_tl_mt_model(sentence_input,
         activation_fn=None
     )
 
-    reshaped_premise = tf.reshape(tf.tile(premise_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
+    reshaped_premise = tf.reshape(tf.tile(premise_final_states.h, [1, num_img_features]),
+                                  [-1, num_img_features, rnn_hidden_size])
     img_premise_concatenation = tf.concat([normalized_img_features, reshaped_premise], -1)
     gated_img_premise_concatenation = gated_tanh(img_premise_concatenation, rnn_hidden_size)
     att_wa_premise = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None)
@@ -119,7 +121,8 @@ def build_tl_mt_model(sentence_input,
     a_premise = tf.nn.softmax(tf.squeeze(a_premise))
     v_head_premise = tf.squeeze(tf.matmul(tf.expand_dims(a_premise, 1), normalized_img_features))
 
-    reshaped_hypothesis = tf.reshape(tf.tile(hypothesis_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
+    reshaped_hypothesis = tf.reshape(tf.tile(hypothesis_final_states.h, [1, num_img_features]),
+                                     [-1, num_img_features, rnn_hidden_size])
     img_hypothesis_concatenation = tf.concat([normalized_img_features, reshaped_hypothesis], -1)
     gated_img_hypothesis_concatenation = gated_tanh(img_hypothesis_concatenation, rnn_hidden_size)
     att_wa_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None)
@@ -169,7 +172,8 @@ if __name__ == "__main__":
     sentence_input = tf.placeholder(tf.int32, (None, None), name="sentence_input")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
-    img_features_input = tf.placeholder(tf.float32, (None, num_img_features, img_features_size), name="img_features_input")
+    img_features_input = tf.placeholder(tf.float32, (None, num_img_features, img_features_size),
+                                        name="img_features_input")
     ic_label_input = tf.placeholder(tf.int32, (None,), name="ic_label_input")
     vte_label_input = tf.placeholder(tf.int32, (None,), name="vte_label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
