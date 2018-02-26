@@ -76,17 +76,9 @@ def build_simple_te_model(premise_input,
     )
     final_concatenation = tf.concat([premise_final_states.h, hypothesis_final_states.h], axis=1)
 
-    gated_W_first_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_W_prime_first_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_first_layer = gated_tanh(final_concatenation, gated_W_first_layer, gated_W_prime_first_layer)
-
-    gated_W_second_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_W_prime_second_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_second_layer = gated_tanh(gated_first_layer, gated_W_second_layer, gated_W_prime_second_layer)
-
-    gated_W_third_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_W_prime_third_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_third_layer = gated_tanh(gated_second_layer, gated_W_third_layer, gated_W_prime_third_layer)
+    gated_first_layer = gated_tanh(final_concatenation, classification_hidden_size)
+    gated_second_layer = gated_tanh(gated_first_layer, classification_hidden_size)
+    gated_third_layer = gated_tanh(gated_second_layer, classification_hidden_size)
 
     return tf.contrib.layers.fully_connected(
         gated_third_layer,
