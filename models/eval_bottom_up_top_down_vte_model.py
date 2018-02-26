@@ -75,7 +75,8 @@ if __name__ == "__main__":
         params["img_features_size"],
         params["train_embeddings"],
         params["rnn_hidden_size"],
-        params["classification_hidden_size"]
+        params["classification_hidden_size"],
+        params["multimodal_fusion_hidden_size"]
     )
     saver = tf.train.Saver()
     with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:

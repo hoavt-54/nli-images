@@ -75,7 +75,6 @@ def build_simple_te_model(premise_input,
         dtype=tf.float32
     )
     final_concatenation = tf.concat([premise_final_states.h, hypothesis_final_states.h], axis=1)
-
     gated_first_layer = gated_tanh(final_concatenation, classification_hidden_size)
     gated_second_layer = gated_tanh(gated_first_layer, classification_hidden_size)
     gated_third_layer = gated_tanh(gated_second_layer, classification_hidden_size)

@@ -77,46 +77,15 @@ def build_lstm_vte_model(premise_input,
         dtype=tf.float32
     )
     normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=1)
-
-    gated_W_premise_hidden_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_W_prime_premise_hidden_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_premise_hidden_layer = gated_tanh(
-        premise_final_states.h,
-        gated_W_premise_hidden_layer,
-        gated_W_prime_premise_hidden_layer
-    )
-
-    gated_W_hypothesis_hidden_layer = lambda x: tf.contrib.layers.fully_connected(x, multimodal_fusion_hidden_size)
-    gated_W_prime_hypothesis_hidden_layer = lambda x: tf.contrib.layers.fully_connected(x, multimodal_fusion_hidden_size)
-    gated_hypothesis_hidden_layer = gated_tanh(
-        hypothesis_final_states.h,
-        gated_W_hypothesis_hidden_layer,
-        gated_W_prime_hypothesis_hidden_layer
-    )
-
-    gated_W_img_hidden_layer = lambda x: tf.contrib.layers.fully_connected(x, multimodal_fusion_hidden_size)
-    gated_W_prime_img_hidden_layer = lambda x: tf.contrib.layers.fully_connected(x, multimodal_fusion_hidden_size)
-    gated_img_hidden_layer = gated_tanh(
-        normalized_img_features,
-        gated_W_img_hidden_layer,
-        gated_W_prime_img_hidden_layer
-    )
-
+    gated_img_hidden_layer = gated_tanh(normalized_img_features, multimodal_fusion_hidden_size)
+    gated_premise_hidden_layer = gated_tanh(premise_final_states.h, multimodal_fusion_hidden_size)
+    gated_hypothesis_hidden_layer = gated_tanh(hypothesis_final_states.h, multimodal_fusion_hidden_size)
     premise_img_multimodal_fusion = tf.multiply(gated_premise_hidden_layer, gated_img_hidden_layer)
     hypothesis_img_multimodal_fusion = tf.multiply(gated_hypothesis_hidden_layer, gated_img_hidden_layer)
     final_concatenation = tf.concat([premise_img_multimodal_fusion, hypothesis_img_multimodal_fusion], axis=1)
-
-    gated_W_first_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_W_prime_first_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_first_layer = gated_tanh(final_concatenation, gated_W_first_layer, gated_W_prime_first_layer)
-
-    gated_W_second_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_W_prime_second_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_second_layer = gated_tanh(gated_first_layer, gated_W_second_layer, gated_W_prime_second_layer)
-
-    gated_W_third_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_W_prime_third_layer = lambda x: tf.contrib.layers.fully_connected(x, classification_hidden_size)
-    gated_third_layer = gated_tanh(gated_second_layer, gated_W_third_layer, gated_W_prime_third_layer)
+    gated_first_layer = gated_tanh(final_concatenation, classification_hidden_size)
+    gated_second_layer = gated_tanh(gated_first_layer, classification_hidden_size)
+    gated_third_layer = gated_tanh(gated_second_layer, classification_hidden_size)
 
     return tf.contrib.layers.fully_connected(
         gated_third_layer,
