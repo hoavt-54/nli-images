@@ -243,8 +243,8 @@ if __name__ == "__main__":
         args.rnn_hidden_size,
         args.classification_hidden_size
     )
-    # L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
-    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)  # + L2_loss
+    L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
 
