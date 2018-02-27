@@ -18,7 +18,7 @@ def load_te_dataset(filename, token2id, label2id):
 
         for row in reader:
             # each row is of the form:
-            # label \t premise tokens \t hypothesis tokens \t original premise \t hypothesis tokens
+            # label \t premise tokens \t hypothesis tokens \t original premise \t original hypothesis
             label = row[0].strip()
             premise_tokens = row[1].strip().split()
             hypothesis_tokens = row[2].strip().split()
@@ -50,17 +50,17 @@ def load_vte_dataset(nli_dataset_filename, token2id, label2id):
 
         for row in reader:
             # each row is of the form:
-            # label \t premise tokens \t hypothesis tokens \t image filename \t original premise \t hypothesis tokens
+            # label \t premise tokens \t hypothesis tokens \t image filename \t original premise \t original hypothesis
             label = row[0].strip()
             premise_tokens = row[1].strip().split()
             hypothesis_tokens = row[2].strip().split()
-            img = row[3].strip().split("#")[0]
+            image = row[3].strip().split("#")[0]
             premise = row[4].strip()
             hypothesis = row[5].strip()
             labels.append(label2id[label])
             padded_premises.append([token2id.get(token, token2id["#unk#"]) for token in premise_tokens])
             padded_hypotheses.append([token2id.get(token, token2id["#unk#"]) for token in hypothesis_tokens])
-            image_names.append(img)
+            image_names.append(image)
             original_premises.append(premise)
             original_hypotheses.append(hypothesis)
 
@@ -73,24 +73,29 @@ def load_vte_dataset(nli_dataset_filename, token2id, label2id):
 
 def load_ic_dataset(ic_dataset_filename, token2id, label2id):
     labels = []
-    sentences = []
-    img_names = []
+    padded_sentences = []
+    image_names = []
+    original_sentences = []
 
     with open(ic_dataset_filename) as in_file:
         reader = csv.reader(in_file, delimiter="\t")
 
         for row in reader:
+            # each row is of the form:
+            # label \t sentence tokens \t image filename \t source \t original sentence
             label = row[0].strip()
-            img = row[2].strip()
+            sentence_tokens = row[1].strip().split()
+            image = row[2].strip()
+            sentence = row[4].strip()
             labels.append(label2id[label])
-            sentence_tokens = row[1].strip().lower().split()
-            sentences.append([token2id.get(token, token2id["#unk#"]) for token in sentence_tokens])
-            img_names.append(img)
+            padded_sentences.append([token2id.get(token, token2id["#unk#"]) for token in sentence_tokens])
+            image_names.append(image)
+            original_sentences.append(sentence)
 
-        sentences = pad_sequences(sentences, padding="post", value=token2id["#pad#"], dtype=np.long)
+        padded_sentences = pad_sequences(padded_sentences, padding="post", value=token2id["#pad#"], dtype=np.long)
         labels = np.array(labels)
 
-    return labels, sentences, img_names
+    return labels, padded_sentences, image_names, original_sentences
 
 
 class ImageReader:
