@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
     print("-- Building vocabulary")
     embeddings, token2id, id2token = load_glove(args.vectors_filename, args.max_vocab, args.embeddings_size)
-    label2id = {"neutral": 0, "entailment": 1, "contradiction": 2}
+    label2id = {"no": 0, "yes": 1}
     id2label = {v: k for k, v in label2id.items()}
     num_tokens = len(token2id)
     num_labels = len(label2id)
