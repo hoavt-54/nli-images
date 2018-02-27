@@ -1,0 +1,2 @@
+~/python3 ../train_simple_blind_ic_model.py --train_filename=../../datasets/IC/ic_train.tokens --dev_filename=../../datasets/IC/ic_dev.tokens --vectors_filename=../../../pre-wordvec/glove.840B.300d.txt --model_save_filename=../checkpoints/simple_blind_ic_model/ic_train
+~/python3 ../eval_simple_blind_ic_model.py --test_filename=../../datasets/IC/ic_test.tokens --model_filename=../checkpoints/simple_blind_ic_model/ic_train --result_filename=../results/simple_blind_ic_model/ic_train_to_ic_test
