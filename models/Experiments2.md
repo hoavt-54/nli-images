@@ -16,6 +16,7 @@ The results of the stage I are reported in the following table:
 | (V)SNLI train | (V)SICK2           | 56.05  | 55.66        | 52.31              |
 | (V)SNLI train | (V)SICK2 difficult | 45.16  | 50.36        | 47.5               |
 
+# References
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference." arXiv preprint arXiv:1508.05326 (2015).
 
 [2] Antol, Stanislaw, et al. "Vqa: Visual question answering." Proceedings of the IEEE International Conference on Computer Vision. 2015.
