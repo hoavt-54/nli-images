@@ -18,12 +18,12 @@ def load_te_dataset(filename, token2id, label2id):
 
         for row in reader:
             # each row is of the form:
-            # label \t premise tokens \t hypothesis tokens \t original premise \t original hypothesis
+            # label \t premise tokens \t hypothesis tokens \t # \t original premise \t original hypothesis
             label = row[0].strip()
             premise_tokens = row[1].strip().split()
             hypothesis_tokens = row[2].strip().split()
-            premise = row[3].strip()
-            hypothesis = row[4].strip()
+            premise = row[4].strip()
+            hypothesis = row[5].strip()
             labels.append(label2id[label])
             padded_premises.append([token2id.get(token, token2id["#unk#"]) for token in premise_tokens])
             padded_hypotheses.append([token2id.get(token, token2id["#unk#"]) for token in hypothesis_tokens])
