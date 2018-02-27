@@ -11,7 +11,7 @@ import pandas as pd
 import tensorflow as tf
 
 from datasets import ImageReader, load_vte_dataset
-from old_scripts.train_lstm_vte_model import build_lstm_vte_model
+from train_simple_vte_model import build_simple_vte_model
 from utils import batch
 from utils import start_logger, stop_logger
 
@@ -46,12 +46,12 @@ if __name__ == "__main__":
         num_labels = len(label2id)
 
     print("-- Loading test set")
-    test_labels, test_padded_premises, test_padded_hypotheses, test_img_names, test_original_premises, test_original_hypotheses = \
-        load_vte_dataset(
-            args.test_filename,
-            token2id,
-            label2id
-        )
+    test_labels, test_padded_premises, test_padded_hypotheses, test_img_names,\
+    test_original_premises, test_original_hypotheses = load_vte_dataset(
+        args.test_filename,
+        token2id,
+        label2id
+    )
 
     print("-- Loading images")
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     img_features_input = tf.placeholder(tf.float32, (None, params["img_features_size"]), name="img_features_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_lstm_vte_model(
+    logits = build_simple_vte_model(
         premise_input,
         hypothesis_input,
         img_features_input,
