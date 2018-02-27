@@ -10,3 +10,7 @@ At this stage, the following models are evaluated on the Grounded Textual Entail
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference.".
 
 [2] Antol, Stanislaw, et al. "Vqa: Visual question answering." Proceedings of the IEEE International Conference on Computer Vision. 2015.
+
+[3] Anderson, Peter, et al. "Bottom-up and top-down attention for image captioning and VQA." arXiv preprint arXiv:1707.07998 (2017).
+
+[4] Teney, Damien, et al. "Tips and Tricks for Visual Question Answering: Learnings from the 2017 Challenge." arXiv preprint arXiv:1708.02711 (2017).
