@@ -6,7 +6,7 @@ The dataset has been designed for the task of recognizing whether a caption is a
 - one negative caption from Foil;
 - one negative caption from MSCOCO such that is corresponds to an image with a number of categories in common with the actual image which is less or equal than two.
 
-We consider Foil as a starting point because Foil is a subset of MSCOCO, so if we take images from Foil we can be sure that we can find negative captions both from Foil and from MSCOOCO for each image. The script implementing the dataset generation procedure has been parametrized to allow to sample the desired number of positive/negative captions for each image, while maintaining the dataset balanced.
+We consider Foil as a starting point because Foil is a subset of MSCOCO, so if we take images from Foil we can be sure that we can find negative captions both from Foil and from MSCOCO for each image. The script implementing the dataset generation procedure has been parametrized to allow to sample the desired number of positive/negative captions for each image, while maintaining the dataset balanced.
 
 The script implementing the dataset generation procedure has been published [here](https://github.com/hoavt-54/nli-images/blob/master/models/build_ic_dataset.py).
 
