@@ -4,6 +4,7 @@ import json
 from argparse import ArgumentParser
 
 import numpy as np
+import sys
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -21,6 +22,7 @@ if __name__ == "__main__":
             print("Processing image {}/{}".format(num_image, len(mscoco_captions["images"])))
             id2jpg[image["id"]] = image["file_name"]
 
+    csv.field_size_limit(sys.maxsize)
     FIELDNAMES = ["image_id", "image_w", "image_h", "num_boxes", "boxes", "features"]
 
     img_labels = []
