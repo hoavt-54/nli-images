@@ -29,7 +29,7 @@ if __name__ == "__main__":
     img_features = []
 
     with open(args.bottom_up_features_filename, "r+b") as tsv_in_file:
-        reader = csv.DictReader(tsv_in_file, delimiter='\t', fieldnames = FIELDNAMES)
+        reader = csv.DictReader(tsv_in_file, delimiter="\t", fieldnames=FIELDNAMES)
 
         for num_item, item in enumerate(reader, 1):
             image_id = int(item["image_id"])
