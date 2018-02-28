@@ -25,6 +25,14 @@ The results of the stage I are reported in the following table:
 | (V)SNLI train | (V)SICK2           | 56.05  | 55.66        | 52.31              |
 | (V)SNLI train | (V)SICK2 difficult | 45.16  | 50.36        | 47.5               |
 
+Moreover, the results of the stage I for each class are reported in the following table:
+
+| TRAINING SET  | TEST SET           | Simple                                                                  | Simple + CNN                                                            | Top-down bottom-up                                                      |
+|---------------|--------------------|-------------------------------------------------------------------------|-------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| (V)SNLI train | (V)SNLI test       | Neutral: 77.1, Entailment: 85.42, Contradiction: 80.17, Overall: 80.96  | Neutral: 74.87, Entailment: 83.94, Contradiction: 76.74, Overall: 78.59 | Neutral: 72.47, Entailment: 83.34, Contradiction: 78.68, Overall: 78.25 |
+| (V)SNLI train | (V)SICK2           | Neutral: 39.35, Entailment: 85.5, Contradiction: 87.25, Overall: 56.05  | Neutral: 38.79, Entailment: 86.95, Contradiction: 82.52, Overall: 55.66 | Neutral: 35.61, Entailment: 80.35, Contradiction: 85.44, Overall: 52.31 |
+| (V)SNLI train | (V)SICK2 difficult | Neutral: 19.35, Entailment: 67.31, Contradiction: 62.74, Overall: 45.16 | Neutral: 20.49, Entailment: 77.36, Contradiction: 65.38, Overall: 50.36 | Neutral: 22.95, Entailment: 65.09, Contradiction: 69.23 Overall: 47.5   |
+
 ## Stage II
 ...
 
