@@ -21,13 +21,13 @@ if __name__ == "__main__":
         mscoco_captions_train = json.load(in_file)
         for num_image, image in enumerate(mscoco_captions_train["images"], 1):
             print("Processing image {}/{}".format(num_image, len(mscoco_captions_train["images"])))
-            id2jpg[image["id"]] = image["file_name"]
+            id2jpg[image["id"]] = image["file_name"].replace("COCO_train2014_").replace("COCO_val2014_", "")
 
     with open(args.mscoco_captions_val_filename) as in_file:
         mscoco_captions_val = json.load(in_file)
         for num_image, image in enumerate(mscoco_captions_val["images"], 1):
             print("Processing image {}/{}".format(num_image, len(mscoco_captions_val["images"])))
-            id2jpg[image["id"]] = image["file_name"]
+            id2jpg[image["id"]] = image["file_name"].replace("COCO_train2014_").replace("COCO_val2014_", "")
 
     csv.field_size_limit(sys.maxsize)
     FIELDNAMES = ["image_id", "image_w", "image_h", "num_boxes", "boxes", "features"]
