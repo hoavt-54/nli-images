@@ -35,19 +35,11 @@ if __name__ == "__main__":
     img_labels = []
     img_features = []
 
-    num_lines = 0
-    with open(args.bottom_up_features_filename, "r+b") as tsv_in_file:
-        reader = csv.DictReader(tsv_in_file, delimiter="\t", fieldnames=FIELDNAMES)
-
-        for _ in reader:
-            print("Reading line {}".format(num_lines))
-            num_lines += 1
-
     with open(args.bottom_up_features_filename, "r+b") as tsv_in_file:
         reader = csv.DictReader(tsv_in_file, delimiter="\t", fieldnames=FIELDNAMES)
 
         for num_item, item in enumerate(reader, 1):
-            print("Processing image {}/{}".format(num_item, num_lines))
+            print("Processing image {}".format(num_item))
             image_id = int(item["image_id"])
             num_boxes = int(item["num_boxes"])
             image_features = np.frombuffer(
