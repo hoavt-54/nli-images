@@ -40,6 +40,7 @@ if __name__ == "__main__":
         reader = csv.DictReader(tsv_in_file, delimiter="\t", fieldnames=FIELDNAMES)
 
         for _ in reader:
+            print("Reading line {}".format(num_lines))
             num_lines += 1
 
     with open(args.bottom_up_features_filename, "r+b") as tsv_in_file:
