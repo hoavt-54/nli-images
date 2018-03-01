@@ -34,13 +34,13 @@ Moreover, the results of the stage I for each class are reported in the followin
 | (V)SNLI train | (V)SICK2 difficult | Neutral: 19.35, Entailment: 67.31, Contradiction: 62.74, Overall: 45.16    | Neutral: 20.49, Entailment: 77.36, Contradiction: 65.38, Overall: 50.36     | Neutral: 22.95, Entailment: 65.09, Contradiction: 69.23 Overall: 47.5   |
 
 ## Stage II
-At this stage, models are evaluated on the task of recognizing whether a sentence is a good caption for an image to identify the best multimodal fusion mechanism able to properly integrate language and vision. The considered models are the same evaluated at the stage II except for the fact that the last softmax layer evaluates a probability distribution among two classes, corresponding to the yes or no labels, instead of three. The adapted models which corresponds to the models called **Simple**, **Simple + CNN**, and **Bottom-up top-down** have been called **Simple IC**, **Simple IC + CNN**, and **Bottom-up top-down IC**. At this stage, the models have been evaluated on the dataset available at [https://github.com/hoavt-54/nli-images/tree/master/datasets/IC](https://github.com/hoavt-54/nli-images/tree/master/datasets/IC), which has been properly built to solve the described task.
+At this stage, models are evaluated on the task of recognizing whether a sentence is a good caption for an image to identify the best multimodal fusion mechanism able to properly integrate language and vision. The considered models are the same evaluated at the stage II except for the fact that the last softmax layer evaluates a probability distribution among two classes, corresponding to the yes or no labels, instead of three. Moreover, L2 regularization has been applied, but dropout has been applied to all the fully-connected layers, as well as to the recurrent connection of the LSTMs. This choice has been motivated by the fact that L2 regularization did not allow the models to converge at this stage. The adapted models which corresponds to the models called **Simple**, **Simple + CNN**, and **Bottom-up top-down** have been called **Simple IC**, **Simple IC + CNN**, and **Bottom-up top-down IC**. At this stage, the models have been evaluated on the dataset available at [https://github.com/hoavt-54/nli-images/tree/master/datasets/IC](https://github.com/hoavt-54/nli-images/tree/master/datasets/IC), which has been properly built to solve the described task.
 
 The results of the stage II are reported in the following table:
 
 | TRAINING SET | TEST SET | Simple Blind IC | Simple IC + CNN | Bottom-up top-down IC |
 |--------------|----------|-----------------|-----------------|-----------------------|
-| IC train     | IC test  | 68.2            |                 |                       |
+| IC train     | IC test  | 68.93           | 70.98           | 72.05                 |
 
 ## Stage III
 ...
