@@ -35,7 +35,12 @@ if __name__ == "__main__":
     img_labels = []
     img_features = []
 
-    num_lines = len([1 for line in open(args.bottom_up_features_filename)])
+    num_lines = 0
+    with open(args.bottom_up_features_filename, "r+b") as tsv_in_file:
+        reader = csv.DictReader(tsv_in_file, delimiter="\t", fieldnames=FIELDNAMES)
+
+        for _ in reader:
+            num_lines += 1
 
     with open(args.bottom_up_features_filename, "r+b") as tsv_in_file:
         reader = csv.DictReader(tsv_in_file, delimiter="\t", fieldnames=FIELDNAMES)
