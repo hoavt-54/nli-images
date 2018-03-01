@@ -9,17 +9,24 @@ import sys
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--bottom_up_features_filename", type=str)
-    parser.add_argument("--mscoco_captions_filename", type=str)
+    parser.add_argument("--mscoco_captions_train_filename", type=str)
+    parser.add_argument("--mscoco_captions_val_filename", type=str)
     parser.add_argument("--img_names_filename", type=str)
     parser.add_argument("--img_features_filename", type=str)
     args = parser.parse_args()
 
     id2jpg = {}
 
-    with open(args.mscoco_captions_filename) as in_file:
-        mscoco_captions = json.load(in_file)
-        for num_image, image in enumerate(mscoco_captions["images"], 1):
-            print("Processing image {}/{}".format(num_image, len(mscoco_captions["images"])))
+    with open(args.mscoco_captions_train_filename) as in_file:
+        mscoco_captions_train = json.load(in_file)
+        for num_image, image in enumerate(mscoco_captions_train["images"], 1):
+            print("Processing image {}/{}".format(num_image, len(mscoco_captions_train["images"])))
+            id2jpg[image["id"]] = image["file_name"]
+
+    with open(args.mscoco_captions_val_filename) as in_file:
+        mscoco_captions_val = json.load(in_file)
+        for num_image, image in enumerate(mscoco_captions_val["images"], 1):
+            print("Prfeimg_ocessing image {}/{}".format(num_image, len(mscoco_captions_val["images"])))
             id2jpg[image["id"]] = image["file_name"]
 
     csv.field_size_limit(sys.maxsize)
@@ -37,7 +44,7 @@ if __name__ == "__main__":
             image_features = np.frombuffer(
                 base64.decodestring(item["features"]),
                 dtype=np.float32
-            ).reshape((item[num_boxes], -1))
+            ).reshape((num_boxes, -1))
             img_labels.append(id2jpg[image_id])
             img_features.append(image_features)
 
