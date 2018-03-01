@@ -94,13 +94,12 @@ if __name__ == "__main__":
     parser.add_argument("--embeddings_size", type=int, default=300)
     parser.add_argument("--train_embeddings", type=bool, default=True)
     parser.add_argument("--rnn_hidden_size", type=int, default=512)
-    parser.add_argument("--rnn_dropout_ratio", type=float, default=0.5)
+    parser.add_argument("--dropout_ratio", type=float, default=0.5)
     parser.add_argument("--multimodal_fusion_hidden_size", type=int, default=512)
     parser.add_argument("--classification_hidden_size", type=int, default=512)
     parser.add_argument("--batch_size", type=int, default=256)
     parser.add_argument("--num_epochs", type=int, default=100)
     parser.add_argument("--learning_rate", type=float, default=0.001)
-    parser.add_argument("--l2_reg", type=float, default=0.000005)
     parser.add_argument("--patience", type=int, default=3)
     args = parser.parse_args()
     start_logger(args.model_save_filename + ".train_log")
@@ -184,7 +183,7 @@ if __name__ == "__main__":
                 loss, _ = session.run([loss_function, train_step], feed_dict={
                     sentence_input: batch_sentences,
                     label_input: batch_labels,
-                    dropout_input: args.rnn_dropout_ratio
+                    dropout_input: args.dropout_ratio
                 })
                 progress.update(batch_index, [("Loss", loss)])
                 epoch_loss += loss
