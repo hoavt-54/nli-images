@@ -62,12 +62,27 @@ def build_simple_ic_model(sentence_input,
         dtype=tf.float32
     )
     normalized_img_features = tf.nn.l2_normalize(img_features_input, dim=1)
-    gated_sentence_hidden_layer = gated_tanh(sentence_final_states.h, multimodal_fusion_hidden_size)
-    gated_img_hidden_layer = gated_tanh(normalized_img_features, multimodal_fusion_hidden_size)
+    gated_sentence_hidden_layer = tf.nn.dropout(
+        gated_tanh(sentence_final_states.h, multimodal_fusion_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_img_hidden_layer = tf.nn.dropout(
+        gated_tanh(normalized_img_features, multimodal_fusion_hidden_size),
+        keep_prob=dropout_input
+    )
     sentence_img_multimodal_fusion = tf.multiply(gated_sentence_hidden_layer, gated_img_hidden_layer)
-    gated_first_layer = gated_tanh(sentence_img_multimodal_fusion, classification_hidden_size)
-    gated_second_layer = gated_tanh(gated_first_layer, classification_hidden_size)
-    gated_third_layer = gated_tanh(gated_second_layer, classification_hidden_size)
+    gated_first_layer = tf.nn.dropout(
+        gated_tanh(sentence_img_multimodal_fusion, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_second_layer = tf.nn.dropout(
+        gated_tanh(gated_first_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_third_layer = tf.nn.dropout(
+        gated_tanh(gated_second_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
 
     return tf.contrib.layers.fully_connected(
         gated_third_layer,
@@ -158,8 +173,7 @@ if __name__ == "__main__":
         args.multimodal_fusion_hidden_size,
         args.classification_hidden_size
     )
-    L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
-    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
 

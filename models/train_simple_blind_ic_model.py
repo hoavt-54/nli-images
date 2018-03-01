@@ -59,9 +59,18 @@ def build_simple_blind_ic_model(sentence_input,
         sequence_length=sentence_length,
         dtype=tf.float32
     )
-    gated_first_layer = gated_tanh(sentence_final_states.h, classification_hidden_size)
-    gated_second_layer = gated_tanh(gated_first_layer, classification_hidden_size)
-    gated_third_layer = gated_tanh(gated_second_layer, classification_hidden_size)
+    gated_first_layer = tf.nn.dropout(
+        gated_tanh(sentence_final_states.h, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_second_layer = tf.nn.dropout(
+        gated_tanh(gated_first_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_third_layer = tf.nn.dropout(
+        gated_tanh(gated_second_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
 
     return tf.contrib.layers.fully_connected(
         gated_third_layer,
@@ -143,8 +152,7 @@ if __name__ == "__main__":
         args.rnn_hidden_size,
         args.classification_hidden_size
     )
-    L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
-    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
 

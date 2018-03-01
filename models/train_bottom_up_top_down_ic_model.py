@@ -51,7 +51,7 @@ def build_bottom_up_top_down_ic_model(sentence_input,
             initializer=tf.random_normal_initializer(stddev=0.05),
             trainable=train_embeddings
         )
-    premise_embeddings = tf.nn.embedding_lookup(embedding_matrix, sentence_input)
+    sentence_embeddings = tf.nn.embedding_lookup(embedding_matrix, sentence_input)
     lstm_cell = DropoutWrapper(
         tf.nn.rnn_cell.LSTMCell(rnn_hidden_size),
         input_keep_prob=dropout_input,
@@ -59,7 +59,7 @@ def build_bottom_up_top_down_ic_model(sentence_input,
     )
     sentence_outputs, sentence_final_states = tf.nn.dynamic_rnn(
         cell=lstm_cell,
-        inputs=premise_embeddings,
+        inputs=sentence_embeddings,
         sequence_length=sentence_length,
         dtype=tf.float32
     )
@@ -68,20 +68,33 @@ def build_bottom_up_top_down_ic_model(sentence_input,
     reshaped_sentence = tf.reshape(tf.tile(sentence_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
     img_sentence_concatenation = tf.concat([normalized_img_features, reshaped_sentence], -1)
     gated_img_sentence_concatenation = gated_tanh(img_sentence_concatenation, rnn_hidden_size)
-    att_wa_premise = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None)
-    a_sentence = att_wa_premise(gated_img_sentence_concatenation)
+    att_wa_sentence = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None)
+    a_sentence = att_wa_sentence(gated_img_sentence_concatenation)
     a_sentence = tf.nn.softmax(tf.squeeze(a_sentence))
     v_head_sentence = tf.squeeze(tf.matmul(tf.expand_dims(a_sentence, 1), normalized_img_features))
+    v_head_sentence.set_shape((sentence_embeddings.get_shape()[0], img_features_size))
 
-    gated_sentence = gated_tanh(sentence_final_states.h, multimodal_fusion_hidden_size)
-
-    v_head_sentence.set_shape((premise_embeddings.get_shape()[0], img_features_size))
-    gated_img_features_sentence = gated_tanh(v_head_sentence, multimodal_fusion_hidden_size)
-
-    h_premise_img = tf.multiply(gated_sentence, gated_img_features_sentence)
-    gated_first_layer = gated_tanh(h_premise_img, classification_hidden_size)
-    gated_second_layer = gated_tanh(gated_first_layer, classification_hidden_size)
-    gated_third_layer = gated_tanh(gated_second_layer, classification_hidden_size)
+    gated_sentence = tf.nn.dropout(
+        gated_tanh(sentence_final_states.h, multimodal_fusion_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_img_features_sentence = tf.nn.dropout(
+        gated_tanh(v_head_sentence, multimodal_fusion_hidden_size),
+        keep_prob=dropout_input
+    )
+    h_sentence_img = tf.multiply(gated_sentence, gated_img_features_sentence)
+    gated_first_layer = tf.nn.dropout(
+        gated_tanh(h_sentence_img, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_second_layer = tf.nn.dropout(
+        gated_tanh(gated_first_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_third_layer = tf.nn.dropout(
+        gated_tanh(gated_second_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
 
     return tf.contrib.layers.fully_connected(
         gated_third_layer,
@@ -175,8 +188,7 @@ if __name__ == "__main__":
         args.classification_hidden_size,
         args.multimodal_fusion_hidden_size
     )
-    L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
-    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
 
