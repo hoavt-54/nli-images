@@ -26,7 +26,7 @@ if __name__ == "__main__":
     with open(args.mscoco_captions_val_filename) as in_file:
         mscoco_captions_val = json.load(in_file)
         for num_image, image in enumerate(mscoco_captions_val["images"], 1):
-            print("Prfeimg_ocessing image {}/{}".format(num_image, len(mscoco_captions_val["images"])))
+            print("Processing image {}/{}".format(num_image, len(mscoco_captions_val["images"])))
             id2jpg[image["id"]] = image["file_name"]
 
     csv.field_size_limit(sys.maxsize)
@@ -35,10 +35,13 @@ if __name__ == "__main__":
     img_labels = []
     img_features = []
 
+    num_lines = len([1 for line in open(args.bottom_up_features_filename)])
+
     with open(args.bottom_up_features_filename, "r+b") as tsv_in_file:
         reader = csv.DictReader(tsv_in_file, delimiter="\t", fieldnames=FIELDNAMES)
 
         for num_item, item in enumerate(reader, 1):
+            print("Processing image {}/{}".format(num_item, num_lines))
             image_id = int(item["image_id"])
             num_boxes = int(item["num_boxes"])
             image_features = np.frombuffer(
