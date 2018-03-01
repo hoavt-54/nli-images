@@ -75,9 +75,18 @@ def build_simple_te_model(premise_input,
         dtype=tf.float32
     )
     final_concatenation = tf.concat([premise_final_states.h, hypothesis_final_states.h], axis=1)
-    gated_first_layer = gated_tanh(final_concatenation, classification_hidden_size)
-    gated_second_layer = gated_tanh(gated_first_layer, classification_hidden_size)
-    gated_third_layer = gated_tanh(gated_second_layer, classification_hidden_size)
+    gated_first_layer = tf.nn.dropout(
+        gated_tanh(final_concatenation, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_second_layer = tf.nn.dropout(
+        gated_tanh(gated_first_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_third_layer = tf.nn.dropout(
+        gated_tanh(gated_second_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
 
     return tf.contrib.layers.fully_connected(
         gated_third_layer,
@@ -101,7 +110,7 @@ if __name__ == "__main__":
     parser.add_argument("--embeddings_size", type=int, default=300)
     parser.add_argument("--train_embeddings", type=bool, default=True)
     parser.add_argument("--rnn_hidden_size", type=int, default=512)
-    parser.add_argument("--rnn_dropout_ratio", type=float, default=0.5)
+    parser.add_argument("--dropout_ratio", type=float, default=0.5)
     parser.add_argument("--classification_hidden_size", type=int, default=512)
     parser.add_argument("--batch_size", type=int, default=256)
     parser.add_argument("--num_epochs", type=int, default=100)
@@ -160,8 +169,7 @@ if __name__ == "__main__":
         args.rnn_hidden_size,
         args.classification_hidden_size
     )
-    L2_loss = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if "bias" not in v.name]) * args.l2_reg
-    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits) + L2_loss
+    loss_function = tf.losses.sparse_softmax_cross_entropy(label_input, logits)
     train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss_function)
     saver = tf.train.Saver()
 
@@ -195,7 +203,7 @@ if __name__ == "__main__":
                     premise_input: batch_premises,
                     hypothesis_input: batch_hypotheses,
                     label_input: batch_labels,
-                    dropout_input: args.rnn_dropout_ratio
+                    dropout_input: args.dropout_ratio
                 })
                 progress.update(batch_index, [("Loss", loss)])
                 epoch_loss += loss
