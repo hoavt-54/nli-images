@@ -102,10 +102,11 @@ if __name__ == "__main__":
         )
 
     print("-- Loading images")
-    ic_image_reader = ImageReader(args.ic_img_names_filename, args.ic_img_features_filename)
+    # ic_image_reader = ImageReader(args.ic_img_names_filename, args.ic_img_features_filename)
 
     print("-- Loading images")
-    vte_image_reader = ImageReader(args.vte_img_names_filename, args.vte_img_features_filename)
+    # vte_image_reader = ImageReader(args.vte_img_names_filename, args.vte_img_features_filename)
+
 
     sentence_input = tf.placeholder(tf.int32, (None, None), name="sentence_input")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
@@ -173,10 +174,12 @@ if __name__ == "__main__":
 
             while next_ic_batches is not None and next_vte_batches is not None:
                 if next_ic_batches is not None:
+                    print(ic_next_indexes)
                     batch_sentences = ic_train_sentences[ic_next_indexes]
                     batch_labels = ic_train_labels[ic_next_indexes]
-                    batch_img_names = [ic_train_img_names[i] for i in ic_next_indexes]
-                    batch_img_features = ic_image_reader.get_features(batch_img_names)
+                    batch_img_features = np.random.randn(batch_sentences.shape[0], args.img_features_size)
+                    # batch_img_names = [ic_train_img_names[i] for i in ic_next_indexes]
+                    # batch_img_features = ic_image_reader.get_features(batch_img_names)
 
                     ic_loss, _ = session.run([ic_loss_function, ic_train_step], feed_dict={
                         sentence_input: batch_sentences,
@@ -190,8 +193,9 @@ if __name__ == "__main__":
                     batch_premises = vte_train_premises[ic_next_indexes]
                     batch_hypotheses = vte_train_hypotheses[ic_next_indexes]
                     batch_labels = ic_train_labels[ic_next_indexes]
-                    batch_img_names = [ic_train_img_names[i] for i in ic_next_indexes]
-                    batch_img_features = ic_image_reader.get_features(batch_img_names)
+                    batch_img_features = np.random.randn(batch_sentences.shape[0], args.img_features_size)
+                    # batch_img_names = [vte_train_img_names[i] for i in vte_next_indexes]
+                    # batch_img_features = vte_image_reader.get_features(batch_img_names)
 
                     vte_loss, _ = session.run([ic_loss_function, ic_train_step], feed_dict={
                         premise_input: batch_premises,
