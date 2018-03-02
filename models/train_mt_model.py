@@ -186,7 +186,7 @@ if __name__ == "__main__":
                     })
                     print("ic_loss", ic_loss)
 
-                else:
+                if next_vte_batches:
                     batch_premises = vte_train_premises[ic_next_indexes]
                     batch_hypotheses = vte_train_hypotheses[ic_next_indexes]
                     batch_labels = ic_train_labels[ic_next_indexes]
