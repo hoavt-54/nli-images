@@ -191,16 +191,16 @@ if __name__ == "__main__":
                 if next_vte_batches is not None:
                     batch_premises = vte_train_premises[next_vte_batches]
                     batch_hypotheses = vte_train_hypotheses[next_vte_batches]
-                    batch_labels = ic_train_labels[next_vte_batches]
+                    batch_labels = vte_train_labels[next_vte_batches]
                     batch_img_features = np.random.randn(batch_sentences.shape[0], args.num_img_features, args.img_features_size)
                     # batch_img_names = [vte_train_img_names[i] for i in vte_next_indexes]
                     # batch_img_features = vte_image_reader.get_features(batch_img_names)
 
-                    vte_loss, _ = session.run([ic_loss_function, ic_train_step], feed_dict={
+                    vte_loss, _ = session.run([vte_loss_function, vte_train_step], feed_dict={
                         premise_input: batch_premises,
                         hypothesis_input: batch_hypotheses,
                         img_features_input: batch_img_features,
-                        ic_label_input: batch_labels,
+                        vte_label_input: batch_labels,
                         dropout_input: args.dropout_ratio
                     })
                     print("vte loss", vte_loss)
