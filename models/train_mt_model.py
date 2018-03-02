@@ -200,3 +200,45 @@ if __name__ == "__main__":
                     progress.update(batch_index, [("Loss", vte_loss)])
                     batch_index += 1
             print("Current mean training loss: {}\n".format(epoch_loss / vte_num_batches))
+
+        print("-- Validating model")
+        dev_num_examples = vte_dev_labels.shape[0]
+        dev_batches_indexes = np.arange(dev_num_examples)
+        dev_num_correct = 0
+
+        for indexes in batch(dev_batches_indexes, args.batch_size):
+            vte_dev_batch_premises = vte_dev_premises[indexes]
+            vte_dev_batch_hypotheses = vte_dev_hypotheses[indexes]
+            vte_dev_batch_labels = vte_dev_labels[indexes]
+            vte_dev_batch_img_names = [vte_dev_img_names[i] for i in indexes]
+            vte_dev_batch_img_features = vte_image_reader.get_features(vte_dev_batch_img_names)
+            predictions = session.run(
+                tf.argmax(vte_logits, axis=1),
+                feed_dict={
+                    premise_input: vte_dev_batch_premises,
+                    hypothesis_input: vte_dev_batch_hypotheses,
+                    img_features_input: vte_dev_batch_img_features,
+                    dropout_input: 1.0
+                }
+            )
+            dev_num_correct += (predictions == vte_dev_batch_labels).sum()
+        dev_accuracy = dev_num_correct / dev_num_examples
+        print("Current mean validation accuracy: {}".format(dev_accuracy))
+
+        if dev_accuracy > dev_best_accuracy:
+            stopping_step = 0
+            best_epoch = epoch + 1
+            dev_best_accuracy = dev_accuracy
+            saver.save(session, args.model_save_filename + ".ckpt")
+            print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
+            print("Best model saved to: {}".format(args.model_save_filename))
+        else:
+            stopping_step += 1
+            print("Current stopping step: {}".format(stopping_step))
+        if stopping_step >= args.patience:
+            print("Early stopping at epoch {}!".format(epoch + 1))
+            print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
+            should_stop = True
+        if epoch + 1 >= args.num_epochs:
+            print("Stopping at epoch {}!".format(epoch + 1))
+            print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
