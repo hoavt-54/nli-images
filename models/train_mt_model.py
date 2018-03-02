@@ -11,7 +11,7 @@ import tensorflow as tf
 from datasets import load_ic_dataset, load_vte_dataset, ImageReader
 from embeddings import load_glove
 from tl_mt_model import build_tl_mt_model
-from utils import start_logger, stop_logger
+from utils import start_logger, stop_logger, Progbar
 
 if __name__ == "__main__":
     random_seed = 12345
@@ -85,13 +85,6 @@ if __name__ == "__main__":
         ic_label2id
     )
 
-    print("-- Loading development set")
-    ic_dev_labels, ic_dev_sentences, ic_dev_img_names, _ = load_ic_dataset(
-        args.ic_dev_filename,
-        token2id,
-        ic_label2id
-    )
-
     print("-- Loading training set")
     vte_train_labels, vte_train_premises, vte_train_hypotheses, vte_train_img_names, _, _ =\
         load_vte_dataset(
@@ -140,3 +133,34 @@ if __name__ == "__main__":
         args.classification_hidden_size,
         args.multimodal_fusion_hidden_size
     )
+    ic_loss_function = tf.losses.sparse_softmax_cross_entropy(ic_label_input, ic_logits)
+    ic_train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(ic_loss_function)
+    vte_loss_function = tf.losses.sparse_softmax_cross_entropy(vte_label_input, vte_logits)
+    vte_train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(vte_loss_function)
+    saver = tf.train.Saver()
+
+    ic_num_examples = ic_train_labels.shape[0]
+    vte_num_examples = vte_train_labels.shape[0]
+    ic_num_batches = ic_num_examples // args.batch_size
+    vte_num_batches = vte_num_examples // args.batch_size
+    num_batches = ic_num_batches + vte_num_batches
+    dev_best_accuracy = -1
+    stopping_step = 0
+    best_epoch = None
+    should_stop = False
+
+    with tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=1)) as session:
+        session.run(tf.global_variables_initializer())
+
+        for epoch in range(args.num_epochs):
+            if should_stop:
+                break
+
+            print("\n==> Online epoch # {0}".format(epoch + 1))
+            progress = Progbar(num_batches)
+            ic_batches_indexes = np.arange(ic_num_examples)
+            np.random.shuffle(ic_batches_indexes)
+            vte_batches_indexes = np.arange(vte_num_examples)
+            np.random.shuffle(vte_batches_indexes)
+            batch_index = 1
+            epoch_loss = 0
