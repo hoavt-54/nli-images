@@ -171,7 +171,7 @@ if __name__ == "__main__":
             next_ic_batches = next(ic_next_indexes, None)
             next_vte_batches = next(vte_next_indexes, None)
 
-            while next_ic_batches or next_vte_batches:
+            while all([next_ic_batches, next_vte_batches]):
                 if next_ic_batches:
                     batch_sentences = ic_train_sentences[ic_next_indexes]
                     batch_labels = ic_train_labels[ic_next_indexes]
