@@ -44,6 +44,8 @@ The results of the stage II are reported in the following table:
 
 ## Stage III
 ...
+![image](https://raw.githubusercontent.com/hoavt-54/nli-images/master/models/images/Multi-Task%20or%20Transfer%20Learning.png)
+...
 
 # References
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference." arXiv preprint arXiv:1508.05326 (2015).
