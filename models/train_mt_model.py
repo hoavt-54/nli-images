@@ -131,11 +131,11 @@ if __name__ == "__main__":
         num_tokens,
         ic_num_labels,
         vte_num_labels,
-        None,
+        embeddings,
         args.embeddings_size,
         args.num_img_features,
         args.img_features_size,
-        True,
+        args.train_embeddings,
         args.rnn_hidden_size,
         args.classification_hidden_size,
         args.multimodal_fusion_hidden_size
