@@ -102,11 +102,10 @@ if __name__ == "__main__":
         )
 
     print("-- Loading images")
-    # ic_image_reader = ImageReader(args.ic_img_names_filename, args.ic_img_features_filename)
+    ic_image_reader = ImageReader(args.ic_img_names_filename, args.ic_img_features_filename)
 
     print("-- Loading images")
-    # vte_image_reader = ImageReader(args.vte_img_names_filename, args.vte_img_features_filename)
-
+    vte_image_reader = ImageReader(args.vte_img_names_filename, args.vte_img_features_filename)
 
     sentence_input = tf.placeholder(tf.int32, (None, None), name="sentence_input")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
@@ -158,7 +157,7 @@ if __name__ == "__main__":
                 break
 
             print("\n==> Online epoch # {0}".format(epoch + 1))
-            progress = Progbar(num_batches)
+            progress = Progbar(vte_num_batches)
             ic_batches_indexes = np.arange(ic_num_examples)
             np.random.shuffle(ic_batches_indexes)
             vte_batches_indexes = np.arange(vte_num_examples)
@@ -166,19 +165,15 @@ if __name__ == "__main__":
             batch_index = 1
             epoch_loss = 0
 
-            ic_next_indexes = batch(ic_batches_indexes, args.batch_size)
-            vte_next_indexes = batch(vte_batches_indexes, args.batch_size)
-
-            next_ic_batches = next(ic_next_indexes, None)
-            next_vte_batches = next(vte_next_indexes, None)
+            next_ic_batches = next(batch(ic_batches_indexes, args.batch_size), None)
+            next_vte_batches = next(batch(vte_batches_indexes, args.batch_size), None)
 
             while next_ic_batches is not None and next_vte_batches is not None:
                 if next_ic_batches is not None:
                     batch_sentences = ic_train_sentences[next_ic_batches]
                     batch_labels = ic_train_labels[next_ic_batches]
-                    batch_img_features = np.random.randn(batch_sentences.shape[0], args.num_img_features, args.img_features_size)
-                    # batch_img_names = [ic_train_img_names[i] for i in ic_next_indexes]
-                    # batch_img_features = ic_image_reader.get_features(batch_img_names)
+                    batch_img_names = [ic_train_img_names[i] for i in next_ic_batches]
+                    batch_img_features = ic_image_reader.get_features(batch_img_names)
 
                     ic_loss, _ = session.run([ic_loss_function, ic_train_step], feed_dict={
                         sentence_input: batch_sentences,
@@ -186,15 +181,13 @@ if __name__ == "__main__":
                         ic_label_input: batch_labels,
                         dropout_input: args.dropout_ratio
                     })
-                    print("ic_loss", ic_loss)
 
                 if next_vte_batches is not None:
                     batch_premises = vte_train_premises[next_vte_batches]
                     batch_hypotheses = vte_train_hypotheses[next_vte_batches]
                     batch_labels = vte_train_labels[next_vte_batches]
-                    batch_img_features = np.random.randn(batch_sentences.shape[0], args.num_img_features, args.img_features_size)
-                    # batch_img_names = [vte_train_img_names[i] for i in vte_next_indexes]
-                    # batch_img_features = vte_image_reader.get_features(batch_img_names)
+                    batch_img_names = [vte_train_img_names[i] for i in next_vte_batches]
+                    batch_img_features = vte_image_reader.get_features(batch_img_names)
 
                     vte_loss, _ = session.run([vte_loss_function, vte_train_step], feed_dict={
                         premise_input: batch_premises,
@@ -203,4 +196,7 @@ if __name__ == "__main__":
                         vte_label_input: batch_labels,
                         dropout_input: args.dropout_ratio
                     })
-                    print("vte loss", vte_loss)
+                    epoch_loss += vte_loss
+                    progress.update(batch_index, [("Loss", vte_loss)])
+                    batch_index += 1
+            print("Current mean training loss: {}\n".format(epoch_loss / vte_num_batches))
