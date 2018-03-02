@@ -11,7 +11,7 @@ import tensorflow as tf
 from datasets import load_ic_dataset, load_vte_dataset, ImageReader
 from embeddings import load_glove
 from tl_mt_model import build_tl_mt_model
-from utils import start_logger, stop_logger, Progbar
+from utils import start_logger, stop_logger, Progbar, batch
 
 if __name__ == "__main__":
     random_seed = 12345
@@ -164,3 +164,40 @@ if __name__ == "__main__":
             np.random.shuffle(vte_batches_indexes)
             batch_index = 1
             epoch_loss = 0
+
+            ic_next_indexes = batch(ic_batches_indexes, args.batch_size)
+            vte_next_indexes = batch(vte_batches_indexes, args.batch_size)
+
+            next_ic_batches = next(ic_next_indexes, None)
+            next_vte_batches = next(vte_next_indexes, None)
+
+            while next_ic_batches or next_vte_batches:
+                if next_ic_batches:
+                    batch_sentences = ic_train_sentences[ic_next_indexes]
+                    batch_labels = ic_train_labels[ic_next_indexes]
+                    batch_img_names = [ic_train_img_names[i] for i in ic_next_indexes]
+                    batch_img_features = ic_image_reader.get_features(batch_img_names)
+
+                    ic_loss, _ = session.run([ic_loss_function, ic_train_step], feed_dict={
+                        sentence_input: batch_sentences,
+                        img_features_input: batch_img_features,
+                        ic_label_input: batch_labels,
+                        dropout_input: args.dropout_ratio
+                    })
+                    print("ic_loss", ic_loss)
+
+                else:
+                    batch_premises = vte_train_premises[ic_next_indexes]
+                    batch_hypotheses = vte_train_hypotheses[ic_next_indexes]
+                    batch_labels = ic_train_labels[ic_next_indexes]
+                    batch_img_names = [ic_train_img_names[i] for i in ic_next_indexes]
+                    batch_img_features = ic_image_reader.get_features(batch_img_names)
+
+                    vte_loss, _ = session.run([ic_loss_function, ic_train_step], feed_dict={
+                        premise_input: batch_premises,
+                        hypothesis_input: batch_hypotheses,
+                        img_features_input: batch_img_features,
+                        ic_label_input: batch_labels,
+                        dropout_input: args.dropout_ratio
+                    })
+                    print("vte loss", vte_loss)
