@@ -172,7 +172,7 @@ if __name__ == "__main__":
             next_vte_batches = next(vte_next_indexes, None)
 
             while next_ic_batches is not None and next_vte_batches is not None:
-                if next_ic_batches:
+                if next_ic_batches is not None:
                     batch_sentences = ic_train_sentences[ic_next_indexes]
                     batch_labels = ic_train_labels[ic_next_indexes]
                     batch_img_names = [ic_train_img_names[i] for i in ic_next_indexes]
@@ -186,7 +186,7 @@ if __name__ == "__main__":
                     })
                     print("ic_loss", ic_loss)
 
-                if next_vte_batches:
+                if next_vte_batches is not None:
                     batch_premises = vte_train_premises[ic_next_indexes]
                     batch_hypotheses = vte_train_hypotheses[ic_next_indexes]
                     batch_labels = ic_train_labels[ic_next_indexes]
