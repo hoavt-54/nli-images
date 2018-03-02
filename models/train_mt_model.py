@@ -176,7 +176,7 @@ if __name__ == "__main__":
                 if next_ic_batches is not None:
                     batch_sentences = ic_train_sentences[next_ic_batches]
                     batch_labels = ic_train_labels[next_ic_batches]
-                    batch_img_features = np.random.randn(batch_sentences.shape[0], args.img_features_size)
+                    batch_img_features = np.random.randn(batch_sentences.shape[0], args.num_img_features, args.img_features_size)
                     # batch_img_names = [ic_train_img_names[i] for i in ic_next_indexes]
                     # batch_img_features = ic_image_reader.get_features(batch_img_names)
 
@@ -192,7 +192,7 @@ if __name__ == "__main__":
                     batch_premises = vte_train_premises[next_vte_batches]
                     batch_hypotheses = vte_train_hypotheses[next_vte_batches]
                     batch_labels = ic_train_labels[next_vte_batches]
-                    batch_img_features = np.random.randn(batch_sentences.shape[0], args.img_features_size)
+                    batch_img_features = np.random.randn(batch_sentences.shape[0], args.num_img_features, args.img_features_size)
                     # batch_img_names = [vte_train_img_names[i] for i in vte_next_indexes]
                     # batch_img_features = vte_image_reader.get_features(batch_img_names)
 
