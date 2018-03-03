@@ -101,9 +101,32 @@ def build_tl_mt_model(sentence_input,
     a_sentence = tf.nn.softmax(tf.squeeze(a_sentence))
     v_head_sentence = tf.squeeze(tf.matmul(tf.expand_dims(a_sentence, 1), normalized_img_features))
 
+    with tf.variable_scope("gated_sentence_scope_W_plus_b") as gated_sentence_scope_W_plus_b:
+        gated_sentence_W_plus_b = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            multimodal_fusion_hidden_size,
+            activation_fn=None,
+            reuse=True,
+            scope=gated_sentence_scope_W_plus_b
+        )
+
+    with tf.variable_scope("gated_sentence_scope_W_plus_b_prime") as gated_sentence_scope_W_plus_b_prime:
+        gated_sentence_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            multimodal_fusion_hidden_size,
+            activation_fn=None,
+            reuse=True,
+            scope=gated_sentence_scope_W_plus_b_prime
+        )
+
     gated_sentence = tf.nn.dropout(
-        gated_tanh(sentence_final_states.h, multimodal_fusion_hidden_size),
-        keep_prob=dropout_input
+        gated_tanh(
+            sentence_final_states.h,
+            multimodal_fusion_hidden_size,
+            W_plus_b=gated_sentence_W_plus_b,
+            W_plus_b_prime=gated_sentence_W_plus_b_prime
+        ),
+        keep_prob=dropout_input,
     )
 
     v_head_sentence.set_shape((premise_embeddings.get_shape()[0], img_features_size))
