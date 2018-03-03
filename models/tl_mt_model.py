@@ -166,7 +166,6 @@ def build_tl_mt_model(sentence_input,
             activation_fn=None,
             scope=gated_first_layer_scope_W_plus_b_prime
         )
-
     gated_first_layer = tf.nn.dropout(
         gated_tanh(
             h_premise_img,
@@ -330,9 +329,58 @@ def build_tl_mt_model(sentence_input,
 
     h_premise_img = tf.multiply(gated_premise, gated_img_features_premise)
     h_hypothesis_img = tf.multiply(gated_hypothesis, gated_img_features_hypothesis)
-    final_concatenation = tf.concat([h_premise_img, h_hypothesis_img], 1)
 
-    # TODO
+    with tf.variable_scope("gated_first_layer_scope_W_plus_b") as gated_first_layer_scope_W_plus_b:
+        gated_h_premise_img_hidden_layer_W_plus_b = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            classification_hidden_size,
+            activation_fn=None,
+            scope=gated_first_layer_scope_W_plus_b,
+            reuse=True
+        )
+    with tf.variable_scope("gated_first_layer_scope_W_plus_b_prime") as gated_first_layer_scope_W_plus_b_prime:
+        gated_h_premise_hidden_layer_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            classification_hidden_size,
+            activation_fn=None,
+            scope=gated_first_layer_scope_W_plus_b_prime,
+            reuse=True
+        )
+    gated_h_premise_img_hidden_layer = tf.nn.dropout(
+        gated_tanh(
+            h_premise_img,
+            W_plus_b=gated_h_premise_img_hidden_layer_W_plus_b,
+            W_plus_b_prime=gated_h_premise_hidden_layer_W_plus_b_prime
+        ),
+        keep_prob=dropout_input
+    )
+
+    with tf.variable_scope("gated_first_layer_scope_W_plus_b") as gated_first_layer_scope_W_plus_b:
+        gated_h_hypothesis_img_hidden_layer_W_plus_b = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            classification_hidden_size,
+            activation_fn=None,
+            scope=gated_first_layer_scope_W_plus_b,
+            reuse=True
+        )
+    with tf.variable_scope("gated_first_layer_scope_W_plus_b_prime") as gated_first_layer_scope_W_plus_b_prime:
+        gated_h_hypothesis_hidden_layer_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            classification_hidden_size,
+            activation_fn=None,
+            scope=gated_first_layer_scope_W_plus_b_prime,
+            reuse=True
+        )
+    gated_h_hypothesis_img_hidden_layer = tf.nn.dropout(
+        gated_tanh(
+            h_hypothesis_img,
+            W_plus_b=gated_h_hypothesis_img_hidden_layer_W_plus_b,
+            W_plus_b_prime=gated_h_hypothesis_hidden_layer_W_plus_b_prime
+        ),
+        keep_prob=dropout_input
+    )
+
+    final_concatenation = tf.concat([gated_h_premise_img_hidden_layer, gated_h_hypothesis_img_hidden_layer], 1)
 
     gated_first_layer = tf.nn.dropout(
         gated_tanh(final_concatenation, classification_hidden_size),
