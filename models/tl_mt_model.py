@@ -89,64 +89,124 @@ def build_tl_mt_model(sentence_input,
 
     reshaped_sentence = tf.reshape(tf.tile(sentence_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
     img_sentence_concatenation = tf.concat([normalized_img_features, reshaped_sentence], -1)
-    gated_img_sentence_concatenation = gated_tanh(img_sentence_concatenation, rnn_hidden_size)
-    att_wa_sentence = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None)
+    gated_img_sentence_concatenation = tf.nn.dropout(
+        gated_tanh(img_sentence_concatenation, rnn_hidden_size),
+        keep_prob=dropout_input
+    )
+    att_wa_sentence = lambda x: tf.nn.dropout(
+        tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None),
+        keep_prob=dropout_input
+    )
     a_sentence = att_wa_sentence(gated_img_sentence_concatenation)
     a_sentence = tf.nn.softmax(tf.squeeze(a_sentence))
     v_head_sentence = tf.squeeze(tf.matmul(tf.expand_dims(a_sentence, 1), normalized_img_features))
 
-    gated_sentence = gated_tanh(sentence_final_states.h, multimodal_fusion_hidden_size)
+    gated_sentence = tf.nn.dropout(
+        gated_tanh(sentence_final_states.h, multimodal_fusion_hidden_size),
+        keep_prob=dropout_input
+    )
 
     v_head_sentence.set_shape((premise_embeddings.get_shape()[0], img_features_size))
-    gated_img_features_sentence = gated_tanh(v_head_sentence, multimodal_fusion_hidden_size)
+    gated_img_features_sentence = tf.nn.dropout(
+        gated_tanh(v_head_sentence, multimodal_fusion_hidden_size),
+        keep_prob=dropout_input
+    )
 
     h_premise_img = tf.multiply(gated_sentence, gated_img_features_sentence)
-    gated_first_layer = gated_tanh(h_premise_img, classification_hidden_size)
-    gated_second_layer = gated_tanh(gated_first_layer, classification_hidden_size)
-    gated_third_layer = gated_tanh(gated_second_layer, classification_hidden_size)
+    gated_first_layer = tf.nn.dropout(
+        gated_tanh(h_premise_img, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_second_layer = tf.nn.dropout(
+        gated_tanh(gated_first_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_third_layer = tf.nn.dropout(
+        gated_tanh(gated_second_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
 
-    ic_classification = tf.contrib.layers.fully_connected(
-        gated_third_layer,
-        num_ic_labels,
-        activation_fn=None
+    ic_classification = tf.nn.dropout(
+        tf.contrib.layers.fully_connected(
+            gated_third_layer,
+            num_ic_labels,
+            activation_fn=None
+        ),
+        keep_prob=dropout_input
     )
 
     reshaped_premise = tf.reshape(tf.tile(premise_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
     img_premise_concatenation = tf.concat([normalized_img_features, reshaped_premise], -1)
-    gated_img_premise_concatenation = gated_tanh(img_premise_concatenation, rnn_hidden_size)
-    att_wa_premise = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None)
+    gated_img_premise_concatenation = tf.nn.dropout(
+        gated_tanh(img_premise_concatenation, rnn_hidden_size),
+        keep_prob=dropout_input
+    )
+    att_wa_premise = lambda x: tf.nn.dropout(
+        tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None),
+        keep_prob=dropout_input
+    )
     a_premise = att_wa_premise(gated_img_premise_concatenation)
     a_premise = tf.nn.softmax(tf.squeeze(a_premise))
     v_head_premise = tf.squeeze(tf.matmul(tf.expand_dims(a_premise, 1), normalized_img_features))
 
     reshaped_hypothesis = tf.reshape(tf.tile(hypothesis_final_states.h, [1, num_img_features]), [-1, num_img_features, rnn_hidden_size])
     img_hypothesis_concatenation = tf.concat([normalized_img_features, reshaped_hypothesis], -1)
-    gated_img_hypothesis_concatenation = gated_tanh(img_hypothesis_concatenation, rnn_hidden_size)
-    att_wa_hypothesis = lambda x: tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None)
+    gated_img_hypothesis_concatenation = tf.nn.dropout(
+        gated_tanh(img_hypothesis_concatenation, rnn_hidden_size),
+        keep_prob=dropout_input
+    )
+    att_wa_hypothesis = lambda x: tf.nn.dropout(
+        tf.contrib.layers.fully_connected(x, 1, activation_fn=None, biases_initializer=None),
+        keep_prob=dropout_input
+    )
     a_hypothesis = att_wa_hypothesis(gated_img_hypothesis_concatenation)
     a_hypothesis = tf.nn.softmax(tf.squeeze(a_hypothesis))
     v_head_hypothesis = tf.squeeze(tf.matmul(tf.expand_dims(a_hypothesis, 1), normalized_img_features))
 
-    gated_premise = gated_tanh(premise_final_states.h, multimodal_fusion_hidden_size)
-    gated_hypothesis = gated_tanh(hypothesis_final_states.h, multimodal_fusion_hidden_size)
+    gated_premise = tf.nn.dropout(
+        gated_tanh(premise_final_states.h, multimodal_fusion_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_hypothesis = tf.nn.dropout(
+        gated_tanh(hypothesis_final_states.h, multimodal_fusion_hidden_size),
+        keep_prob=dropout_input
+    )
 
     v_head_premise.set_shape((premise_embeddings.get_shape()[0], img_features_size))
-    gated_img_features_premise = gated_tanh(v_head_premise, multimodal_fusion_hidden_size)
+    gated_img_features_premise = tf.nn.dropout(
+        gated_tanh(v_head_premise, multimodal_fusion_hidden_size),
+        keep_prob=dropout_input
+    )
 
     v_head_hypothesis.set_shape((hypothesis_embeddings.get_shape()[0], img_features_size))
-    gated_img_features_hypothesis = gated_tanh(v_head_hypothesis, multimodal_fusion_hidden_size)
+    gated_img_features_hypothesis = tf.nn.dropout(
+        gated_tanh(v_head_hypothesis, multimodal_fusion_hidden_size),
+        keep_prob=dropout_input
+    )
 
     h_premise_img = tf.multiply(gated_premise, gated_img_features_premise)
     h_hypothesis_img = tf.multiply(gated_hypothesis, gated_img_features_hypothesis)
     final_concatenation = tf.concat([h_premise_img, h_hypothesis_img], 1)
-    gated_first_layer = gated_tanh(final_concatenation, classification_hidden_size)
-    gated_second_layer = gated_tanh(gated_first_layer, classification_hidden_size)
-    gated_third_layer = gated_tanh(gated_second_layer, classification_hidden_size)
+    gated_first_layer = tf.nn.dropout(
+        gated_tanh(final_concatenation, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_second_layer = tf.nn.dropout(
+        gated_tanh(gated_first_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
+    gated_third_layer = tf.nn.dropout(
+        gated_tanh(gated_second_layer, classification_hidden_size),
+        keep_prob=dropout_input
+    )
 
-    vte_classification = tf.contrib.layers.fully_connected(
-        gated_third_layer,
-        num_vte_labels,
-        activation_fn=None
+    vte_classification = tf.nn.dropout(
+        tf.contrib.layers.fully_connected(
+            gated_third_layer,
+            num_vte_labels,
+            activation_fn=None
+        ),
+        keep_prob=dropout_input
     )
 
     return ic_classification, vte_classification

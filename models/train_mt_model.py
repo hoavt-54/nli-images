@@ -163,7 +163,7 @@ if __name__ == "__main__":
             vte_batches_indexes = np.arange(vte_num_examples)
             np.random.shuffle(vte_batches_indexes)
             batch_index = 1
-            epoch_loss = 0
+            vte_epoch_loss = 0
 
             ic_batches = batch(ic_batches_indexes, args.batch_size)
             vte_batches = batch(vte_batches_indexes, args.batch_size)
@@ -171,7 +171,7 @@ if __name__ == "__main__":
             next_ic_batches = next(ic_batches, None)
             next_vte_batches = next(vte_batches, None)
 
-            while next_ic_batches is not None and next_vte_batches is not None:
+            while next_ic_batches is not None or next_vte_batches is not None:
                 if next_ic_batches is not None:
                     ic_batch_sentences = ic_train_sentences[next_ic_batches]
                     ic_batch_labels = ic_train_labels[next_ic_batches]
@@ -184,6 +184,7 @@ if __name__ == "__main__":
                         ic_label_input: ic_batch_labels,
                         dropout_input: args.dropout_ratio
                     })
+                    next_ic_batches = next(ic_batches, None)
 
                 if next_vte_batches is not None:
                     vte_batch_premises = vte_train_premises[next_vte_batches]
@@ -199,23 +200,23 @@ if __name__ == "__main__":
                         vte_label_input: vte_batch_labels,
                         dropout_input: args.dropout_ratio
                     })
-                    epoch_loss += vte_loss
+                    vte_epoch_loss += vte_loss
                     progress.update(batch_index, [("Loss", vte_loss)])
+                    next_vte_batches = next(vte_batches, None)
                     batch_index += 1
-                next_ic_batches = next(ic_batches, None)
-                next_vte_batches = next(vte_batches, None)
-            print("Current mean training loss: {}\n".format(epoch_loss / vte_num_batches))
+
+            print("Current mean training loss: {}\n".format(vte_epoch_loss / vte_num_batches))
 
             print("-- Validating model")
             dev_num_examples = vte_dev_labels.shape[0]
             dev_batches_indexes = np.arange(dev_num_examples)
             dev_num_correct = 0
 
-            for indexes in batch(dev_batches_indexes, args.batch_size):
-                vte_dev_batch_premises = vte_dev_premises[indexes]
-                vte_dev_batch_hypotheses = vte_dev_hypotheses[indexes]
-                vte_dev_batch_labels = vte_dev_labels[indexes]
-                vte_dev_batch_img_names = [vte_dev_img_names[i] for i in indexes]
+            for vte_indexes in batch(dev_batches_indexes, args.batch_size):
+                vte_dev_batch_premises = vte_dev_premises[vte_indexes]
+                vte_dev_batch_hypotheses = vte_dev_hypotheses[vte_indexes]
+                vte_dev_batch_labels = vte_dev_labels[vte_indexes]
+                vte_dev_batch_img_names = [vte_dev_img_names[i] for i in vte_indexes]
                 vte_dev_batch_img_features = vte_image_reader.get_features(vte_dev_batch_img_names)
                 predictions = session.run(
                     tf.argmax(vte_logits, axis=1),
