@@ -106,7 +106,6 @@ def build_tl_mt_model(sentence_input,
             x,
             multimodal_fusion_hidden_size,
             activation_fn=None,
-            reuse=True,
             scope=gated_sentence_scope_W_plus_b
         )
 
@@ -115,7 +114,6 @@ def build_tl_mt_model(sentence_input,
             x,
             multimodal_fusion_hidden_size,
             activation_fn=None,
-            reuse=True,
             scope=gated_sentence_scope_W_plus_b_prime
         )
 
