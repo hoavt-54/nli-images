@@ -212,9 +212,32 @@ def build_tl_mt_model(sentence_input,
         keep_prob=dropout_input,
     )
 
+    with tf.variable_scope("gated_sentence_scope_W_plus_b") as gated_sentence_scope_W_plus_b:
+        gated_hypothesis_W_plus_b = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            multimodal_fusion_hidden_size,
+            activation_fn=None,
+            scope=gated_sentence_scope_W_plus_b,
+            reuse=True
+        )
+
+    with tf.variable_scope("gated_sentence_scope_W_plus_b_prime") as gated_sentence_scope_W_plus_b_prime:
+        gated_hypothesis_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            multimodal_fusion_hidden_size,
+            activation_fn=None,
+            scope=gated_sentence_scope_W_plus_b_prime,
+            reuse=True
+        )
+
     gated_hypothesis = tf.nn.dropout(
-        gated_tanh(hypothesis_final_states.h, multimodal_fusion_hidden_size),
-        keep_prob=dropout_input
+        gated_tanh(
+            hypothesis_final_states.h,
+            multimodal_fusion_hidden_size,
+            W_plus_b=gated_hypothesis_W_plus_b,
+            W_plus_b_prime=gated_hypothesis_W_plus_b_prime
+        ),
+        keep_prob=dropout_input,
     )
 
     v_head_premise.set_shape((premise_embeddings.get_shape()[0], img_features_size))
