@@ -190,7 +190,7 @@ if __name__ == "__main__":
                     vte_batch_hypotheses = vte_train_hypotheses[next_vte_batches]
                     vte_batch_labels = vte_train_labels[next_vte_batches]
                     vte_batch_img_names = [vte_train_img_names[i] for i in next_vte_batches]
-                    vte_batch_img_features = vte_image_reader.get_features(ic_batch_img_names)
+                    vte_batch_img_features = vte_image_reader.get_features(vte_batch_img_names)
 
                     vte_loss, _ = session.run([vte_loss_function, vte_train_step], feed_dict={
                         premise_input: vte_batch_premises,
