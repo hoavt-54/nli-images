@@ -270,14 +270,16 @@ def build_tl_mt_model(sentence_input,
             x,
             multimodal_fusion_hidden_size,
             activation_fn=None,
-            scope=gated_img_features_sentence_scope_W_plus_b
+            scope=gated_img_features_sentence_scope_W_plus_b,
+            reuse=True
         )
     with tf.variable_scope("gated_img_features_sentence_scope_W_plus_b_prime") as gated_img_features_sentence_scope_W_plus_b_prime:
         gated_img_features_premise_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
             x,
             multimodal_fusion_hidden_size,
             activation_fn=None,
-            scope=gated_img_features_sentence_scope_W_plus_b_prime
+            scope=gated_img_features_sentence_scope_W_plus_b_prime,
+            reuse=True
         )
     gated_img_features_premise = tf.nn.dropout(
         gated_tanh(
