@@ -165,8 +165,11 @@ if __name__ == "__main__":
             batch_index = 1
             epoch_loss = 0
 
-            next_ic_batches = next(batch(ic_batches_indexes, args.batch_size), None)
-            next_vte_batches = next(batch(vte_batches_indexes, args.batch_size), None)
+            ic_batches = batch(ic_batches_indexes, args.batch_size)
+            vte_batches = batch(vte_batches_indexes, args.batch_size)
+
+            next_ic_batches = next(ic_batches, None)
+            next_vte_batches = next(vte_batches, None)
 
             while next_ic_batches is not None and next_vte_batches is not None:
                 if next_ic_batches is not None:
@@ -197,6 +200,8 @@ if __name__ == "__main__":
                         dropout_input: args.dropout_ratio
                     })
                     epoch_loss += vte_loss
+                    next_ic_batches = next(ic_batches, None)
+                    next_vte_batches = next(vte_batches, None)
                     progress.update(batch_index, [("Loss", vte_loss)])
                     batch_index += 1
             print("Current mean training loss: {}\n".format(epoch_loss / vte_num_batches))
