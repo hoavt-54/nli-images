@@ -108,7 +108,6 @@ def build_tl_mt_model(sentence_input,
             activation_fn=None,
             scope=gated_sentence_scope_W_plus_b
         )
-
     with tf.variable_scope("gated_sentence_scope_W_plus_b_prime") as gated_sentence_scope_W_plus_b_prime:
         gated_sentence_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
             x,
@@ -116,7 +115,6 @@ def build_tl_mt_model(sentence_input,
             activation_fn=None,
             scope=gated_sentence_scope_W_plus_b_prime
         )
-
     gated_sentence = tf.nn.dropout(
         gated_tanh(
             sentence_final_states.h,
@@ -135,7 +133,6 @@ def build_tl_mt_model(sentence_input,
             activation_fn=None,
             scope=gated_img_features_sentence_scope_W_plus_b
         )
-
     with tf.variable_scope("gated_img_features_sentence_scope_W_plus_b_prime") as gated_img_features_sentence_scope_W_plus_b_prime:
         gated_img_features_sentence_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
             x,
@@ -143,7 +140,6 @@ def build_tl_mt_model(sentence_input,
             activation_fn=None,
             scope=gated_img_features_sentence_scope_W_plus_b_prime
         )
-
     gated_img_features_sentence = tf.nn.dropout(
         gated_tanh(
             v_head_sentence,
@@ -213,7 +209,6 @@ def build_tl_mt_model(sentence_input,
             scope=gated_sentence_scope_W_plus_b,
             reuse=True
         )
-
     with tf.variable_scope("gated_sentence_scope_W_plus_b_prime") as gated_sentence_scope_W_plus_b_prime:
         gated_premise_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
             x,
@@ -222,7 +217,6 @@ def build_tl_mt_model(sentence_input,
             scope=gated_sentence_scope_W_plus_b_prime,
             reuse=True
         )
-
     gated_premise = tf.nn.dropout(
         gated_tanh(
             premise_final_states.h,
@@ -241,7 +235,6 @@ def build_tl_mt_model(sentence_input,
             scope=gated_sentence_scope_W_plus_b,
             reuse=True
         )
-
     with tf.variable_scope("gated_sentence_scope_W_plus_b_prime") as gated_sentence_scope_W_plus_b_prime:
         gated_hypothesis_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
             x,
@@ -250,7 +243,6 @@ def build_tl_mt_model(sentence_input,
             scope=gated_sentence_scope_W_plus_b_prime,
             reuse=True
         )
-
     gated_hypothesis = tf.nn.dropout(
         gated_tanh(
             hypothesis_final_states.h,
@@ -262,14 +254,56 @@ def build_tl_mt_model(sentence_input,
     )
 
     v_head_premise.set_shape((premise_embeddings.get_shape()[0], img_features_size))
+    with tf.variable_scope("gated_img_features_sentence_scope_W_plus_b") as gated_img_features_sentence_scope_W_plus_b:
+        gated_img_features_premise_W_plus_b = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            multimodal_fusion_hidden_size,
+            activation_fn=None,
+            scope=gated_img_features_sentence_scope_W_plus_b,
+            reuse=True
+        )
+    with tf.variable_scope("gated_img_features_sentence_scope_W_plus_b_prime") as gated_img_features_sentence_scope_W_plus_b_prime:
+        gated_img_features_premise_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            multimodal_fusion_hidden_size,
+            activation_fn=None,
+            scope=gated_img_features_sentence_scope_W_plus_b_prime,
+            reuse=True
+        )
     gated_img_features_premise = tf.nn.dropout(
-        gated_tanh(v_head_premise, multimodal_fusion_hidden_size),
+        gated_tanh(
+            v_head_sentence,
+            multimodal_fusion_hidden_size,
+            W_plus_b=gated_img_features_premise_W_plus_b,
+            W_plus_b_prime=gated_img_features_premise_W_plus_b_prime
+        ),
         keep_prob=dropout_input
     )
 
     v_head_hypothesis.set_shape((hypothesis_embeddings.get_shape()[0], img_features_size))
+    with tf.variable_scope("gated_img_features_sentence_scope_W_plus_b") as gated_img_features_sentence_scope_W_plus_b:
+        gated_img_features_hypothesis_W_plus_b = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            multimodal_fusion_hidden_size,
+            activation_fn=None,
+            scope=gated_img_features_sentence_scope_W_plus_b,
+            reuse=True
+        )
+    with tf.variable_scope("gated_img_features_sentence_scope_W_plus_b_prime") as gated_img_features_sentence_scope_W_plus_b_prime:
+        gated_img_features_hypothesis_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            multimodal_fusion_hidden_size,
+            activation_fn=None,
+            scope=gated_img_features_sentence_scope_W_plus_b_prime,
+            reuse=True
+        )
     gated_img_features_hypothesis = tf.nn.dropout(
-        gated_tanh(v_head_hypothesis, multimodal_fusion_hidden_size),
+        gated_tanh(
+            v_head_sentence,
+            multimodal_fusion_hidden_size,
+            W_plus_b=gated_img_features_hypothesis_W_plus_b,
+            W_plus_b_prime=gated_img_features_hypothesis_W_plus_b_prime
+        ),
         keep_prob=dropout_input
     )
 
