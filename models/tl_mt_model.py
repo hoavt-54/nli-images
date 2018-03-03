@@ -151,10 +151,31 @@ def build_tl_mt_model(sentence_input,
     )
 
     h_premise_img = tf.multiply(gated_sentence, gated_img_features_sentence)
+
+    with tf.variable_scope("gated_first_layer_scope_W_plus_b") as gated_first_layer_scope_W_plus_b:
+        gated_first_layer_W_plus_b = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            classification_hidden_size,
+            activation_fn=None,
+            scope=gated_first_layer_scope_W_plus_b
+        )
+    with tf.variable_scope("gated_first_layer_scope_W_plus_b_prime") as gated_first_layer_scope_W_plus_b_prime:
+        gated_first_layer_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
+            x,
+            classification_hidden_size,
+            activation_fn=None,
+            scope=gated_first_layer_scope_W_plus_b_prime
+        )
+
     gated_first_layer = tf.nn.dropout(
-        gated_tanh(h_premise_img, classification_hidden_size),
+        gated_tanh(
+            h_premise_img,
+            W_plus_b=gated_first_layer_W_plus_b,
+            W_plus_b_prime=gated_first_layer_W_plus_b_prime
+        ),
         keep_prob=dropout_input
     )
+
     gated_second_layer = tf.nn.dropout(
         gated_tanh(gated_first_layer, classification_hidden_size),
         keep_prob=dropout_input
@@ -310,6 +331,9 @@ def build_tl_mt_model(sentence_input,
     h_premise_img = tf.multiply(gated_premise, gated_img_features_premise)
     h_hypothesis_img = tf.multiply(gated_hypothesis, gated_img_features_hypothesis)
     final_concatenation = tf.concat([h_premise_img, h_hypothesis_img], 1)
+
+    # TODO
+
     gated_first_layer = tf.nn.dropout(
         gated_tanh(final_concatenation, classification_hidden_size),
         keep_prob=dropout_input
@@ -318,14 +342,10 @@ def build_tl_mt_model(sentence_input,
         gated_tanh(gated_first_layer, classification_hidden_size),
         keep_prob=dropout_input
     )
-    gated_third_layer = tf.nn.dropout(
-        gated_tanh(gated_second_layer, classification_hidden_size),
-        keep_prob=dropout_input
-    )
 
     vte_classification = tf.nn.dropout(
         tf.contrib.layers.fully_connected(
-            gated_third_layer,
+            gated_second_layer,
             num_vte_labels,
             activation_fn=None
         ),
