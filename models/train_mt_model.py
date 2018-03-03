@@ -173,30 +173,30 @@ if __name__ == "__main__":
 
             while next_ic_batches is not None and next_vte_batches is not None:
                 if next_ic_batches is not None:
-                    batch_sentences = ic_train_sentences[next_ic_batches]
-                    batch_labels = ic_train_labels[next_ic_batches]
-                    batch_img_names = [ic_train_img_names[i] for i in next_ic_batches]
-                    batch_img_features = ic_image_reader.get_features(batch_img_names)
+                    ic_batch_sentences = ic_train_sentences[next_ic_batches]
+                    ic_batch_labels = ic_train_labels[next_ic_batches]
+                    ic_batch_img_names = [ic_train_img_names[i] for i in next_ic_batches]
+                    ic_batch_img_features = ic_image_reader.get_features(ic_batch_img_names)
 
                     ic_loss, _ = session.run([ic_loss_function, ic_train_step], feed_dict={
-                        sentence_input: batch_sentences,
-                        img_features_input: batch_img_features,
-                        ic_label_input: batch_labels,
+                        sentence_input: ic_batch_sentences,
+                        img_features_input: ic_batch_img_features,
+                        ic_label_input: ic_batch_labels,
                         dropout_input: args.dropout_ratio
                     })
 
                 if next_vte_batches is not None:
-                    batch_premises = vte_train_premises[next_vte_batches]
-                    batch_hypotheses = vte_train_hypotheses[next_vte_batches]
-                    batch_labels = vte_train_labels[next_vte_batches]
-                    batch_img_names = [vte_train_img_names[i] for i in next_vte_batches]
-                    batch_img_features = vte_image_reader.get_features(batch_img_names)
+                    vte_batch_premises = vte_train_premises[next_vte_batches]
+                    vte_batch_hypotheses = vte_train_hypotheses[next_vte_batches]
+                    vte_batch_labels = vte_train_labels[next_vte_batches]
+                    vte_batch_img_names = [vte_train_img_names[i] for i in next_vte_batches]
+                    vte_batch_img_features = vte_image_reader.get_features(ic_batch_img_names)
 
                     vte_loss, _ = session.run([vte_loss_function, vte_train_step], feed_dict={
-                        premise_input: batch_premises,
-                        hypothesis_input: batch_hypotheses,
-                        img_features_input: batch_img_features,
-                        vte_label_input: batch_labels,
+                        premise_input: vte_batch_premises,
+                        hypothesis_input: vte_batch_hypotheses,
+                        img_features_input: vte_batch_img_features,
+                        vte_label_input: vte_batch_labels,
                         dropout_input: args.dropout_ratio
                     })
                     epoch_loss += vte_loss
