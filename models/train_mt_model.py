@@ -200,10 +200,10 @@ if __name__ == "__main__":
                         dropout_input: args.dropout_ratio
                     })
                     epoch_loss += vte_loss
-                    next_ic_batches = next(ic_batches, None)
-                    next_vte_batches = next(vte_batches, None)
                     progress.update(batch_index, [("Loss", vte_loss)])
                     batch_index += 1
+                next_ic_batches = next(ic_batches, None)
+                next_vte_batches = next(vte_batches, None)
             print("Current mean training loss: {}\n".format(epoch_loss / vte_num_batches))
 
             print("-- Validating model")
