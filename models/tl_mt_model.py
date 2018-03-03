@@ -184,21 +184,21 @@ def build_tl_mt_model(sentence_input,
     a_hypothesis = tf.nn.softmax(tf.squeeze(a_hypothesis))
     v_head_hypothesis = tf.squeeze(tf.matmul(tf.expand_dims(a_hypothesis, 1), normalized_img_features))
 
-    with tf.variable_scope("gated_premise_scope_W_plus_b") as gated_premise_scope_W_plus_b:
+    with tf.variable_scope("gated_sentence_scope_W_plus_b") as gated_sentence_scope_W_plus_b:
         gated_premise_W_plus_b = lambda x: tf.contrib.layers.fully_connected(
             x,
             multimodal_fusion_hidden_size,
             activation_fn=None,
-            scope=gated_premise_scope_W_plus_b,
+            scope=gated_sentence_scope_W_plus_b,
             reuse=True
         )
 
-    with tf.variable_scope("gated_premise_scope_W_plus_b_prime") as gated_premise_scope_W_plus_b_prime:
+    with tf.variable_scope("gated_sentence_scope_W_plus_b_prime") as gated_sentence_scope_W_plus_b_prime:
         gated_premise_W_plus_b_prime = lambda x: tf.contrib.layers.fully_connected(
             x,
             multimodal_fusion_hidden_size,
             activation_fn=None,
-            scope=gated_premise_scope_W_plus_b_prime,
+            scope=gated_sentence_scope_W_plus_b_prime,
             reuse=True
         )
 
