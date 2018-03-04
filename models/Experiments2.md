@@ -52,7 +52,7 @@ At this stage, a model exploiting the best-performing multimodal fusion mechanis
 
 The results of the stage III are reported in the following table:
 
-| TRAINING SET | TEST SET         | Multi-tasking model |
+| TRAINING SET | TEST SET         | Multi-task model    |
 |--------------|------------------|---------------------|
 | VSNLI train  | VSNLI test       | 76.09               |
 | VSNLI train  | VSICK2           | 46.09               |
@@ -60,7 +60,7 @@ The results of the stage III are reported in the following table:
 
 Moreover, the results of the stage III for each class are reported in the following table:
 
-| TRAINING SET | TEST SET         | Multi-tasking model                                                     |
+| TRAINING SET | TEST SET         | Multi-task model                                                        |
 |--------------|------------------|-------------------------------------------------------------------------|
 | VSNLI train  | VSNLI test       | Neutral: 69.52, Entailment: 84.92, Contradiction: 73.43, Overall: 76.09 |
 | VSNLI train  | VSICK2           | Neutral: 23.21, Entailment: 87.39, Contradiction: 85.11, Overall: 46.09 |
