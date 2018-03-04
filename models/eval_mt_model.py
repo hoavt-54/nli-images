@@ -41,17 +41,17 @@ if __name__ == "__main__":
         index = pickle.load(in_file)
         token2id = index["token2id"]
         id2token = index["id2token"]
-        label2id = index["label2id"]
-        id2label = index["id2label"]
+        vte_label2id = index["vte_label2id"]
+        vte_id2label = index["vte_id2label"]
         num_tokens = len(token2id)
-        num_labels = len(label2id)
+        num_labels = len(vte_label2id)
 
     print("-- Loading test set")
     test_labels, test_padded_premises, test_padded_hypotheses, test_img_names,\
     test_original_premises, test_original_hypotheses = load_vte_dataset(
         args.test_filename,
         token2id,
-        label2id
+        vte_label2id
     )
 
     print("-- Loading images")
@@ -116,8 +116,8 @@ if __name__ == "__main__":
                 for i in range(len(indexes)):
                     writer.writerow(
                         [
-                            id2label[test_batch_labels[i]],
-                            id2label[predictions[i]],
+                            vte_id2label[test_batch_labels[i]],
+                            vte_id2label[predictions[i]],
                             " ".join([id2token[id] for id in test_batch_premises[i] if id != token2id["#pad#"]]),
                             " ".join([id2token[id] for id in test_batch_hypotheses[i] if id != token2id["#pad#"]]),
                             batch_img_names[i],
@@ -125,8 +125,8 @@ if __name__ == "__main__":
                             test_batch_original_hypotheses[i]
                         ]
                     )
-                    y_true.append(id2label[test_batch_labels[i]])
-                    y_pred.append(id2label[predictions[i]])
+                    y_true.append(vte_id2label[test_batch_labels[i]])
+                    y_pred.append(vte_id2label[predictions[i]])
         test_accuracy = test_num_correct / test_num_examples
         print("Mean test accuracy: {}".format(test_accuracy))
         y_true = pd.Series(y_true, name="Actual")
