@@ -58,7 +58,6 @@ if __name__ == "__main__":
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
 
     print("-- Restoring model")
-    print(params["multimodal_fusion_hidden_size"])
     sentence_input = tf.placeholder(tf.int32, (None, None), name="sentence_input")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
