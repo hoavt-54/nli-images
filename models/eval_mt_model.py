@@ -58,18 +58,20 @@ if __name__ == "__main__":
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
 
     print("-- Restoring model")
+    print(params["multimodal_fusion_hidden_size"])
+    sentence_input = tf.placeholder(tf.int32, (None, None), name="sentence_input")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
     img_features_input = tf.placeholder(tf.float32, (None, params["num_img_features"], params["img_features_size"]), name="img_features_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
     _, vte_logits = build_tl_mt_model(
-        None,
+        sentence_input,
         premise_input,
         hypothesis_input,
         img_features_input,
         dropout_input,
         num_tokens,
-        None,
+        2,
         num_labels,
         None,
         params["embeddings_size"],
