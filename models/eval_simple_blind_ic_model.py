@@ -83,6 +83,7 @@ if __name__ == "__main__":
                 test_batch_labels = test_labels[indexes]
                 batch_img_names = [test_img_names[i] for i in indexes]
                 test_original_sentences = np.array(test_original_sentences)
+                test_sources = np.array(test_sources)
                 test_batch_sources = test_sources[indexes]
                 test_batch_original_sentences = test_original_sentences[indexes]
                 predictions = session.run(
