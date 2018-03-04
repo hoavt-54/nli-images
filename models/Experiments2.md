@@ -46,7 +46,7 @@ The results of the stage II are reported in the following table:
 At this stage, a model exploiting the best-performing multimodal fusion mechanism identified in stage II is trained and evaluated in two different settings:
 
 - Multi-task learning: the model is trained to solve the task of recognizing whether a sentence is a good caption for an image and the Grounded Textual Entailment task.
-- Transfer learning: the model is first trained on the task of recognizing whether a sentence is a good caption for an image and then trained on Grounded Textual Entailment task.
+- Transfer learning: the model is first trained on the task of recognizing whether a sentence is a good caption for an image and then trained on the Grounded Textual Entailment task.
 
 ![image](https://raw.githubusercontent.com/hoavt-54/nli-images/master/models/images/Multi-Task%20or%20Transfer%20Learning.png)
 
