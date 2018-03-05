@@ -42,10 +42,35 @@ The results of the stage II are reported in the following table:
 |--------------|----------|-------------------|-----------------|-----------------------|
 | IC train     | IC test  | 68.93             | 70.98           | 72.05                 |
 
+Moreover, the results of the stage II for each class, including the accuracy for each source of captions for the negative class, are reported in the following table:
+
+| TRAINING SET | TEST SET | Simple IC (Blind)                                                  | Simple IC + CNN                                                    | Bottom-up top-down IC                                              |
+|--------------|----------|--------------------------------------------------------------------|--------------------------------------------------------------------|--------------------------------------------------------------------|
+| IC train     | IC test  | Yes: 87.29, No: 50.58 (mscoco: 17.14, foil: 84.15), Overall: 68.93 | Yes: 90.21, No: 51.75 (mscoco: 15.18, foil: 88.46), Overall: 70.98 | Yes: 91.02, No: 53.09 (mscoco: 15.05, foil: 91.29), Overall: 72.05 |                   |
+
 ## Stage III
-...
+At this stage, a model exploiting the best-performing multimodal fusion mechanism identified in stage II is trained and evaluated in two different settings:
+
+- Multi-task learning: the model is trained to solve the task of recognizing whether a sentence is a good caption for an image and the Grounded Textual Entailment task.
+- Transfer learning: the model is first trained on the task of recognizing whether a sentence is a good caption for an image and then trained on the Grounded Textual Entailment task.
+
 ![image](https://raw.githubusercontent.com/hoavt-54/nli-images/master/models/images/Multi-Task%20or%20Transfer%20Learning.png)
-...
+
+The results of the stage III are reported in the following table:
+
+| TRAINING SET | TEST SET         | Multi-task learning |
+|--------------|------------------|---------------------|
+| VSNLI train  | VSNLI test       | 76.09               |
+| VSNLI train  | VSICK2           | 46.09               |
+| VSNLI train  | Difficult VSICK2 | 47.86               |
+
+Moreover, the results of the stage III for each class are reported in the following table:
+
+| TRAINING SET | TEST SET         | Multi-task learning                                                     |
+|--------------|------------------|-------------------------------------------------------------------------|
+| VSNLI train  | VSNLI test       | Neutral: 69.52, Entailment: 84.92, Contradiction: 73.43, Overall: 76.09 |
+| VSNLI train  | VSICK2           | Neutral: 23.21, Entailment: 87.39, Contradiction: 85.11, Overall: 46.09 |
+| VSNLI train  | Difficult VSICK2 | Neutral: 12.29, Entailment: 79.24, Contradiction: 67.31, Overall: 47.86 |
 
 # References
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference." arXiv preprint arXiv:1508.05326 (2015).

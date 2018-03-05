@@ -163,82 +163,88 @@ if __name__ == "__main__":
             vte_batches_indexes = np.arange(vte_num_examples)
             np.random.shuffle(vte_batches_indexes)
             batch_index = 1
-            epoch_loss = 0
+            vte_epoch_loss = 0
 
-            next_ic_batches = next(batch(ic_batches_indexes, args.batch_size), None)
-            next_vte_batches = next(batch(vte_batches_indexes, args.batch_size), None)
+            ic_batches = batch(ic_batches_indexes, args.batch_size)
+            vte_batches = batch(vte_batches_indexes, args.batch_size)
 
-            while next_ic_batches is not None and next_vte_batches is not None:
+            next_ic_batches = next(ic_batches, None)
+            next_vte_batches = next(vte_batches, None)
+
+            while next_ic_batches is not None or next_vte_batches is not None:
                 if next_ic_batches is not None:
-                    batch_sentences = ic_train_sentences[next_ic_batches]
-                    batch_labels = ic_train_labels[next_ic_batches]
-                    batch_img_names = [ic_train_img_names[i] for i in next_ic_batches]
-                    batch_img_features = ic_image_reader.get_features(batch_img_names)
+                    ic_batch_sentences = ic_train_sentences[next_ic_batches]
+                    ic_batch_labels = ic_train_labels[next_ic_batches]
+                    ic_batch_img_names = [ic_train_img_names[i] for i in next_ic_batches]
+                    ic_batch_img_features = ic_image_reader.get_features(ic_batch_img_names)
 
                     ic_loss, _ = session.run([ic_loss_function, ic_train_step], feed_dict={
-                        sentence_input: batch_sentences,
-                        img_features_input: batch_img_features,
-                        ic_label_input: batch_labels,
+                        sentence_input: ic_batch_sentences,
+                        img_features_input: ic_batch_img_features,
+                        ic_label_input: ic_batch_labels,
                         dropout_input: args.dropout_ratio
                     })
+                    next_ic_batches = next(ic_batches, None)
 
                 if next_vte_batches is not None:
-                    batch_premises = vte_train_premises[next_vte_batches]
-                    batch_hypotheses = vte_train_hypotheses[next_vte_batches]
-                    batch_labels = vte_train_labels[next_vte_batches]
-                    batch_img_names = [vte_train_img_names[i] for i in next_vte_batches]
-                    batch_img_features = vte_image_reader.get_features(batch_img_names)
+                    vte_batch_premises = vte_train_premises[next_vte_batches]
+                    vte_batch_hypotheses = vte_train_hypotheses[next_vte_batches]
+                    vte_batch_labels = vte_train_labels[next_vte_batches]
+                    vte_batch_img_names = [vte_train_img_names[i] for i in next_vte_batches]
+                    vte_batch_img_features = vte_image_reader.get_features(vte_batch_img_names)
 
                     vte_loss, _ = session.run([vte_loss_function, vte_train_step], feed_dict={
-                        premise_input: batch_premises,
-                        hypothesis_input: batch_hypotheses,
-                        img_features_input: batch_img_features,
-                        vte_label_input: batch_labels,
+                        premise_input: vte_batch_premises,
+                        hypothesis_input: vte_batch_hypotheses,
+                        img_features_input: vte_batch_img_features,
+                        vte_label_input: vte_batch_labels,
                         dropout_input: args.dropout_ratio
                     })
-                    epoch_loss += vte_loss
+                    vte_epoch_loss += vte_loss
                     progress.update(batch_index, [("Loss", vte_loss)])
+                    next_vte_batches = next(vte_batches, None)
                     batch_index += 1
-            print("Current mean training loss: {}\n".format(epoch_loss / vte_num_batches))
 
-        print("-- Validating model")
-        dev_num_examples = vte_dev_labels.shape[0]
-        dev_batches_indexes = np.arange(dev_num_examples)
-        dev_num_correct = 0
+            print("Current mean training loss: {}\n".format(vte_epoch_loss / vte_num_batches))
 
-        for indexes in batch(dev_batches_indexes, args.batch_size):
-            vte_dev_batch_premises = vte_dev_premises[indexes]
-            vte_dev_batch_hypotheses = vte_dev_hypotheses[indexes]
-            vte_dev_batch_labels = vte_dev_labels[indexes]
-            vte_dev_batch_img_names = [vte_dev_img_names[i] for i in indexes]
-            vte_dev_batch_img_features = vte_image_reader.get_features(vte_dev_batch_img_names)
-            predictions = session.run(
-                tf.argmax(vte_logits, axis=1),
-                feed_dict={
-                    premise_input: vte_dev_batch_premises,
-                    hypothesis_input: vte_dev_batch_hypotheses,
-                    img_features_input: vte_dev_batch_img_features,
-                    dropout_input: 1.0
-                }
-            )
-            dev_num_correct += (predictions == vte_dev_batch_labels).sum()
-        dev_accuracy = dev_num_correct / dev_num_examples
-        print("Current mean validation accuracy: {}".format(dev_accuracy))
+            print("-- Validating model")
+            dev_num_examples = vte_dev_labels.shape[0]
+            dev_batches_indexes = np.arange(dev_num_examples)
+            dev_num_correct = 0
 
-        if dev_accuracy > dev_best_accuracy:
-            stopping_step = 0
-            best_epoch = epoch + 1
-            dev_best_accuracy = dev_accuracy
-            saver.save(session, args.model_save_filename + ".ckpt")
-            print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
-            print("Best model saved to: {}".format(args.model_save_filename))
-        else:
-            stopping_step += 1
-            print("Current stopping step: {}".format(stopping_step))
-        if stopping_step >= args.patience:
-            print("Early stopping at epoch {}!".format(epoch + 1))
-            print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
-            should_stop = True
-        if epoch + 1 >= args.num_epochs:
-            print("Stopping at epoch {}!".format(epoch + 1))
-            print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
+            for vte_indexes in batch(dev_batches_indexes, args.batch_size):
+                vte_dev_batch_premises = vte_dev_premises[vte_indexes]
+                vte_dev_batch_hypotheses = vte_dev_hypotheses[vte_indexes]
+                vte_dev_batch_labels = vte_dev_labels[vte_indexes]
+                vte_dev_batch_img_names = [vte_dev_img_names[i] for i in vte_indexes]
+                vte_dev_batch_img_features = vte_image_reader.get_features(vte_dev_batch_img_names)
+                predictions = session.run(
+                    tf.argmax(vte_logits, axis=1),
+                    feed_dict={
+                        premise_input: vte_dev_batch_premises,
+                        hypothesis_input: vte_dev_batch_hypotheses,
+                        img_features_input: vte_dev_batch_img_features,
+                        dropout_input: 1.0
+                    }
+                )
+                dev_num_correct += (predictions == vte_dev_batch_labels).sum()
+            dev_accuracy = dev_num_correct / dev_num_examples
+            print("Current mean validation accuracy: {}".format(dev_accuracy))
+
+            if dev_accuracy > dev_best_accuracy:
+                stopping_step = 0
+                best_epoch = epoch + 1
+                dev_best_accuracy = dev_accuracy
+                saver.save(session, args.model_save_filename + ".ckpt")
+                print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
+                print("Best model saved to: {}".format(args.model_save_filename))
+            else:
+                stopping_step += 1
+                print("Current stopping step: {}".format(stopping_step))
+            if stopping_step >= args.patience:
+                print("Early stopping at epoch {}!".format(epoch + 1))
+                print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))
+                should_stop = True
+            if epoch + 1 >= args.num_epochs:
+                print("Stopping at epoch {}!".format(epoch + 1))
+                print("Best mean validation accuracy: {} (reached at epoch {})".format(dev_best_accuracy, best_epoch))

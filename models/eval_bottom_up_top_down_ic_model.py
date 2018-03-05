@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     print("-- Loading test set")
     print("-- Loading test set")
-    test_labels, test_padded_sentences, test_img_names, test_original_sentences = load_ic_dataset(
+    test_labels, test_padded_sentences, test_img_names, test_sources, test_original_sentences = load_ic_dataset(
         args.test_filename,
         token2id,
         label2id
@@ -94,6 +94,8 @@ if __name__ == "__main__":
                 test_batch_labels = test_labels[indexes]
                 batch_img_names = [test_img_names[i] for i in indexes]
                 batch_img_features = image_reader.get_features(batch_img_names)
+                test_sources = np.array(test_sources)
+                test_batch_sources = test_sources[indexes]
                 test_original_sentences = np.array(test_original_sentences)
                 test_batch_original_sentences = test_original_sentences[indexes]
                 predictions = session.run(
@@ -112,6 +114,7 @@ if __name__ == "__main__":
                             id2label[predictions[i]],
                             " ".join([id2token[id] for id in test_batch_sentences[i] if id != token2id["#pad#"]]),
                             batch_img_names[i],
+                            test_batch_sources[i],
                             test_batch_original_sentences[i],
                         ]
                     )

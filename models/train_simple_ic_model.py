@@ -146,10 +146,10 @@ if __name__ == "__main__":
             print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_sentences, train_img_names, _ = load_ic_dataset(args.train_filename, token2id, label2id)
+    train_labels, train_sentences, train_img_names, _, _ = load_ic_dataset(args.train_filename, token2id, label2id)
 
     print("-- Loading development set")
-    dev_labels, dev_sentences, dev_img_names, _ = load_ic_dataset(args.dev_filename, token2id, label2id)
+    dev_labels, dev_sentences, dev_img_names, _, _ = load_ic_dataset(args.dev_filename, token2id, label2id)
 
     print("-- Loading images")
     image_reader = ImageReader(args.img_names_filename, args.img_features_filename)
