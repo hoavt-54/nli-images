@@ -16,12 +16,9 @@ if __name__ == "__main__":
     flickr = pd.read_csv(args.flickr_filename, sep="\t", header=None)
 
     sentences_A = []
-    sentences_B = []
     for index, row in sick2.iterrows():
         joined_A = "".join([x for x in sick2.sentence_A_original[index].lower() if x.isalpha()])
-        joined_B = "".join([x for x in sick2.sentence_B_original[index].lower() if x.isalpha()])
         sentences_A.append(joined_A)
-        sentences_B.append(joined_B)
     sick2["sent_A"] = pd.Series(sentences_A, index=sick2.index)
 
     flickr_joined = []

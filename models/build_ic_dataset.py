@@ -24,8 +24,7 @@ def get_num_overlapping_cats(image_a_id, image_b_id, a_coco_instances_reader, b_
 if __name__ == "__main__":
     np.random.seed(12345)
     parser = ArgumentParser()
-    parser.add_argument("--foil_train_filename", type=str, required=True)
-    parser.add_argument("--foil_test_filename", type=str, required=True)
+    parser.add_argument("--foil_filename", type=str, required=True)
     parser.add_argument("--mscoco_captions_train_filename", type=str, required=True)
     parser.add_argument("--mscoco_captions_dev_filename", type=str, required=True)
     parser.add_argument("--mscoco_instances_train_filename", type=str, required=True)
@@ -37,16 +36,7 @@ if __name__ == "__main__":
 
     foil_captions = collections.defaultdict(lambda: collections.defaultdict(list))
 
-    with open(args.foil_train_filename) as in_file:
-        foil = json.load(in_file)
-
-        for annotation in foil["annotations"]:
-            if annotation["target_word"] == "ORIG":
-                foil_captions[annotation["image_id"]]["pos"].append(annotation["caption"])
-            else:
-                foil_captions[annotation["image_id"]]["neg"].append(annotation["caption"])
-
-    with open(args.foil_test_filename) as in_file:
+    with open(args.foil_filename) as in_file:
         foil = json.load(in_file)
 
         for annotation in foil["annotations"]:
@@ -126,11 +116,13 @@ if __name__ == "__main__":
                 sampled_mscoco_neg_captions.append(sampled_coco_captions_reader.loadAnns(int(sampled_neg_caption_id))[0]["caption"])
                 sampled_mscoco_neg_images.append(sampled_coco_captions_reader.loadImgs(int(sampled_neg_image_id))[0]["file_name"])
 
+            image_filename = image_filename.replace("COCO_train2014_", "").replace("COCO_val2014_", "")
+
             for pos_caption in sampled_pos_captions:
                 writer.writerow(["yes", pos_caption, image_filename, "mscoco"])
 
             for neg_caption, neg_image_filename in zip(sampled_foil_neg_captions, sampled_foil_neg_images):
-                writer.writerow(["no", neg_caption, neg_image_filename, "foil"])
+                writer.writerow(["no", neg_caption, image_filename, "foil"])
 
             for neg_caption, neg_image_filename in zip(sampled_mscoco_neg_captions, sampled_mscoco_neg_images):
-                writer.writerow(["no", neg_caption, neg_image_filename, "mscoco"])
+                writer.writerow(["no", neg_caption, image_filename, "mscoco"])

@@ -1,16 +1,17 @@
 #!/usr/bin/env python
+
 import os
 import pickle
 from argparse import ArgumentParser
+from utils import Progbar
 
+import _init_paths
 import caffe
 import cv2
 import numpy as np
 from fast_rcnn.config import cfg, cfg_from_file
 from fast_rcnn.nms_wrapper import nms
 from fast_rcnn.test import im_detect, _get_blobs
-
-from utils import Progbar
 
 
 def get_detections_from_im(net, im_file, conf_thresh=0.2, min_num_boxes=36, max_num_boxes=36):
@@ -65,15 +66,11 @@ def get_detections_from_im(net, im_file, conf_thresh=0.2, min_num_boxes=36, max_
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--gpu", type=int, default=0)
-    parser.add_argument("--cfg_filename", type=str,
-                        default="../experiments/cfgs/faster_rcnn_end2end_resnet.yml")
-    parser.add_argument("--net_filename", type=str,
-                        default="../data/faster_rcnn_models/resnet101_faster_rcnn_final_iter_320000.caffemodel")
-    parser.add_argument("--def_filename", type=str,
-                        default="../models/vg/ResNet-101/faster_rcnn_end2end_final/test.prototxt")
+    parser.add_argument("--cfg_filename", type=str,default="../experiments/cfgs/faster_rcnn_end2end_resnet.yml")
+    parser.add_argument("--net_weights_filename", type=str,default="../data/faster_rcnn_models/resnet101_faster_rcnn_final_iter_320000.caffemodel")
+    parser.add_argument("--net_def_filename", type=str,default="../models/vg/ResNet-101/faster_rcnn_end2end_final/test.prototxt")
     parser.add_argument("--num_boxes", type=int, default=36)
     parser.add_argument("--img_path", type=str, required=True)
-    parser.add_argument("--img_extension", type=str, default=".jpg")
     parser.add_argument("--features_filename", type=str, required=True)
     args = parser.parse_args()
 
@@ -96,10 +93,9 @@ if __name__ == "__main__":
     caffe.set_mode_gpu()
     net = None
     cfg_from_file(args.cfg_filename)
-    net = caffe.Net(args.def_filename, caffe.TEST, weights=args.net_filename)
+    net = caffe.Net(args.net_def_filename, caffe.TEST, weights=args.net_weights_filename)
 
-    img_filenames = [filename for filename in os.listdir(args.img_path)
-                     if filename.endswith(args.img_extension)]
+    img_filenames = os.listdir(args.img_path)
     num_img_filenames = len(img_filenames)
 
     progress = Progbar(num_img_filenames)
