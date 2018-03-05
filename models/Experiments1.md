@@ -55,7 +55,7 @@ This folder contains two models evaluated on the Recognizing Textual Entailment 
 | training set  | test set           | Bowman | Bowman + images | LSTM  | LSTM + images | BiMPM | V-BiMPM |
 |---------------|--------------------|--------|-----------------|-------|---------------|-------|---------|
 | (V)SNLI train | (V)SNLI test       | 78.81  | 76.45           | 79.81 | 79.15         | 86.41 | 86.99   |
-| (V)SNLI train | (V)SICK2           | 51.76  | 54.06           | 54.55 | 57.26         | 56.49 | 61.15   |
+| (V)SNLI train | (V)SICK2           | 51.76  | 54.06           | 54.55 | 57.26         | 56.49 | 61.15 (62.31 with tokenization)   | 
 | (V)SNLI train | (V)SICK2 difficult | 45.88  | 48.57           | 48.39 | 48.21         | 51.61 | 52.86   |
 
 ### With transfer learning:
