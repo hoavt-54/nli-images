@@ -116,6 +116,8 @@ if __name__ == "__main__":
                 sampled_mscoco_neg_captions.append(sampled_coco_captions_reader.loadAnns(int(sampled_neg_caption_id))[0]["caption"])
                 sampled_mscoco_neg_images.append(sampled_coco_captions_reader.loadImgs(int(sampled_neg_image_id))[0]["file_name"])
 
+            image_filename = image_filename.replace("COCO_train2014_", "").replace("COCO_val2014_", "")
+
             for pos_caption in sampled_pos_captions:
                 writer.writerow(["yes", pos_caption, image_filename, "mscoco"])
 
