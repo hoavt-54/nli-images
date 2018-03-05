@@ -7,8 +7,8 @@ import numpy as np
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--ic_test_set_filename", type=str, required=True)
-    parser.add_argument("--generated_ic_test_set_filename", type=str, required=True)
-    parser.add_argument("--generated_ic_validation_set_filename", type=str, required=True)
+    parser.add_argument("--ic_generated_test_set_filename", type=str, required=True)
+    parser.add_argument("--ic_generated_validation_set_filename", type=str, required=True)
     args = parser.parse_args()
 
     dataset = pd.read_csv(args.ic_test_set_filename, sep="\t")
@@ -22,6 +22,9 @@ if __name__ == "__main__":
         stratify=dataset_y,
         random_state=12345
     )
+
+    y_test = y_test.reshape(y_test.shape[0], 1)
+    y_dev = y_dev.reshape(y_dev.shape[0], 1)
 
     test_set = np.concatenate((y_test, X_test), axis=1)
     validation_set = np.concatenate((y_dev, X_dev), axis=1)
