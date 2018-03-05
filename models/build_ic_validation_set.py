@@ -32,5 +32,5 @@ if __name__ == "__main__":
     test_set = pd.DataFrame(test_set)
     validation_set = pd.DataFrame(validation_set)
 
-    test_set.to_csv(args.test_set_filename, sep="\t", index=False, header=False)
-    validation_set.to_csv(args.validation_set_filename, sep="\t", index=False, header=False)
+    test_set.to_csv(args.ic_generated_test_set_filename, sep="\t", index=False, header=False)
+    validation_set.to_csv(args.ic_generated_validation_set_filename, sep="\t", index=False, header=False)
