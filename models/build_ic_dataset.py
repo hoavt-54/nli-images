@@ -120,7 +120,7 @@ if __name__ == "__main__":
                 writer.writerow(["yes", pos_caption, image_filename, "mscoco"])
 
             for neg_caption, neg_image_filename in zip(sampled_foil_neg_captions, sampled_foil_neg_images):
-                writer.writerow(["no", neg_caption, neg_image_filename, "foil"])
+                writer.writerow(["no", neg_caption, image_filename, "foil"])
 
             for neg_caption, neg_image_filename in zip(sampled_mscoco_neg_captions, sampled_mscoco_neg_images):
-                writer.writerow(["no", neg_caption, neg_image_filename, "mscoco"])
+                writer.writerow(["no", neg_caption, image_filename, "mscoco"])
