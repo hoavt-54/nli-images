@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     foil_captions = collections.defaultdict(lambda: collections.defaultdict(list))
 
-    with open(args.foil_train_filename) as in_file:
+    with open(args.foil_filename) as in_file:
         foil = json.load(in_file)
 
         for annotation in foil["annotations"]:
