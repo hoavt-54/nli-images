@@ -33,6 +33,7 @@ if __name__ == "__main__":
             for num_annotation, annotation in enumerate(dataset["annotations"], 1):
                 print(annotation)
                 caption = annotation["caption"]
+                print(caption["image_id"])
                 image = images[caption["image_id"]]
                 label = "yes" if annotation["foil_word"] == "ORIG" else "no"
                 caption_tokens = [token.lower_ for token in nlp(caption)]
