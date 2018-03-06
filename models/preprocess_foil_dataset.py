@@ -20,11 +20,10 @@ if __name__ == "__main__":
     with open(args.dataset_filename) as in_file:
         dataset = json.load(in_file)
 
-        progress = Progbar(len(dataset["images"]))
         for num_image, image in enumerate(dataset["images"], 1):
             images[image["id"]] = image["file_name"]
-            progress.update(num_image)
 
+        print("Found {} images".format(len(images)))
         with open(args.preprocessed_dataset_filename, mode="w") as out_file:
             writer = csv.writer(out_file, delimiter="\t")
 
