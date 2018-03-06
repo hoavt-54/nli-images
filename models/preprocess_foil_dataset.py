@@ -22,6 +22,7 @@ if __name__ == "__main__":
 
         progress = Progbar(len(dataset["images"]))
         for num_image, image in enumerate(dataset["images"], 1):
+            print(image)
             images[image["id"]] = image["file_name"]
             progress.update(num_image)
 
@@ -30,6 +31,7 @@ if __name__ == "__main__":
 
             progress = Progbar(len(dataset["annotations"]))
             for num_annotation, annotation in enumerate(dataset["annotations"], 1):
+                print(annotation)
                 caption = annotation["caption"]
                 image = images[caption["image_id"]]
                 label = "yes" if annotation["foil_word"] == "ORIG" else "no"
