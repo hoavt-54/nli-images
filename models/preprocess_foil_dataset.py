@@ -25,7 +25,7 @@ if __name__ == "__main__":
             images[image["id"]] = image["file_name"]
             progress.update(num_image)
 
-        with open("args.preprocessed_dataset_filename", mode="w") as out_file:
+        with open(args.preprocessed_dataset_filename, mode="w") as out_file:
             writer = csv.writer(out_file, delimiter="\t")
 
             progress = Progbar(len(dataset["annotations"]))
