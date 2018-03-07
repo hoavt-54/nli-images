@@ -21,6 +21,8 @@ if __name__ == "__main__":
             image2rows[image_filename].append(row)
 
         images = set(image2rows.keys())
+        print(images)
+        print(len(images) // 2)
         test_set_images = set(np.random.choice(images, size=len(images) // 2, replace=False))
         dev_set_images = images - test_set_images
 
