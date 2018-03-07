@@ -96,7 +96,7 @@ if __name__ == "__main__":
         y_true = tf.cast(y_true, tf.int32)
         return tf.nn.sparse_softmax_cross_entropy_with_logits(labels=y_true, logits=y_pred)
 
-    opt = optimizers.adam(lr=args.learning_rate , epsilon=1e-08)
+    opt = optimizers.adam(lr=args.learning_rate, epsilon=1e-08)
     model.compile(loss=loss_fn, optimizer=opt)
     model.fit(train_sentences, train_labels, batch_size=args.batch_size, epochs=args.num_epochs)
 

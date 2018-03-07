@@ -33,6 +33,40 @@ def load_glove(filename, max_vocab):
     return token2id, id2token
 
 
+def build_vocabulary(ic_train_filename, ic_test_filename):
+    token2id = {}
+    id2token = {}
+
+    token_id = len(token2id)
+    token2id["#pad#"] = token_id
+    id2token[token_id] = "#pad#"
+
+    with open(ic_train_filename) as in_file:
+        reader = csv.reader(in_file, delimiter="\t")
+
+        for row in reader:
+            sentence_tokens = row[1].strip().lower().split()
+
+            for token in sentence_tokens:
+                if token not in token2id:
+                    token_id = len(token2id)
+                    token2id[token] = token_id
+                    id2token[token_id] = token
+
+    with open(ic_test_filename) as in_file:
+        reader = csv.reader(in_file, delimiter="\t")
+        for row in reader:
+            sentence_tokens = row[1].strip().lower().split()
+
+            for token in sentence_tokens:
+                if token not in token2id:
+                    token_id = len(token2id)
+                    token2id[token] = token_id
+                    id2token[token_id] = token
+
+    return token2id, id2token
+
+
 def load_dataset(ic_dataset_filename, token2id, label2id):
     padded_sentences = []
     labels = []
@@ -44,7 +78,8 @@ def load_dataset(ic_dataset_filename, token2id, label2id):
             label = row[0].strip()
             sentence_tokens = row[1].strip().lower().split()
             labels.append(label2id[label])
-            padded_sentences.append([token2id.get(token, token2id["#unk#"]) for token in sentence_tokens])
+            padded_sentences.append([token2id[token] for token in sentence_tokens])
+            # padded_sentences.append([token2id.get(token, token2id["#unk#"]) for token in sentence_tokens])
 
         padded_sentences = pad_sequences(padded_sentences, padding="post", value=token2id["#pad#"], dtype=np.long)
         labels = np.array(labels)
@@ -62,17 +97,18 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--train_filename", type=str, required=True)
     parser.add_argument("--test_filename", type=str, required=True)
-    parser.add_argument("--vectors_filename", type=str, required=True)
+    parser.add_argument("--vectors_filename", type=str, required=False)
     parser.add_argument("--max_vocab", type=int, default=300000)
     parser.add_argument("--embeddings_size", type=int, default=300)
     parser.add_argument("--rnn_hidden_size", type=int, default=512)
     parser.add_argument("--classification_hidden_size", type=int, default=512)
-    parser.add_argument("--batch_size", type=int, default=256)
+    parser.add_argument("--batch_size", type=int, default=512)
     parser.add_argument("--num_epochs", type=int, default=1)
     parser.add_argument("--learning_rate", type=float, default=0.001)
     args = parser.parse_args()
 
-    token2id, id2token = load_glove(args.vectors_filename, args.max_vocab)
+    # token2id, id2token = load_glove(args.vectors_filename, args.max_vocab)
+    token2id, id2token = build_vocabulary(args.train_filename, args.test_filename)
     label2id = {"no": 0, "yes": 1}
     id2label = {v: k for k, v in label2id.items()}
     num_tokens = len(token2id)
@@ -105,7 +141,7 @@ if __name__ == "__main__":
     sentence_outputs, sentence_final_states = tf.nn.dynamic_rnn(
         cell=lstm_cell,
         inputs=sentence_embeddings,
-        # sequence_length=sentence_length,
+        sequence_length=sentence_length,
         dtype=tf.float32
     )
     logits = tf.contrib.layers.fully_connected(
@@ -147,6 +183,7 @@ if __name__ == "__main__":
                 batch_index += 1
 
             print("-- Evaluating model")
+
             test_num_examples = test_labels.shape[0]
             test_batches_indexes = np.arange(test_num_examples)
             test_num_correct = 0
@@ -161,5 +198,13 @@ if __name__ == "__main__":
                     }
                 )
                 test_num_correct += (predictions == test_batch_labels).sum()
+                # print("---")
+                # print("test_batch_sentences[0]", test_batch_sentences[0])
+                # print("test_batch_sentences[1]", test_batch_sentences[1])
+                # print("test_batch_sentences[2]", test_batch_sentences[2])
+                # print("predictions", predictions)
+                # print("test_batch_labels", test_batch_labels)
+                # print("(predictions == test_batch_labels).sum()", (predictions == test_batch_labels).sum())
+                # print("---")
             test_accuracy = test_num_correct / test_num_examples
             print("Current mean test accuracy: {}".format(test_accuracy))

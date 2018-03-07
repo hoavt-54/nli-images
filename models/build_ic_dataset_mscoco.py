@@ -63,9 +63,7 @@ if __name__ == "__main__":
                 neg_captions_ids = coco_captions.getAnnIds(imgIds=sampled_neg_image_id)
                 sampled_neg_caption_id = np.random.choice(neg_captions_ids)
                 sampled_neg_captions_ids.append(sampled_neg_caption_id)
-                print(sampled_neg_caption_id)
-                print(coco_captions.loadAnns(sampled_neg_caption_id))
-                sampled_neg_captions.append(coco_captions.loadAnns(sampled_neg_caption_id)[0]["caption"])
+                sampled_neg_captions.append(coco_captions.loadAnns(int(sampled_neg_caption_id))[0]["caption"])
 
             for pos_caption, pos_caption_id in zip(sampled_pos_captions, sampled_pos_captions_ids):
                 writer.writerow(["yes", pos_caption, image_filename, pos_caption_id, image_id])
