@@ -1,36 +1,39 @@
+import csv
 from argparse import ArgumentParser
+from collections import defaultdict
 
-import pandas as pd
-from sklearn.model_selection import train_test_split
 import numpy as np
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--ic_test_set_filename", type=str, required=True)
+    parser.add_argument("--ic_validation_set_filename", type=str, required=True)
     parser.add_argument("--ic_generated_test_set_filename", type=str, required=True)
     parser.add_argument("--ic_generated_validation_set_filename", type=str, required=True)
     args = parser.parse_args()
 
-    dataset = pd.read_csv(args.ic_test_set_filename, sep="\t")
-    dataset_X = dataset.ix[:, 1:].values
-    dataset_y = dataset.ix[:, 0].values
+    with open(args.ic_test_set_filename) as in_file:
+        reader = csv.reader(in_file)
 
-    X_test, X_dev, y_test, y_dev = train_test_split(
-        dataset_X,
-        dataset_y,
-        test_size=0.5,
-        stratify=dataset_y,
-        random_state=12345
-    )
+        image2rows = defaultdict(list)
 
-    y_test = y_test.reshape(y_test.shape[0], 1)
-    y_dev = y_dev.reshape(y_dev.shape[0], 1)
+        for row in reader:
+            image_filename = row[2].strip()
+            image2rows[image_filename].append(row)
 
-    test_set = np.concatenate((y_test, X_test), axis=1)
-    validation_set = np.concatenate((y_dev, X_dev), axis=1)
+        images = set(image2rows.keys())
+        test_set_images = set(np.random.choice(images, size=len(images) // 2, replace=False))
+        dev_set_images = images - test_set_images
 
-    test_set = pd.DataFrame(test_set)
-    validation_set = pd.DataFrame(validation_set)
+    with open(args.ic_generated_test_set_filename, mode="w") as out_file:
+        writer = csv.writer(out_file)
 
-    test_set.to_csv(args.ic_generated_test_set_filename, sep="\t", index=False, header=False)
-    validation_set.to_csv(args.ic_generated_validation_set_filename, sep="\t", index=False, header=False)
+        for image in test_set_images:
+            for row in image2rows[image]:
+                writer.writerow(row)
+
+    with open(args.ic_generated_dev_set_filename, mode="w") as out_file:
+        writer = csv.writer(out_file)
+
+        for image in dev_set_images:
+            for row in image2rows[image]:
+                writer.writerow(row)
