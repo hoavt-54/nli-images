@@ -131,10 +131,10 @@ if __name__ == "__main__":
             print("Index saved to: {}".format(args.model_save_filename + ".index"))
 
     print("-- Loading training set")
-    train_labels, train_sentences, _, _, _ = load_ic_dataset(args.train_filename, token2id, label2id)
+    train_labels, train_sentences, _, _ = load_ic_dataset(args.train_filename, token2id, label2id)
 
     print("-- Loading development set")
-    dev_labels, dev_sentences, _, _, _ = load_ic_dataset(args.dev_filename, token2id, label2id)
+    dev_labels, dev_sentences, _, _ = load_ic_dataset(args.dev_filename, token2id, label2id)
 
     print("-- Building model")
     sentence_input = tf.placeholder(tf.int32, (None, None), name="sentence_input")
