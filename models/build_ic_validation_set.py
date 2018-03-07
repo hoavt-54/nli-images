@@ -11,7 +11,7 @@ if __name__ == "__main__":
     parser.add_argument("--ic_generated_validation_set_filename", type=str, required=True)
     args = parser.parse_args()
 
-    with open(args.ic_test_set_filename) as in_file:
+    with open(args.ic_validation_set_filename) as in_file:
         reader = csv.reader(in_file)
 
         image2rows = defaultdict(list)
