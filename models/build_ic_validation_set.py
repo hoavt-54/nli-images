@@ -31,7 +31,7 @@ if __name__ == "__main__":
             for row in image2rows[image]:
                 writer.writerow(row)
 
-    with open(args.ic_generated_dev_set_filename, mode="w") as out_file:
+    with open(args.ic_generated_validation_set_filename, mode="w") as out_file:
         writer = csv.writer(out_file, delimiter="\t")
 
         for image in dev_set_images:
