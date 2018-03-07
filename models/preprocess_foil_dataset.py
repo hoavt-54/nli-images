@@ -32,6 +32,7 @@ if __name__ == "__main__":
                 caption = annotation["caption"]
                 image = images[annotation["image_id"]]
                 label = "yes" if annotation["foil_word"] == "ORIG" else "no"
-                caption_tokens = [token.lower_ for token in nlp(caption)]
-                writer.writerow([label, " ".join(caption_tokens), image, caption])
+                # caption_tokens = [token.lower_ for token in nlp(caption)]
+                # writer.writerow([label, " ".join(caption_tokens), image, caption])
+                writer.writerow([label, image, caption])
                 progress.update(num_annotation)
