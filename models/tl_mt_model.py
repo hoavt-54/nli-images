@@ -125,7 +125,7 @@ def build_tl_mt_model(sentence_input,
         keep_prob=dropout_input,
     )
 
-    v_head_sentence.set_shape((premise_embeddings.get_shape()[0], img_features_size))
+    v_head_sentence.set_shape((sentence_embeddings.get_shape()[0], img_features_size))
     with tf.variable_scope("gated_img_features_sentence_scope_W_plus_b") as gated_img_features_sentence_scope_W_plus_b:
         gated_img_features_sentence_W_plus_b = lambda x: tf.contrib.layers.fully_connected(
             x,
