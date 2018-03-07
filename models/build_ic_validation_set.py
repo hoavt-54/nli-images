@@ -20,11 +20,9 @@ if __name__ == "__main__":
             image_filename = row[2].strip()
             image2rows[image_filename].append(row)
 
-        images = set(image2rows.keys())
-        print(images)
-        print(len(images) // 2)
+        images = list(image2rows.keys())
         test_set_images = set(np.random.choice(images, size=len(images) // 2, replace=False))
-        dev_set_images = images - test_set_images
+        dev_set_images = set(images) - test_set_images
 
     with open(args.ic_generated_test_set_filename, mode="w") as out_file:
         writer = csv.writer(out_file, delimiter="\t")
