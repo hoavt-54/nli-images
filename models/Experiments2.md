@@ -42,7 +42,7 @@ The results of the stage II are reported in the following table:
 |-------|-------------------|-----------------|-----------------------|
 | YES   | 83.45             | 96.56           | 98.09                 |
 | NO    | 16.36             | 93.5            | 94.52                 |
-| Total | 49.91             | 95.03           | 96.31                 |
+| TOTAL | 49.91             | 95.03           | 96.31                 |
 
 ## Stage III
 At this stage, a model exploiting the best-performing multimodal fusion mechanism identified in stage II is trained and evaluated in two different settings:
