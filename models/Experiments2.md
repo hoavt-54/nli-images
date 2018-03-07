@@ -38,15 +38,11 @@ At this stage, models are evaluated on the task of recognizing whether a sentenc
 
 The results of the stage II are reported in the following table:
 
-| TRAINING SET | TEST SET | Simple IC (Blind) | Simple IC + CNN | Bottom-up top-down IC |
-|--------------|----------|-------------------|-----------------|-----------------------|
-| IC train     | IC test  | 68.93             | 70.98           | 72.05                 |
-
-Moreover, the results of the stage II for each class, including the accuracy for each source of captions for the negative class, are reported in the following table:
-
-| TRAINING SET | TEST SET | Simple IC (Blind)                                                  | Simple IC + CNN                                                    | Bottom-up top-down IC                                              |
-|--------------|----------|--------------------------------------------------------------------|--------------------------------------------------------------------|--------------------------------------------------------------------|
-| IC train     | IC test  | Yes: 87.29, No: 50.58 (mscoco: 17.14, foil: 84.15), Overall: 68.93 | Yes: 90.21, No: 51.75 (mscoco: 15.18, foil: 88.46), Overall: 70.98 | Yes: 91.02, No: 53.09 (mscoco: 15.05, foil: 91.29), Overall: 72.05 |                   |
+| Class | Simple IC (Blind) | Simple IC + CNN | Bottom-up top-down IC |
+|-------|-------------------|-----------------|-----------------------|
+| YES   | 83.45             | 96.56           | 98.09                 |
+| NO    | 16.36             | 93.5            | 94.52                 |
+| TOTAL | 49.91             | 95.03           | 96.31                 |
 
 ## Stage III
 At this stage, a model exploiting the best-performing multimodal fusion mechanism identified in stage II is trained and evaluated in two different settings:
