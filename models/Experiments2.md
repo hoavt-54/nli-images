@@ -40,8 +40,8 @@ The results of the stage II are reported in the following table:
 
 | Class | Simple IC (Blind) | Simple IC + CNN | Bottom-up top-down IC |
 |-------|-------------------|-----------------|-----------------------|
-| YES   | 83.45             | 96.56           |                       |
-| NO    | 16.36             | 93.5            |                       |
+| YES   | 83.45             | 96.56           | 98.09                 |
+| NO    | 16.36             | 93.5            | 94.52                 |
 | Total | 49.91             | 95.03           | 96.31                 |
 
 ## Stage III
