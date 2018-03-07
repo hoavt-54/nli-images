@@ -12,7 +12,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     with open(args.ic_validation_set_filename) as in_file:
-        reader = csv.reader(in_file)
+        reader = csv.reader(in_file, delimiter="\t")
 
         image2rows = defaultdict(list)
 
@@ -25,14 +25,14 @@ if __name__ == "__main__":
         dev_set_images = images - test_set_images
 
     with open(args.ic_generated_test_set_filename, mode="w") as out_file:
-        writer = csv.writer(out_file)
+        writer = csv.writer(out_file, delimiter="\t")
 
         for image in test_set_images:
             for row in image2rows[image]:
                 writer.writerow(row)
 
     with open(args.ic_generated_dev_set_filename, mode="w") as out_file:
-        writer = csv.writer(out_file)
+        writer = csv.writer(out_file, delimiter="\t")
 
         for image in dev_set_images:
             for row in image2rows[image]:
