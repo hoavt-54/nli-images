@@ -74,9 +74,8 @@ def load_vte_dataset(nli_dataset_filename, token2id, label2id):
 def load_ic_dataset(ic_dataset_filename, token2id, label2id):
     labels = []
     padded_sentences = []
-    image_names = []
+    images_filenames = []
     original_sentences = []
-    sources = []
 
     with open(ic_dataset_filename) as in_file:
         reader = csv.reader(in_file, delimiter="\t")
@@ -86,19 +85,17 @@ def load_ic_dataset(ic_dataset_filename, token2id, label2id):
             # label \t sentence tokens \t image filename \t source \t original sentence
             label = row[0].strip()
             sentence_tokens = row[1].strip().split()
-            image = row[2].strip()
-            source = row[3].strip()
-            sentence = row[4].strip()
+            image_filename = row[2].strip()
+            sentence = row[5].strip()
             labels.append(label2id[label])
             padded_sentences.append([token2id.get(token, token2id["#unk#"]) for token in sentence_tokens])
-            image_names.append(image)
-            sources.append(source)
+            images_filenames.append(image_filename)
             original_sentences.append(sentence)
 
         padded_sentences = pad_sequences(padded_sentences, padding="post", value=token2id["#pad#"], dtype=np.long)
         labels = np.array(labels)
 
-    return labels, padded_sentences, image_names, sources, original_sentences
+    return labels, padded_sentences, images_filenames, original_sentences
 
 
 class ImageReader:
