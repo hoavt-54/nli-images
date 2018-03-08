@@ -64,12 +64,12 @@ Moreover, the results of the stage III for each class are reported in the follow
 
 Trained on IC and VSNLI train and evaluated on VSNLI test
 
-| Class         | Multi-task learning |
-|---------------|---------------------|
-| ENTAILMENT    | 85.54               |
-| CONTRADICTION | 75.44               |
-| NEUTRAL       | 71.36               |
-| Total         | 77.56               |
+| Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning |
+|---------------|-------------------|------------|------------------------------|---------------------|
+| ENTAILMENT    | 86.1              |            |                              | 85.54               |
+| CONTRADICTION | 81.68             |            |                              | 75.44               |
+| NEUTRAL       | 75.58             |            |                              | 71.36               |
+| Total         | 81.2              |            |                              | 77.56               |
 
 # References
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference." arXiv preprint arXiv:1508.05326 (2015).
