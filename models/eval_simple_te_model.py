@@ -129,10 +129,10 @@ if __name__ == "__main__":
         print("Overall accuracy: {}".format(accuracy_score(data["gold_label"], data["prediction"])))
 
         data_entailment = data.loc[data["gold_label"] == "entailment"]
-        print("Accuracy for 'yes': {}".format(accuracy_score(data_entailment["gold_label"], data_entailment["prediction"])))
+        print("Accuracy for 'entailment': {}".format(accuracy_score(data_entailment["gold_label"], data_entailment["prediction"])))
 
         data_contradiction = data.loc[data["gold_label"] == "contradiction"]
-        print("Accuracy for 'no': {}".format(accuracy_score(data_contradiction["gold_label"], data_contradiction["prediction"])))
+        print("Accuracy for 'contradiction': {}".format(accuracy_score(data_contradiction["gold_label"], data_contradiction["prediction"])))
 
         data_neutral = data.loc[data["gold_label"] == "neutral"]
-        print("Accuracy for 'no': {}".format(accuracy_score(data_neutral["gold_label"], data_neutral["prediction"])))
+        print("Accuracy for 'neutral': {}".format(accuracy_score(data_neutral["gold_label"], data_neutral["prediction"])))
