@@ -135,4 +135,4 @@ if __name__ == "__main__":
         print("Accuracy for 'yes': {}".format(accuracy_score(data_yes["gold_label"], data_yes["prediction"])))
 
         data_no = data.loc[data["gold_label"] == "no"]
-        print("Acuracy for 'no': {}".format(accuracy_score(data_no["gold_label"], data_no["prediction"])))
+        print("Accuracy for 'no': {}".format(accuracy_score(data_no["gold_label"], data_no["prediction"])))

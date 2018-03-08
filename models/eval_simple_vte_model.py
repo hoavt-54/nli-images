@@ -9,6 +9,7 @@ from argparse import ArgumentParser
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+from sklearn.metrics import accuracy_score
 
 from datasets import ImageReader, load_vte_dataset
 from train_simple_vte_model import build_simple_vte_model
@@ -129,3 +130,21 @@ if __name__ == "__main__":
         y_pred = pd.Series(y_pred, name="Predicted")
         confusion_matrix = pd.crosstab(y_true, y_pred, margins=True)
         confusion_matrix.to_csv(args.result_filename + ".confusion_matrix")
+
+        data = pd.read_csv(
+            args.result_filename + ".predictions",
+            sep="\t",
+            header=None,
+            names=["gold_label", "prediction", "premise_toks", "hypothesis_toks", "jpg", "premise", "hypothesis"]
+        )
+
+        print("Overall accuracy: {}".format(accuracy_score(data["gold_label"], data["prediction"])))
+
+        data_entailment = data.loc[data["gold_label"] == "entailment"]
+        print("Accuracy for 'yes': {}".format(accuracy_score(data_entailment["gold_label"], data_entailment["prediction"])))
+
+        data_contradiction = data.loc[data["gold_label"] == "contradiction"]
+        print("Accuracy for 'no': {}".format(accuracy_score(data_contradiction["gold_label"], data_contradiction["prediction"])))
+
+        data_neutral = data.loc[data["gold_label"] == "neutral"]
+        print("Accuracy for 'no': {}".format(accuracy_score(data_neutral["gold_label"], data_neutral["prediction"])))
