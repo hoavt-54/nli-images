@@ -52,17 +52,9 @@ At this stage, a model exploiting the best-performing multimodal fusion mechanis
 
 ![image](https://raw.githubusercontent.com/hoavt-54/nli-images/master/models/images/Multi-Task%20or%20Transfer%20Learning.png)
 
-The results of the stage III are reported in the following table:
+The results of the stage III are reported in the following tables:
 
-| TRAINING SET | TEST SET         | Multi-task learning |
-|--------------|------------------|---------------------|
-| VSNLI train  | VSNLI test       | 76.09               |
-| VSNLI train  | VSICK2           | 46.09               |
-| VSNLI train  | Difficult VSICK2 | 47.86               |
-
-Moreover, the results of the stage III for each class are reported in the following table:
-
-Trained on IC and VSNLI train and evaluated on VSNLI test
+Trained on IC and VSNLI train and evaluated on VSNLI test:
 
 | Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning |
 |---------------|-------------------|------------|------------------------------|---------------------|
