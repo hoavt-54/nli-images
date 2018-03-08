@@ -62,11 +62,13 @@ The results of the stage III are reported in the following table:
 
 Moreover, the results of the stage III for each class are reported in the following table:
 
-| TRAINING SET | TEST SET         | Multi-task learning                                                     |
-|--------------|------------------|-------------------------------------------------------------------------|
-| VSNLI train  | VSNLI test       | Neutral: 69.52, Entailment: 84.92, Contradiction: 73.43, Overall: 76.09 |
-| VSNLI train  | VSICK2           | Neutral: 23.21, Entailment: 87.39, Contradiction: 85.11, Overall: 46.09 |
-| VSNLI train  | Difficult VSICK2 | Neutral: 12.29, Entailment: 79.24, Contradiction: 67.31, Overall: 47.86 |
+Trained on IC and VSNLI train and evaluated on VSNLI test
+| Class         | Multi-task learning |
+|---------------|---------------------|
+| ENTAILMENT    | 85.54               |
+| CONTRADICTION | 75.44               |
+| NEUTRAL       | 71.36               |
+| Total         | 77.56               |
 
 # References
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference." arXiv preprint arXiv:1508.05326 (2015).
