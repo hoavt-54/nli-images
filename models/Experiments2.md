@@ -58,10 +58,10 @@ The results of the stage III are reported in the following tables:
 
 | Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning |
 |---------------|-------------------|------------|------------------------------|---------------------|
-| ENTAILMENT    | 86.1              | 85.81      |                              | 85.54               |
-| CONTRADICTION | 81.68             | 75.5       |                              | 75.44               |
-| NEUTRAL       | 75.58             | 71.01      |                              | 71.36               |
-| Total         | 81.2              | 77.56      |                              | 77.56               |
+| ENTAILMENT    | 86.1              | 85.81      | 86.46                        | 85.54               |
+| CONTRADICTION | 81.68             | 75.5       | 75.69                        | 75.44               |
+| NEUTRAL       | 75.58             | 71.01      | 69.74                        | 71.36               |
+| Total         | 81.2              | 77.56      | 77.43                        | 77.56               |
 
 # References
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference." arXiv preprint arXiv:1508.05326 (2015).
