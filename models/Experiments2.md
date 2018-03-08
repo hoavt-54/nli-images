@@ -63,6 +63,7 @@ The results of the stage III are reported in the following table:
 Moreover, the results of the stage III for each class are reported in the following table:
 
 Trained on IC and VSNLI train and evaluated on VSNLI test
+
 | Class         | Multi-task learning |
 |---------------|---------------------|
 | ENTAILMENT    | 85.54               |
