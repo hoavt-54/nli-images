@@ -52,24 +52,16 @@ At this stage, a model exploiting the best-performing multimodal fusion mechanis
 
 ![image](https://raw.githubusercontent.com/hoavt-54/nli-images/master/models/images/Multi-Task%20or%20Transfer%20Learning.png)
 
-The results of the stage III are reported in the following table:
+The results of the stage III are reported in the following tables:
 
-| TRAINING SET | TEST SET         | Multi-task learning |
-|--------------|------------------|---------------------|
-| VSNLI train  | VSNLI test       | 76.09               |
-| VSNLI train  | VSICK2           | 46.09               |
-| VSNLI train  | Difficult VSICK2 | 47.86               |
+*Trained on IC and VSNLI train and evaluated on VSNLI test:*
 
-Moreover, the results of the stage III for each class are reported in the following table:
-
-Trained on IC and VSNLI train and evaluated on VSNLI test
-
-| Class         | Multi-task learning |
-|---------------|---------------------|
-| ENTAILMENT    | 85.54               |
-| CONTRADICTION | 75.44               |
-| NEUTRAL       | 71.36               |
-| Total         | 77.56               |
+| Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning |
+|---------------|-------------------|------------|------------------------------|---------------------|
+| ENTAILMENT    | 86.1              |            |                              | 85.54               |
+| CONTRADICTION | 81.68             |            |                              | 75.44               |
+| NEUTRAL       | 75.58             |            |                              | 71.36               |
+| Total         | 81.2              |            |                              | 77.56               |
 
 # References
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference." arXiv preprint arXiv:1508.05326 (2015).
