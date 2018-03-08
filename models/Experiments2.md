@@ -54,7 +54,7 @@ At this stage, a model exploiting the best-performing multimodal fusion mechanis
 
 The results of the stage III are reported in the following tables:
 
-Trained on IC and VSNLI train and evaluated on VSNLI test:
+*Trained on IC and VSNLI train and evaluated on VSNLI test:*
 
 | Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning |
 |---------------|-------------------|------------|------------------------------|---------------------|
