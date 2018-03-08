@@ -72,6 +72,15 @@ The results of the stage III are reported in the following tables:
 | NEUTRAL       | 35.06             | 27.13      | 26.85                        | 25.03               |
 | Total         | 53.89             | 47.98      | 47.14                        | 45.91               |
 
+*Trained on IC and VSNLI train and evaluated on Difficult VSICK2:*
+
+| Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning |
+|---------------|-------------------|------------|------------------------------|---------------------|
+| ENTAILMENT    | 73.08             | 75.47      | 74.53                        | 78.3                |
+| CONTRADICTION | 70.59             | 67.31      | 63.46                        | 65.38               |
+| NEUTRAL       | 24.19             | 21.31      | 19.67                        | 18.03               |
+| Total         | 50.9              | 50.36      | 48.57                        | 49.64               |
+
 # References
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference." arXiv preprint arXiv:1508.05326 (2015).
 
