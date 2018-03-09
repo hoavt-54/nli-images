@@ -142,7 +142,7 @@ if __name__ == "__main__":
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_simple_te_model(
+    logits = build_simple_te_model_h(
         premise_input,
         hypothesis_input,
         dropout_input,
