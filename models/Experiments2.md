@@ -61,16 +61,16 @@ The results of the stage III are reported in the following tables:
 | ENTAILMENT    | 86.1              | 85.81      | 86.46                        | 85.54               | 90.03 | 90.38   |
 | CONTRADICTION | 81.68             | 75.5       | 75.69                        | 75.44               | 86.25 | 87.53   |
 | NEUTRAL       | 75.58             | 71.01      | 69.74                        | 71.36               | 82.79 | 82.91   |
-| Total         | 81.2              | 77.56      | 77.43                        | 77.56               |       |         |
+| Total         | 81.2              | 77.56      | 77.43                        | 77.56               | 86.41 | 86.99   |
 
 *Trained on IC and VSNLI train and evaluated on VSICK2:*
 
-| Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning |
-|---------------|-------------------|------------|------------------------------|---------------------|
-| ENTAILMENT    | 88.79             | 85.04      | 83.58                        | 84.75               |
-| CONTRADICTION | 85.29             | 84.79      | 82.2                         | 78.96               |
-| NEUTRAL       | 35.06             | 27.13      | 26.85                        | 25.03               |
-| Total         | 53.89             | 47.98      | 47.14                        | 45.91               |
+| Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning | BiMPM | V-BiMPM |
+|---------------|-------------------|------------|------------------------------|---------------------|-------|---------|
+| ENTAILMENT    | 88.79             | 85.04      | 83.58                        | 84.75               | 87.24 | 87.98   |
+| CONTRADICTION | 85.29             | 84.79      | 82.2                         | 78.96               | 91.26 | 91.26   |
+| NEUTRAL       | 35.06             | 27.13      | 26.85                        | 25.03               | 38.45 | 46.36   |
+| Total         | 53.89             | 47.98      | 47.14                        | 45.91               | 56.49 | 61.71   |
 
 *Trained on IC and VSNLI train and evaluated on Difficult VSICK2:*
 
