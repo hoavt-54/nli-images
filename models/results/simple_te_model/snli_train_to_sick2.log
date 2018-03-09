@@ -3,4 +3,8 @@
 -- Loading test set
 -- Restoring model
 -- Evaluating model
-Mean test accuracy: 0.5605282465150404
+Mean test accuracy: 0.5388848129126926
+Overall accuracy: 0.5388848129126926
+Accuracy for 'entailment': 0.8878923766816144
+Accuracy for 'contradiction': 0.8529411764705882
+Accuracy for 'neutral': 0.35065676756139347
