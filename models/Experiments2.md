@@ -76,10 +76,19 @@ The results of the stage III are reported in the following tables:
 
 | Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning |
 |---------------|-------------------|------------|------------------------------|---------------------|
-| ENTAILMENT    | **73.08**             | 75.47      | 74.53                        | **78.3**                |
+| ENTAILMENT    | **73.08**             | 75.47  | 74.53                        | **78.3**            |
 | CONTRADICTION | 70.59             | 67.31      | 63.46                        | 65.38               |
 | NEUTRAL       | 24.19             | 21.31      | 19.67                        | 18.03               |
 | Total         | 50.9              | 50.36      | 48.57                        | 49.64               |
+
+*Trained on IC and VSNLI train and evaluated on VSNLI Hard:*
+
+| Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning | BiMPM | V-BiMPM |
+|---------------|-------------------|------------|------------------------------|---------------------|-------|---------|
+| ENTAILMENT    | 68.62             | 66.16      | 67.58                        | 63.99               |       |         |
+| CONTRADICTION | 64.23             | 52.25      | 53.39                        | 51.01               |       |         |
+| NEUTRAL       | 48.31             | 36.7       | 33.52                        | 36.98               |       |         |
+| Total         | 60.44             | 51.67      | 51.49                        | 50.63               |       |         |
 
 # References
 [1] Bowman, Samuel R., et al. "A large annotated corpus for learning natural language inference." arXiv preprint arXiv:1508.05326 (2015).
