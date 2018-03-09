@@ -76,7 +76,7 @@ The results of the stage III are reported in the following tables:
 
 | Class         | Simple TE (Blind) | Simple VTE | Top-down bottom-up attention | Multi-task learning |
 |---------------|-------------------|------------|------------------------------|---------------------|
-| ENTAILMENT    | 73.08             | 75.47      | 74.53                        | 78.3                |
+| ENTAILMENT    | **73.08**             | 75.47      | 74.53                        | **78.3**                |
 | CONTRADICTION | 70.59             | 67.31      | 63.46                        | 65.38               |
 | NEUTRAL       | 24.19             | 21.31      | 19.67                        | 18.03               |
 | Total         | 50.9              | 50.36      | 48.57                        | 49.64               |
