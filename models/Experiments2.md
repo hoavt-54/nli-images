@@ -69,7 +69,7 @@ The results of the stage III are reported in the following tables:
 |---------------|-------------------|------------|------------------------------|---------------------|-------|---------|
 | ENTAILMENT    | 88.79             | 85.04      | 83.58                        | 84.75               | 87.24 | 87.98   |
 | CONTRADICTION | 85.29             | 84.79      | 82.2                         | 78.96               | 91.26 | 91.26   |
-| NEUTRAL       | 35.06             | 27.13      | 26.85                        | 25.03               | 38.45 | 46.36   |
+| NEUTRAL       | 35.06             | 27.13      | 26.85                        | 25.03               | 38.45 | *46.36* |
 | Total         | 53.89             | 47.98      | 47.14                        | 45.91               | 56.49 | 61.71   |
 
 *Trained on IC and VSNLI train and evaluated on Difficult VSICK2:*
