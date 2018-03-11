@@ -4,4 +4,8 @@
 -- Loading images
 -- Restoring model
 -- Evaluating model
-Mean test accuracy: 0.7824714983713354
+Mean test accuracy: 0.7743281758957655
+Overall accuracy: 0.7743281758957655
+Accuracy for 'entailment': 0.8646080760095012
+Accuracy for 'contradiction': 0.7568736484399134
+Accuracy for 'neutral': 0.697421559490525

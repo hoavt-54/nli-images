@@ -3,4 +3,4 @@
 -- Loading test set
 -- Restoring model
 -- Evaluating model
-Mean test accuracy: 0.6893328490131977
+Mean test accuracy: 0.4990865099743235
