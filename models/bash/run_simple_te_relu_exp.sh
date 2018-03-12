@@ -2,3 +2,4 @@
 ~/python3 ../eval_simple_te_model_relu.py --model_filename=../checkpoints/simple_te_model_relu/snli_train --test_filename=../../datasets/snli_1.0/snli_1.0_test_filtered.tokens --result_filename=../results/simple_te_model_relu/snli_train_to_snli_test
 ~/python3 ../eval_simple_te_model_relu.py  --model_filename=../checkpoints/simple_te_model_relu/snli_train --test_filename=../../datasets/SICK/SICK2/SICK2.tokens --result_filename=../results/simple_te_model_relu/snli_train_to_sick2
 ~/python3 ../eval_simple_te_model_relu.py  --model_filename=../checkpoints/simple_te_model_relu/snli_train --test_filename=../../datasets/SICK/SICK2/difficult_SICK2.tokens --result_filename=../results/simple_te_model_relu/snli_train_to_difficult_sick2
+~/python3 ../eval_simple_te_model_relu.py --model_filename=../checkpoints/simple_te_model_relu/snli_train --test_filename=../../datasets/snli_1.0_test_hard.tsv --result_filename=../results/simple_te_model_relu/snli_train_to_snli_test_hard
