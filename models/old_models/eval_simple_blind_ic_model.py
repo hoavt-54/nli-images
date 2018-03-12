@@ -10,9 +10,9 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from sklearn.metrics import accuracy_score
-from train_simple_te_model_relu import build_simple_te_model_relu
+from train_simple_blind_ic_model import build_simple_blind_ic_model
 
-from datasets import load_te_dataset
+from datasets import load_ic_dataset
 from utils import batch
 from utils import start_logger, stop_logger
 
@@ -45,21 +45,18 @@ if __name__ == "__main__":
         num_labels = len(label2id)
 
     print("-- Loading test set")
-    test_labels, test_padded_premises, test_padded_hypotheses, test_original_premises, test_original_hypotheses =\
-        load_te_dataset(
-            args.test_filename,
-            token2id,
-            label2id
-        )
+    test_labels, test_padded_sentences, test_img_names, test_original_sentences = load_ic_dataset(
+        args.test_filename,
+        token2id,
+        label2id
+    )
 
     print("-- Restoring model")
-    premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
-    hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
+    sentence_input = tf.placeholder(tf.int32, (None, None), name="sentence_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_simple_te_model_relu(
-        premise_input,
-        hypothesis_input,
+    logits = build_simple_blind_ic_model(
+        sentence_input,
         dropout_input,
         num_tokens,
         num_labels,
@@ -83,18 +80,15 @@ if __name__ == "__main__":
         with open(args.result_filename + ".predictions", mode="w") as out_file:
             writer = csv.writer(out_file, delimiter="\t")
             for indexes in batch(test_batches_indexes, params["batch_size"]):
-                test_batch_premises = test_padded_premises[indexes]
-                test_batch_hypotheses = test_padded_hypotheses[indexes]
+                test_batch_sentences = test_padded_sentences[indexes]
                 test_batch_labels = test_labels[indexes]
-                test_original_premises = np.array(test_original_premises)
-                test_original_hypotheses = np.array(test_original_hypotheses)
-                test_batch_original_premises = test_original_premises[indexes]
-                test_batch_original_hypotheses = test_original_hypotheses[indexes]
+                batch_img_names = [test_img_names[i] for i in indexes]
+                test_original_sentences = np.array(test_original_sentences)
+                test_batch_original_sentences = test_original_sentences[indexes]
                 predictions = session.run(
                     tf.argmax(logits, axis=1),
                     feed_dict={
-                        premise_input: test_batch_premises,
-                        hypothesis_input: test_batch_hypotheses,
+                        sentence_input: test_batch_sentences,
                         dropout_input: 1.0
                     }
                 )
@@ -104,10 +98,9 @@ if __name__ == "__main__":
                         [
                             id2label[test_batch_labels[i]],
                             id2label[predictions[i]],
-                            " ".join([id2token[id] for id in test_batch_premises[i] if id != token2id["#pad#"]]),
-                            " ".join([id2token[id] for id in test_batch_hypotheses[i] if id != token2id["#pad#"]]),
-                            test_batch_original_premises[i],
-                            test_batch_original_hypotheses[i]
+                            " ".join([id2token[id] for id in test_batch_sentences[i] if id != token2id["#pad#"]]),
+                            batch_img_names[i],
+                            test_batch_original_sentences[i]
                         ]
                     )
                     y_true.append(id2label[test_batch_labels[i]])
@@ -123,16 +116,13 @@ if __name__ == "__main__":
             args.result_filename + ".predictions",
             sep="\t",
             header=None,
-            names=["gold_label", "prediction", "premise_toks", "hypothesis_toks", "premise", "hypothesis"]
+            names=["gold_label", "prediction", "sentence_tokens", "jpg", "sentence"]
         )
 
         print("Overall accuracy: {}".format(accuracy_score(data["gold_label"], data["prediction"])))
 
-        data_entailment = data.loc[data["gold_label"] == "entailment"]
-        print("Accuracy for 'entailment': {}".format(accuracy_score(data_entailment["gold_label"], data_entailment["prediction"])))
+        data_yes = data.loc[data["gold_label"] == "yes"]
+        print("Accuracy for 'yes': {}".format(accuracy_score(data_yes["gold_label"], data_yes["prediction"])))
 
-        data_contradiction = data.loc[data["gold_label"] == "contradiction"]
-        print("Accuracy for 'contradiction': {}".format(accuracy_score(data_contradiction["gold_label"], data_contradiction["prediction"])))
-
-        data_neutral = data.loc[data["gold_label"] == "neutral"]
-        print("Accuracy for 'neutral': {}".format(accuracy_score(data_neutral["gold_label"], data_neutral["prediction"])))
+        data_no = data.loc[data["gold_label"] == "no"]
+        print("Accuracy for 'no': {}".format(accuracy_score(data_no["gold_label"], data_no["prediction"])))

@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from sklearn.metrics import accuracy_score
-from train_simple_te_model_relu import build_simple_te_model_relu
+from train_simple_te_model_h import build_simple_te_model_h
 
 from datasets import load_te_dataset
 from utils import batch
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_simple_te_model_relu(
+    logits = build_simple_te_model_h(
         premise_input,
         hypothesis_input,
         dropout_input,

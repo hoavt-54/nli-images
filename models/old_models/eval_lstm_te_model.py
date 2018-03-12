@@ -9,10 +9,9 @@ from argparse import ArgumentParser
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from sklearn.metrics import accuracy_score
-from train_simple_te_model_relu import build_simple_te_model_relu
 
 from datasets import load_te_dataset
+from old_models.train_lstm_te_model import build_lstm_te_model
 from utils import batch
 from utils import start_logger, stop_logger
 
@@ -46,18 +45,14 @@ if __name__ == "__main__":
 
     print("-- Loading test set")
     test_labels, test_padded_premises, test_padded_hypotheses, test_original_premises, test_original_hypotheses =\
-        load_te_dataset(
-            args.test_filename,
-            token2id,
-            label2id
-        )
+        load_te_dataset(args.test_filename, token2id, label2id)
 
     print("-- Restoring model")
     premise_input = tf.placeholder(tf.int32, (None, None), name="premise_input")
     hypothesis_input = tf.placeholder(tf.int32, (None, None), name="hypothesis_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_simple_te_model_relu(
+    logits = build_lstm_te_model(
         premise_input,
         hypothesis_input,
         dropout_input,
@@ -118,21 +113,3 @@ if __name__ == "__main__":
         y_pred = pd.Series(y_pred, name="Predicted")
         confusion_matrix = pd.crosstab(y_true, y_pred, margins=True)
         confusion_matrix.to_csv(args.result_filename + ".confusion_matrix")
-
-        data = pd.read_csv(
-            args.result_filename + ".predictions",
-            sep="\t",
-            header=None,
-            names=["gold_label", "prediction", "premise_toks", "hypothesis_toks", "premise", "hypothesis"]
-        )
-
-        print("Overall accuracy: {}".format(accuracy_score(data["gold_label"], data["prediction"])))
-
-        data_entailment = data.loc[data["gold_label"] == "entailment"]
-        print("Accuracy for 'entailment': {}".format(accuracy_score(data_entailment["gold_label"], data_entailment["prediction"])))
-
-        data_contradiction = data.loc[data["gold_label"] == "contradiction"]
-        print("Accuracy for 'contradiction': {}".format(accuracy_score(data_contradiction["gold_label"], data_contradiction["prediction"])))
-
-        data_neutral = data.loc[data["gold_label"] == "neutral"]
-        print("Accuracy for 'neutral': {}".format(accuracy_score(data_neutral["gold_label"], data_neutral["prediction"])))
