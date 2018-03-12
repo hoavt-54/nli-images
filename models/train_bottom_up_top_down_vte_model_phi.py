@@ -16,20 +16,20 @@ from utils import batch
 from utils import start_logger, stop_logger, gated_tanh
 
 
-def build_bottom_up_top_down_vte_model_hphi(premise_input,
-                                   hypothesis_input,
-                                   img_features_input,
-                                   dropout_input,
-                                   num_tokens,
-                                   num_labels,
-                                   embeddings,
-                                   embeddings_size,
-                                   num_img_features,
-                                   img_features_size,
-                                   train_embeddings,
-                                   rnn_hidden_size,
-                                   multimodal_fusion_hidden_size,
-                                   classification_hidden_size):
+def build_bottom_up_top_down_vte_model_phi(premise_input,
+                                           hypothesis_input,
+                                           img_features_input,
+                                           dropout_input,
+                                           num_tokens,
+                                           num_labels,
+                                           embeddings,
+                                           embeddings_size,
+                                           num_img_features,
+                                           img_features_size,
+                                           train_embeddings,
+                                           rnn_hidden_size,
+                                           multimodal_fusion_hidden_size,
+                                           classification_hidden_size):
     premise_length = tf.cast(
         tf.reduce_sum(
             tf.cast(tf.not_equal(premise_input, tf.zeros_like(premise_input, dtype=tf.int32)), tf.int64),
@@ -207,7 +207,7 @@ if __name__ == "__main__":
     img_features_input = tf.placeholder(tf.float32, (None, args.num_img_features, args.img_features_size), name="img_features_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_bottom_up_top_down_vte_model_hphi(
+    logits = build_bottom_up_top_down_vte_model_phi(
         premise_input,
         hypothesis_input,
         img_features_input,

@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from sklearn.metrics import accuracy_score
-from train_bottom_up_top_down_vte_model_hphi import build_bottom_up_top_down_vte_model_hphi
+from train_bottom_up_top_down_vte_model_phi import build_bottom_up_top_down_vte_model_phi
 
 from datasets import ImageReader, load_vte_dataset
 from utils import batch
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     img_features_input = tf.placeholder(tf.float32, (None, params["num_img_features"], params["img_features_size"]), name="img_features_input")
     label_input = tf.placeholder(tf.int32, (None,), name="label_input")
     dropout_input = tf.placeholder(tf.float32, name="dropout_input")
-    logits = build_bottom_up_top_down_vte_model_hphi(
+    logits = build_bottom_up_top_down_vte_model_phi(
         premise_input,
         hypothesis_input,
         img_features_input,
