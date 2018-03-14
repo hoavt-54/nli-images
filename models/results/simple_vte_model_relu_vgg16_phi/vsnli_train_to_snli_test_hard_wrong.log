@@ -1,0 +1,11 @@
+-- Loading params
+-- Loading index
+-- Loading test set
+-- Loading images
+-- Restoring model
+-- Evaluating model
+Mean test accuracy: 0.46918123275068996
+Overall accuracy: 0.46918123275068996
+Accuracy for 'entailment': 0.6502835538752363
+Accuracy for 'contradiction': 0.4458149779735683
+Accuracy for 'neutral': 0.3146067415730337
