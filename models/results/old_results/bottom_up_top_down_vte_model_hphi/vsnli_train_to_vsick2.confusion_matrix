@@ -1,0 +1,5 @@
+Actual,contradiction,entailment,neutral,All
+contradiction,250,50,9,309
+entailment,19,582,81,682
+neutral,618,567,573,1758
+All,887,1199,663,2749
